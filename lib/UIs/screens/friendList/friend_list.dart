@@ -49,7 +49,12 @@ class _FriendsListState extends State<FriendsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {},
+        ),
         title: const Text('Friends'),
+        centerTitle: true,
       ),
       body: Flex(
         direction: Axis.vertical,
