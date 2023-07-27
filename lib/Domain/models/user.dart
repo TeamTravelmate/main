@@ -8,13 +8,14 @@ class User {
   final String name;
   final String email;
   List<User> friends = [];
+  List<User> followers = [];
 
   User({
     required this.avatar,
     required this.name,
     required this.email,
   });
-  //constructor with friend list automatically populated
+  
   User.withFriends({
     required this.avatar,
     required this.name,
@@ -25,7 +26,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      avatar: json['picture']['large'],
+      avatar: json['picture']['thumbnail'],
       name:
           '${_capitalize(json['name']['first'])} ${_capitalize(json['name']['last'])}',
       email: json['email'],
@@ -36,9 +37,18 @@ class User {
     friends = await getFriendsResponse(userToken);
   }
 
+  Future<void> getFollowers(String userToken) async {
+    followers = await getFollowersResponse(userToken);
+  }
+
   List<User> getFriendsList() {
     return friends;
   }
+
+  List<User> getFollowersList() {
+    return followers;
+  }
+  
 
   List<User> filterFriends(String query) {
     List<User> filteredFriends = [];
