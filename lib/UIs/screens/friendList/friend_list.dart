@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:main/Domain/models/user.dart';
 import 'package:main/UIs/widgets/list_tile.dart';
+import 'package:main/UIs/widgets/textCustom.dart';
 import 'package:main/UIs/widgets/search_bar.dart';
 
 class FriendsList extends StatefulWidget {
@@ -21,7 +22,7 @@ class _FriendsListState extends State<FriendsList> {
 
   //search bar function
   void _filterFriends(value) {
-    if(value.isEmpty) {
+    if (value.isEmpty) {
       setState(() {
         _friends = _user.getFriendsList();
       });
@@ -36,8 +37,6 @@ class _FriendsListState extends State<FriendsList> {
   void initState() {
     super.initState();
     _userToken = 'example_token';
-
-    //get the friends list
     _user.getFriends(_userToken).then((data) {
       setState(() {
         _friends = _user.getFriendsList();
@@ -49,11 +48,18 @@ class _FriendsListState extends State<FriendsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {},
         ),
-        title: const Text('Friends'),
+        title: const TextCustom(
+          text: 'Friends',
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+          // textAlign: TextAlign.center,
+        ),
         centerTitle: true,
       ),
       body: Flex(
@@ -72,5 +78,4 @@ class _FriendsListState extends State<FriendsList> {
       ),
     );
   }
-
 }
