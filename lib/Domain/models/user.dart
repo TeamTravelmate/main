@@ -9,6 +9,7 @@ class User {
   final String email;
   List<User> friends = [];
   List<User> followers = [];
+  List<User> following = [];
 
   User({
     required this.avatar,
@@ -41,6 +42,10 @@ class User {
     followers = await getFollowersResponse(userToken);
   }
 
+  Future<void> getFollowing(String userToken) async{
+    following = await getFollowingResponse(userToken);
+  }
+
   List<User> getFriendsList() {
     return friends;
   }
@@ -49,6 +54,9 @@ class User {
     return followers;
   }
   
+  List<User> getFollowingList(){
+    return following;
+  }
 
   List<User> filterFriends(String query) {
     List<User> filteredFriends = [];

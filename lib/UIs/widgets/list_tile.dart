@@ -9,15 +9,12 @@ Widget buildListTile(BuildContext context, User friend) {
       ),
       title: Text(friend.name),
       subtitle: Text(friend.email),
-      trailing: IconButton(
-          icon: const Icon(Icons.chat),
-          onPressed: () {
-          }));
+      trailing: IconButton(icon: const Icon(Icons.chat), onPressed: () {}));
 }
 
-Widget buildFollowerTile(BuildContext context, User follower){
+Widget buildFollowerTile(BuildContext context, User follower) {
   return ListTile(
-    leading: CircleAvatar(
+      leading: CircleAvatar(
         backgroundImage: NetworkImage(follower.avatar),
       ),
       title: Text(follower.name),
@@ -29,6 +26,28 @@ Widget buildFollowerTile(BuildContext context, User follower){
         height: 30,
         fontSize: 13,
         path: 'follow',
-      )
-  );
+      ));
+}
+
+Widget buildFollowingTile(BuildContext context, User following) {
+  return ListTile(
+      leading: CircleAvatar(
+        backgroundImage: NetworkImage(following.avatar),
+      ),
+      title: Text(following.name),
+      subtitle: Text(following.email),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          buttonWidget(
+            labelText: 'Unfollow',
+            onPressed: () {},
+            width: 90,
+            height: 30,
+            fontSize: 13,
+            path: 'unfollow',
+          ),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.chat)),
+        ],
+      ));
 }
