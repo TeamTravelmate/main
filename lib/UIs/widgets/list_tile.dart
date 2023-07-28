@@ -72,6 +72,9 @@ Widget buildChatTile(BuildContext context, User friend) {
     title: Text(friend.name),
     subtitle: Text('Latest message'),
     trailing: Text(TimeOfDay.now().format(context)),
+    onTap: () {
+      Navigator.of(context).push(chatPageRoute(friend));
+    },
   );
 }
 
