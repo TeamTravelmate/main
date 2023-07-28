@@ -3,7 +3,7 @@
 part of '../models/user.dart';
 
 Future<List<User>> getFriendsResponse(String userToken) async {
-  Uri url = Uri.https('randomuser.me', '/api', {'results': '15'});
+  Uri url = Uri.https('randomuser.me', '/api', {'results': '5'});
   http.Response response = await http.get(url);
 
   if (response.statusCode == 200) {

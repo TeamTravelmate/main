@@ -9,7 +9,11 @@ Widget buildListTile(BuildContext context, User friend) {
       ),
       title: Text(friend.name),
       subtitle: Text(friend.email),
-      trailing: IconButton(icon: const Icon(Icons.chat), onPressed: () {}));
+      trailing: IconButton(
+          icon: const Icon(Icons.chat),
+          onPressed: () {
+            Navigator.of(context).push(chatPageRoute(friend));
+          }));
 }
 
 Widget buildFollowerTile(BuildContext context, User follower) {
@@ -41,13 +45,47 @@ Widget buildFollowingTile(BuildContext context, User following) {
         children: [
           buttonWidget(
             labelText: 'Unfollow',
-            onPressed: () {},
+            onPressed: () {
+              //TODO: implement unfollow
+            },
             width: 90,
             height: 30,
             fontSize: 13,
             path: 'unfollow',
           ),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.chat)),
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(chatPageRoute(following));
+              },
+              icon: const Icon(Icons.chat)),
         ],
       ));
+}
+
+//tile for chat list
+//shows the friend's avatar, name, and latest message
+Widget buildChatTile(BuildContext context, User friend) {
+  return ListTile(
+    leading: CircleAvatar(
+      backgroundImage: NetworkImage(friend.avatar),
+    ),
+    title: Text(friend.name),
+    subtitle: Text('Latest message'),
+    trailing: Text(TimeOfDay.now().format(context)),
+  );
+}
+
+chatPageRoute(User friend) {
+  return MaterialPageRoute(
+    builder: (context) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(friend.name),
+        ),
+        body: const Center(
+          child: Text('Chat messages'),
+        ),
+      );
+    },
+  );
 }
