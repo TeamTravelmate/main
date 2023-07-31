@@ -86,7 +86,7 @@ flutter:
   fonts:
       - family: Qwingley
         fonts:
-          - asset: fonts/Qwingley-Regular.ttf
+          - asset: fonts/Qwigley-Regular.ttf
         
   #   - family: Schyler
   #     fonts:
