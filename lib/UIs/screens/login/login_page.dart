@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main/UIs/themes/colors.dart';
 
@@ -41,6 +42,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
+              const SizedBox(height: 20),
+              SizedBox(                
+                height: MediaQuery.of(context).size.height * 0.25,
+                child: SvgPicture.asset("assets/svg/ch1.svg"),
+              ),
               const SizedBox(height: 20),
 
               Padding(
@@ -116,9 +122,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
               // text line
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 5,
+                padding: const EdgeInsets.only(
+                  left: 10,
+                  right: 20,
+                  top: 10,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment
@@ -202,7 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
 
               const Padding(
                 padding: EdgeInsets.symmetric(
@@ -293,17 +300,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
-              const Spacer(),
-               Row(
+              const SizedBox(height: 30),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
                     "Don't have a accout? ",
                     style: TextStyle(
-                      color: ColorsTravelMate.primary,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600
-                    ),
+                        color: ColorsTravelMate.primary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600),
                   ),
                   GestureDetector(
                     onTap: () {
