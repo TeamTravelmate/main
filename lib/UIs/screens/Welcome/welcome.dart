@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/login/login_page.dart';
 import 'package:main/UIs/themes/colors.dart';
 
 class Welcome extends StatelessWidget {
@@ -25,7 +26,7 @@ class Welcome extends StatelessWidget {
               fit: BoxFit.cover,
             ),
 
-            const SizedBox(height: 15),
+            const SizedBox(height: 10),
             // login
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -40,7 +41,8 @@ class Welcome extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       color: ColorsTravelMate.primary,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));                 },
                       child: const Padding(
                         padding: EdgeInsets.all(15.0),
                         child: Text(
