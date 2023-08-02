@@ -60,7 +60,32 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+        - assets/galleFort.png
+        - assets/unawatuna.png
+        - assets/jungleBeach.png
+        - assets/galle fort hotel.png
+        - assets/le grand.png
+        - assets/blue beach.png
+        - assets/mango house.png
+        - assets/sl railways.png
+        - assets/bus seat.png
+        - assets/pick me.png
+        - assets/uber.png
+        - assets/eseat.png
+        - assets/bus ticket.png
+        - assets/bookaway.png
+        - assets/dialus.png
+        - assets/weather.png
+        - assets/yala.png
+        - assets/nuwara eliya.jpg
+        - assets/unawatuna beach.jpg
+        - assets/colombo.jpg
+        - assets/galle public.png
+        - assets/logo-travelmate.png
+        - assets/post.png
+        - assets/profile.png
+        - assets/tourPlan.jpg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
