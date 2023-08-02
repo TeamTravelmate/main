@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class MarketplacePage extends StatefulWidget {
+  const MarketplacePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<MarketplacePage> createState() => _MarketplacePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _MarketplacePageState extends State<MarketplacePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
           width: double.infinity,
           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
-          child: const Text('Home Page')
+          child: const Text('Marketplace Page')
         ),
       ),
     );

@@ -12,11 +12,19 @@ class Welcome extends StatelessWidget {
         child: Column(
           children: [
             // cover image
-            Image.asset(
-              "assets/img/cover.jpg",
-              height: MediaQuery.of(context).size.height * 0.55,
-              width: MediaQuery.of(context).size.width,
-              fit: BoxFit.cover,
+            Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(100),
+                  bottomRight: Radius.circular(100),
+                ),
+              ),
+              child: Image.asset(
+                "assets/img/cover.jpg",
+                height: MediaQuery.of(context).size.height * 0.55,
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.cover,
+              ),
             ),
 
             // logo
@@ -42,7 +50,11 @@ class Welcome extends StatelessWidget {
                       ),
                       color: ColorsTravelMate.primary,
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));                 },
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()));
+                      },
                       child: const Padding(
                         padding: EdgeInsets.all(15.0),
                         child: Text(
@@ -84,8 +96,8 @@ class Welcome extends StatelessWidget {
               ),
             ),
 
-            Spacer(),
-            Spacer(),      
+            const Spacer(),
+            const Spacer(),
 
             GestureDetector(
               onTap: () {},
@@ -94,12 +106,11 @@ class Welcome extends StatelessWidget {
                 style: TextStyle(
                   color: ColorsTravelMate.secundary,
                   fontWeight: FontWeight.w500,
-                  
                 ),
               ),
             ),
 
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main/UIs/themes/colors.dart';
+import 'package:main/UIs/widgets/bottom_nav.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -62,15 +63,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: 1,
                     ),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.only(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
                       left: 10,
                       right: 10,
                     ),
-                    child: TextField(
-                      decoration: InputDecoration(
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Username / Email',
+
                         border: InputBorder.none,
-                        hintText: "Enter your username / email",
+                        hintText: "Enter your username or email",
                         hintStyle: TextStyle(
                           color: Colors.grey,
                           fontSize: 14,
@@ -97,13 +100,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: 1,
                     ),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.only(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
                       left: 10,
                       right: 10,
                     ),
-                    child: TextField(
-                      decoration: InputDecoration(
+                    child: TextFormField(
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                          labelText: 'Password',
                           border: InputBorder.none,
                           hintText: "Enter password",
                           hintStyle: TextStyle(
@@ -114,7 +119,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             Icons.remove_red_eye,
                             color: Color(0xFF8391A1),
                             size: 20,
-                          )),
+                          )
+                        ),
+                        
                     ),
                   ),
                 ),
@@ -194,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()));
+                                  builder: (context) => const BottomNav()));
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(15.0),
