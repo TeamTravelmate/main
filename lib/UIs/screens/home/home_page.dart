@@ -72,22 +72,22 @@ class home extends StatelessWidget {
                         imagePath: 'assets/nuwara eliya.jpg',
                       ),
                       popularTrips(
-                        path: publicTripView(),
+                        path: popularDestinations(),
                         title: 'Galle',
                         imagePath: 'assets/galleFort.png',
                       ),
                       popularTrips(
-                        path: publicTripView(),
+                        path: popularDestinations(),
                         title: 'Yala',
                         imagePath: 'assets/yala.png',
                       ),
                       popularTrips(
-                        path: publicTripView(),
+                        path: popularDestinations(),
                         title: 'Unawatuna',
                         imagePath: 'assets/unawatuna beach.jpg',
                       ),
                       popularTrips(
-                        path: publicTripView(),
+                        path: popularDestinations(),
                         title: 'Colombo',
                         imagePath: 'assets/colombo.jpg',
                       ),

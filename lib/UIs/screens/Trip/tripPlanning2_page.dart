@@ -10,6 +10,7 @@ import 'customizeToDo_page.dart';
 import 'customizeVehicles_page.dart';
 import 'customizeWeather_page.dart';
 import 'publicTripsAll_page.dart';
+import 'tripView_page.dart';
 
 // ignore: must_be_immutable
 class Plan extends StatelessWidget {
@@ -174,8 +175,8 @@ class CustomFacilities extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 140),
-          const buttonWidget(
-              width: double.infinity, labelText: 'Create my plan', path: null),
+          buttonWidget(
+              width: double.infinity, labelText: 'Create my plan', path: joinedTripView()),
         ],
       ),
     );
