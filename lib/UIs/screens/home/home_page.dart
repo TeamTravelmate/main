@@ -4,6 +4,7 @@ import '../../widgets/feed_widget.dart';
 import '../../widgets/popular_widget.dart';
 import '../Trip/publicTrip_page.dart';
 import '../Trip/tripPlanning_page.dart';
+import 'popularPlaces_page.dart';
 
 class home extends StatelessWidget {
   const home({super.key});
@@ -66,6 +67,11 @@ class home extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     children: const <Widget>[
                       popularTrips(
+                        path: popularDestinations(),
+                        title: 'Nuwara Eliya',
+                        imagePath: 'assets/nuwara eliya.jpg',
+                      ),
+                      popularTrips(
                         path: publicTripView(),
                         title: 'Galle',
                         imagePath: 'assets/galleFort.png',
@@ -74,11 +80,6 @@ class home extends StatelessWidget {
                         path: publicTripView(),
                         title: 'Yala',
                         imagePath: 'assets/yala.png',
-                      ),
-                      popularTrips(
-                        path: publicTripView(),
-                        title: 'Nuwara Eliya',
-                        imagePath: 'assets/nuwara eliya.jpg',
                       ),
                       popularTrips(
                         path: publicTripView(),
