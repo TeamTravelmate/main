@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../themes/colors.dart';
+import '../../widgets/tripCard_widget.dart';
 
 // ignore: must_be_immutable, camel_case_types
 class joinedTripView extends StatelessWidget {
@@ -94,7 +95,12 @@ class joinedTripView extends StatelessWidget {
                   ),
                   const Padding(
                     padding: EdgeInsets.only(top: 250.0),
-                    child: tripCard(),
+                    child: tripCard(
+                      tripLocationTitle: 'Galle - Kandy\n',
+                      location: '  Galle Fort, Unawatuna Beach',
+                      tripDuration: '  July 3, 2023 - July 6, 2023 (3 days)',
+                      tripmates: '  Kumar & 5 others',
+                    ),
                   ),
                 ],
               ),
@@ -120,116 +126,6 @@ class joinedTripView extends StatelessWidget {
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// ignore: camel_case_types
-class tripCard extends StatelessWidget {
-  const tripCard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: SizedBox(
-        height: 150,
-        width: double.infinity,
-        child: ListTile(
-          title: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Galle - Kandy\n',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: ColorsTravelMate.primary,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.favorite_border_rounded,
-                    color: ColorsTravelMate.primary,
-                  ),
-                  Icon(
-                    Icons.file_upload_outlined,
-                    color: ColorsTravelMate.primary,
-                  ),
-                  Icon(
-                    Icons.more_horiz_outlined,
-                    color: ColorsTravelMate.primary,
-                  ),
-                ],
-              ),
-            ],
-          ),
-          subtitle: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Row(
-                    children: [
-                      Icon(
-                        Icons.location_on_rounded,
-                        color: ColorsTravelMate.primary,
-                      ),
-                      Text(
-                        '  Galle Fort, Unawatuna Beach',
-                        style: TextStyle(color: ColorsTravelMate.primary),
-                      ),
-                    ],
-                  ),
-                  const Row(
-                    children: [
-                      Icon(
-                        Icons.calendar_month,
-                        color: ColorsTravelMate.primary,
-                      ),
-                      Text(
-                        '  July 3, 2023 - July 6, 2023 (3 days)',
-                        style: TextStyle(color: ColorsTravelMate.primary),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.supervised_user_circle_sharp,
-                        color: ColorsTravelMate.primary,
-                      ),
-                      Image.asset(
-                        'assets/profile.png',
-                        width: 20,
-                        height: 20,
-                      ),
-                      const Text(
-                        '  Kumar & 5 others',
-                        style: TextStyle(color: ColorsTravelMate.primary),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 40.0),
-                child: FloatingActionButton.small(
-                    onPressed: () {},
-                    backgroundColor: ColorsTravelMate.tertiary,
-                    shape: const CircleBorder(
-                        side: BorderSide(color: ColorsTravelMate.primary)),
-                    child: const Icon(
-                      Icons.map_outlined,
-                      color: ColorsTravelMate.primary,
-                    )),
-              )
             ],
           ),
         ),
