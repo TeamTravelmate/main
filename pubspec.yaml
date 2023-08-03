@@ -17,6 +17,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^5.1.0
 
+  image_picker: ^1.0.1
+
+
+  galleryimage: ^2.0.1
+
+  flutter_staggered_grid_view: ^0.7.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -53,8 +60,38 @@ flutter:
         - assets/post.png
         - assets/profile.png
         - assets/tourPlan.jpg
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+        - assets/2.jpeg
+        - assets/download.jpeg
+        - assets/3.jpeg
+        - assets/4.jpeg
+        - assets/5.jpeg
+        - assets/6.jpg
+        - assets/7.jpeg
+        - assets/8.jpeg
+        - assets/9.jpeg
+        - assets/10.jpg
+        - assets/11.jpg
+        - assets/12.jpeg
+        - assets/13.jpg
+        - assets/cover.jpeg
+        - assets/Message.jpg
+        - assets/surfing.jpg
+        - assets/hiking.jpeg
+        - assets/camping.png
+        - assets/snorkiln.png
+        - assets/profile_pic.jpeg
+        - assets/beach.jpg
+        - assets/beach2.jpeg
+        - assets/jungle.jpg
+        - assets/tiger.jpeg
+        - assets/river.jpg
+        - assets/sigiriya.jpg
+        - assets/travellers.jpg
+        - assets/elephant.jpg
+        - assets/fam.jpg
+        - assets/ella.jpg
+  #   - assets/a_dot_burr.jpeg
+  #   - assets/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

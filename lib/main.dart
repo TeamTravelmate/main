@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'UIs/screens/home/home_page.dart';
+import 'UIs/screens/profile/profile.dart';
 
-void main() {
-  runApp(MyApp());
+main(){
+  runApp(MyApptest());
 }
 
-class MyApp extends StatelessWidget {
+class MyApptest extends StatelessWidget{
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      //remove debug banner
-      debugShowCheckedModeBanner: false,
-      home: home(),
+  Widget build(BuildContext context){
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,        //remove the debug lable
+      home: Profile(),
     );
   }
 }
