@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:main/UIs/screens/friendList/friend_list.dart';
+import 'UIs/screens/home/home_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       //remove debug banner
       debugShowCheckedModeBanner: false,
-      home: FriendsList(),
+      home: home(),
     );
   }
 }
