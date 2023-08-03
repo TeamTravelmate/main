@@ -11,6 +11,7 @@ import 'customizeVehicles_page.dart';
 import 'customizeWeather_page.dart';
 import 'publicTripsAll_page.dart';
 import 'tripView_page.dart';
+import 'package:info_popup/info_popup.dart';
 
 // ignore: must_be_immutable
 class Plan extends StatelessWidget {
@@ -87,51 +88,281 @@ class CustomFacilities extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(height: 30),
-          const Row(
+          Row(
             children: [
-              Facility(
-                  widgetName: CustomizeDestination(),
-                  title: 'Destinations',
-                  icon: Icons.location_city_outlined),
-              SizedBox(width: 20),
-              Facility(
-                  widgetName: CustomizeWeather(),
-                  title: 'Weather',
-                  icon: Icons.cloud),
-              SizedBox(width: 30),
-              Facility(
-                  widgetName: CustomizeHotels(),
-                  title: 'Hotels',
-                  icon: Icons.hotel),
-              SizedBox(width: 30),
-              Facility(
-                  widgetName: CustomizeBudget(),
-                  title: 'Budget',
-                  icon: Icons.wallet),
+              InfoPopupWidget(
+                customContent: Container(
+                  decoration: BoxDecoration(
+                    color: ColorsTravelMate.tertiary,
+                    border: Border.all(
+                      color: ColorsTravelMate.primary,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    'Select places which you \nlike to visit around your \ndestination.',
+                    style: TextStyle(
+                      color: ColorsTravelMate.primary,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                arrowTheme: const InfoPopupArrowTheme(
+                  color: ColorsTravelMate.primary,
+                  arrowDirection: ArrowDirection.up,
+                ),
+                dismissTriggerBehavior: PopupDismissTriggerBehavior.onTapArea,
+                areaBackgroundColor: Colors.transparent,
+                indicatorOffset: Offset.zero,
+                contentOffset: Offset.zero,
+                child: const Facility(
+                    widgetName: CustomizeDestination(),
+                    title: 'Destinations',
+                    icon: Icons.location_city_outlined),
+              ),
+              const SizedBox(width: 20),
+              InfoPopupWidget(
+                customContent: Container(
+                  decoration: BoxDecoration(
+                    color: ColorsTravelMate.tertiary,
+                    border: Border.all(
+                      color: ColorsTravelMate.primary,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    'View the weather report \nbefore you plan the trip.',
+                    style: TextStyle(
+                      color: ColorsTravelMate.primary,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                arrowTheme: const InfoPopupArrowTheme(
+                  color: ColorsTravelMate.primary,
+                  arrowDirection: ArrowDirection.up,
+                ),
+                dismissTriggerBehavior: PopupDismissTriggerBehavior.onTapArea,
+                areaBackgroundColor: Colors.transparent,
+                indicatorOffset: Offset.zero,
+                contentOffset: Offset.zero,
+                child: const Facility(
+                    widgetName: CustomizeWeather(),
+                    title: 'Weather',
+                    icon: Icons.cloud),
+              ),
+              const SizedBox(width: 30),
+              InfoPopupWidget(
+                customContent: Container(
+                  decoration: BoxDecoration(
+                    color: ColorsTravelMate.tertiary,
+                    border: Border.all(
+                      color: ColorsTravelMate.primary,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    'Best choices for you to \nstay around your location \nas you prefer.',
+                    style: TextStyle(
+                      color: ColorsTravelMate.primary,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                arrowTheme: const InfoPopupArrowTheme(
+                  color: ColorsTravelMate.primary,
+                  arrowDirection: ArrowDirection.up,
+                ),
+                dismissTriggerBehavior: PopupDismissTriggerBehavior.onTapArea,
+                areaBackgroundColor: Colors.transparent,
+                indicatorOffset: Offset.zero,
+                contentOffset: Offset.zero,
+                child: const Facility(
+                    widgetName: CustomizeHotels(),
+                    title: 'Hotels',
+                    icon: Icons.hotel),
+              ),
+              const SizedBox(width: 30),
+              InfoPopupWidget(
+                customContent: Container(
+                  decoration: BoxDecoration(
+                    color: ColorsTravelMate.tertiary,
+                    border: Border.all(
+                      color: ColorsTravelMate.primary,
+                      style: BorderStyle.solid,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    'Set a budget, Split budget\n among the members,\n currency conversion.',
+                    style: TextStyle(
+                      color: ColorsTravelMate.primary,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                arrowTheme: const InfoPopupArrowTheme(
+                  color: ColorsTravelMate.primary,
+                  arrowDirection: ArrowDirection.up,
+                ),
+                dismissTriggerBehavior: PopupDismissTriggerBehavior.onTapArea,
+                areaBackgroundColor: Colors.transparent,
+                indicatorOffset: Offset.zero,
+                contentOffset: Offset.zero,
+                child: const Facility(
+                    widgetName: CustomizeBudget(),
+                    title: 'Budget',
+                    icon: Icons.wallet),
+              ),
             ],
           ),
           const SizedBox(height: 45),
-          const Row(
+          Row(
             children: [
-              Facility(
-                  widgetName: CustomizeVehicle(),
-                  title: 'Vehicles',
-                  icon: Icons.car_rental_outlined),
-              SizedBox(width: 30),
-              Facility(
-                  widgetName: CustomizeResturants(),
-                  title: 'Resturants',
-                  icon: Icons.restaurant_menu),
-              SizedBox(width: 30),
-              Facility(
-                  widgetName: CustomizeActivities(),
-                  title: 'Activities',
-                  icon: Icons.hiking),
-              SizedBox(width: 30),
-              Facility(
-                widgetName: CustomizeToDo(),
-                icon: Icons.list_alt_rounded,
-                title: 'To Do',
+              InfoPopupWidget(
+                customContent: Container(
+                  decoration: BoxDecoration(
+                    color: ColorsTravelMate.tertiary,
+                    border: Border.all(
+                      color: ColorsTravelMate.primary,
+                      style: BorderStyle.solid,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    'Select your preferable\n transport service now.\n No regrets later!',
+                    style: TextStyle(
+                      color: ColorsTravelMate.primary,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                arrowTheme: const InfoPopupArrowTheme(
+                  color: ColorsTravelMate.primary,
+                  arrowDirection: ArrowDirection.up,
+                ),
+                dismissTriggerBehavior: PopupDismissTriggerBehavior.onTapArea,
+                areaBackgroundColor: Colors.transparent,
+                indicatorOffset: Offset.zero,
+                contentOffset: Offset.zero,
+                child: Facility(
+                    widgetName: CustomizeVehicle(),
+                    title: 'Vehicles',
+                    icon: Icons.car_rental_outlined),
+              ),
+              const SizedBox(width: 30),
+              InfoPopupWidget(
+                customContent: Container(
+                  decoration: BoxDecoration(
+                    color: ColorsTravelMate.tertiary,
+                    border: Border.all(
+                      color: ColorsTravelMate.primary,
+                      style: BorderStyle.solid,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    'Veg or Non-veg? \nHere’s your choices! \nPick a resturant & \nEnjoy your meal!',
+                    style: TextStyle(
+                      color: ColorsTravelMate.primary,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                arrowTheme: const InfoPopupArrowTheme(
+                  color: ColorsTravelMate.primary,
+                  arrowDirection: ArrowDirection.up,
+                ),
+                dismissTriggerBehavior: PopupDismissTriggerBehavior.onTapArea,
+                areaBackgroundColor: Colors.transparent,
+                indicatorOffset: Offset.zero,
+                contentOffset: Offset.zero,
+                child: const Facility(
+                    widgetName: CustomizeResturants(),
+                    title: 'Resturants',
+                    icon: Icons.restaurant_menu),
+              ),
+
+              const SizedBox(width: 30),
+              InfoPopupWidget(
+                customContent: Container(
+                  decoration: BoxDecoration(
+                    color: ColorsTravelMate.tertiary,
+                    border: Border.all(
+                      color: ColorsTravelMate.primary,
+                      style: BorderStyle.solid,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    'Enjoy your trip with\nrecreational activities \naccording to your \ndestination.',
+                    style: TextStyle(
+                      color: ColorsTravelMate.primary,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                arrowTheme: const InfoPopupArrowTheme(
+                  color: ColorsTravelMate.primary,
+                  arrowDirection: ArrowDirection.up,
+                ),
+                dismissTriggerBehavior: PopupDismissTriggerBehavior.onTapArea,
+                areaBackgroundColor: Colors.transparent,
+                indicatorOffset: Offset.zero,
+                contentOffset: Offset.zero,
+                child: const Facility(
+                    widgetName: CustomizeActivities(),
+                    title: 'Activities',
+                    icon: Icons.hiking),
+              ),
+              const SizedBox(width: 30),
+              InfoPopupWidget(
+                customContent: Container(
+                  decoration: BoxDecoration(
+                    color: ColorsTravelMate.tertiary,
+                    border: Border.all(
+                      color: ColorsTravelMate.primary,
+                      style: BorderStyle.solid,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    'View trip essentials \nchecklist or Add reminders \nat your own need.',
+                    style: TextStyle(
+                      color: ColorsTravelMate.primary,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                arrowTheme: const InfoPopupArrowTheme(
+                  color: ColorsTravelMate.primary,
+                  arrowDirection: ArrowDirection.up,
+                ),
+                dismissTriggerBehavior: PopupDismissTriggerBehavior.onTapArea,
+                areaBackgroundColor: Colors.transparent,
+                indicatorOffset: Offset.zero,
+                contentOffset: Offset.zero,
+                child: const Facility(
+                  widgetName: CustomizeToDo(),
+                  icon: Icons.list_alt_rounded,
+                  title: 'To Do',
+                ),
               ),
             ],
           ),
@@ -176,7 +407,9 @@ class CustomFacilities extends StatelessWidget {
           ),
           const SizedBox(height: 140),
           buttonWidget(
-              width: double.infinity, labelText: 'Create my plan', path: joinedTripView()),
+              width: double.infinity,
+              labelText: 'Create my plan',
+              path: joinedTripView()),
         ],
       ),
     );
@@ -216,7 +449,10 @@ class Facility extends StatelessWidget {
           padding: EdgeInsets.only(top: 5),
         ),
         Text(title,
-            style: const TextStyle(fontSize: 12, color: ColorsTravelMate.primary, fontWeight: FontWeight.bold)),
+            style: const TextStyle(
+                fontSize: 12,
+                color: ColorsTravelMate.primary,
+                fontWeight: FontWeight.bold)),
       ],
     );
   }
