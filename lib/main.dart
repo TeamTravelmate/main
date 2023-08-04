@@ -1,17 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:main/UIs/screens/friendList/friend_list.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:main/UIs/screens/Registration/NameInputScreen.dart';
+import 'package:main/UIs/screens/Welcome/welcome.dart';
+import 'package:main/UIs/screens/Welcome/welcome_screen_2.dart';
+import 'package:main/UIs/screens/Welcome/welcome_screen_3.dart';
+import 'package:main/UIs/screens/login/login_page.dart';
+import 'UIs/screens/Welcome/welcome_screen_1.dart';
 
+
+// Main function
 void main() {
-  runApp(MyApp());
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.dark,
+  ));
+
+  runApp(const MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      //remove debug banner
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FriendsList(),
+      theme: ThemeData(
+        fontFamily: GoogleFonts.poppins().fontFamily,
+        primarySwatch: Colors.blueGrey,
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      home: const Welcome(),
     );
   }
+  
 }
