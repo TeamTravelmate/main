@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/registration/getting_started.dart';
 // import 'gender.dart';
 
 class Password extends StatelessWidget {
@@ -106,7 +107,7 @@ class Password extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Password(),
+                                  builder: (context) => const Getting_Started(),
                                 ),
                               );
                             },

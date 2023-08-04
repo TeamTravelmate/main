@@ -1,11 +1,16 @@
-// ignore_for_file: unnecessary_const
-
 import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/registration/username.dart';
 import 'birthday.dart'; // Import the birthday.dart file
 
-class Gender extends StatelessWidget {
-  const Gender({Key? key});
+class Gender extends StatefulWidget {
+  Gender({Key? key}) : super(key: key);
+
+  @override
+  _GenderState createState() => _GenderState();
+}
+
+class _GenderState extends State<Gender> {
+  String? selectedGender;
 
   @override
   Widget build(BuildContext context) {
@@ -61,20 +66,65 @@ class Gender extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 30),
-                        TextField(
-                          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Color(0xffffffff),
-                            hintText: 'Gender',
-                            hintStyle: TextStyle(color: Colors.black),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                        ),
                         SizedBox(height: 20),
                       ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      ),
+                      child: Container(
+                        color: Colors.white, // White background
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: RadioListTile(
+                                title: Text('Female'),
+                                value: 'female',
+                                groupValue: selectedGender,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedGender = value;
+                                  });
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: RadioListTile(
+                                title: Text('Male'),
+                                value: 'male',
+                                groupValue: selectedGender,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedGender = value;
+                                  });
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: RadioListTile(
+                                title: Text('Other'),
+                                value: 'other',
+                                groupValue: selectedGender,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedGender = value;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 90),
