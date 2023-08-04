@@ -10,7 +10,6 @@ import 'package:main/UIs/widgets/bottom_nav.dart';
 import 'package:main/UIs/screens/profile/profile.dart';
 import 'UIs/screens/Welcome/welcome_screen_1.dart';
 
-
 // Main function
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -21,7 +20,6 @@ void main() {
 
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -35,8 +33,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: Profile(),
+      home: const BottomNav(),
     );
   }
-  
 }
