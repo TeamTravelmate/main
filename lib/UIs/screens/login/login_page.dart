@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:main/UIs/screens/login/forgotPassword_page.dart';
 import 'package:main/UIs/themes/colors.dart';
 import 'package:main/UIs/widgets/bottom_nav.dart';
 import 'package:http/http.dart' as http;
@@ -175,7 +176,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
                         onTap: () {
-                          // Add your "Forgot Password?" functionality here
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ForgotPassword()));
                         },
                         child: const Text(
                           "Forgot Password?",

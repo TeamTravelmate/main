@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:main/UIs/screens/Chat/chat_page.dart';
 import 'package:main/UIs/screens/Marketplace/marketplace_page.dart';
-import 'package:main/UIs/screens/Trip%20Planning/trip_planning.dart';
-import 'package:main/UIs/screens/Trip/tripPlanning2_page.dart';
 import 'package:main/UIs/screens/Trip/tripPlanning_page.dart';
 import 'package:main/UIs/screens/friendList/friend_list.dart';
 import 'package:main/UIs/screens/home/home_page.dart';
+import 'package:main/UIs/screens/search/search_page.dart';
 
 
 class BottomNav extends StatefulWidget {
@@ -18,7 +16,7 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   List pages = [
     const home(),
-    const home(),
+    const SearchPlace(),
     trip(),
     const MarketplacePage(),
     const FriendsList(),
