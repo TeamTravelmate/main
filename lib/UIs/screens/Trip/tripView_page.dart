@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-
 import '../../themes/colors.dart';
 import '../../widgets/tripCard_widget.dart';
 
@@ -135,20 +134,30 @@ class _OverviewState extends State<Overview> {
           AlertDialog(
             backgroundColor: Colors.grey[300],
             title: const Row(
-              children: [ 
-                Icon(Icons.warning_amber_rounded, color: Colors.red, size: 30,),
-                SizedBox(width: 6,),
+              children: [
+                Icon(
+                  Icons.warning_amber_rounded,
+                  color: Colors.red,
+                  size: 30,
+                ),
+                SizedBox(
+                  width: 6,
+                ),
                 Text(
                   "We need more water bottles.\nMake sure to bring at least 1L\nwith you.",
                   style: TextStyle(fontSize: 12),
                 ),
               ],
-            ), 
+            ),
             content: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset('assets/profile.png', width: 20, height: 20,),
-                const Text('Kumara Gamage',style: TextStyle(fontSize: 11)),
+                Image.asset(
+                  'assets/profile.png',
+                  width: 20,
+                  height: 20,
+                ),
+                const Text('Kumara Gamage', style: TextStyle(fontSize: 11)),
                 const Text('2:30 PM', style: TextStyle(fontSize: 11)),
                 const Text('today', style: TextStyle(fontSize: 11)),
               ],
@@ -182,14 +191,22 @@ class _IterinaryState extends State<Iterinary> {
               ),
               Text(
                 " (July 3, 2023)",
-                style: TextStyle(fontSize: 14,),
+                style: TextStyle(
+                  fontSize: 14,
+                ),
               ),
               Spacer(),
-              Icon(Icons.beach_access, color: ColorsTravelMate.secundary, size: 20,),
+              Icon(
+                Icons.beach_access,
+                color: ColorsTravelMate.secundary,
+                size: 20,
+              ),
               Text(' Unawatuna Beach', style: TextStyle(fontSize: 14)),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
@@ -198,14 +215,22 @@ class _IterinaryState extends State<Iterinary> {
               ),
               Text(
                 " (July 4, 2023)",
-                style: TextStyle(fontSize: 14,),
+                style: TextStyle(
+                  fontSize: 14,
+                ),
               ),
               Spacer(),
-              Icon(Icons.hiking, color: ColorsTravelMate.secundary, size: 20,),
+              Icon(
+                Icons.hiking,
+                color: ColorsTravelMate.secundary,
+                size: 20,
+              ),
               Text(' Hanthana Mountain', style: TextStyle(fontSize: 14)),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Text(
@@ -214,10 +239,16 @@ class _IterinaryState extends State<Iterinary> {
               ),
               Text(
                 " (July 5, 2023)",
-                style: TextStyle(fontSize: 14,),
+                style: TextStyle(
+                  fontSize: 14,
+                ),
               ),
               Spacer(),
-              Icon(Icons.directions_boat, color: ColorsTravelMate.secundary, size: 20,),
+              Icon(
+                Icons.directions_boat,
+                color: ColorsTravelMate.secundary,
+                size: 20,
+              ),
               Text(' Kandy Lake', style: TextStyle(fontSize: 14)),
             ],
           ),
@@ -246,12 +277,16 @@ class _BudgetState extends State<Budget> {
             title: const Text(
               "Approved expenses for this trip will be added here.",
               style: TextStyle(fontSize: 12),
-            ), 
+            ),
             content: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset('assets/profile.png', width: 20, height: 20,),
-                const Text('Kumara Gamage',style: TextStyle(fontSize: 11)),
+                Image.asset(
+                  'assets/profile.png',
+                  width: 20,
+                  height: 20,
+                ),
+                const Text('Kumara Gamage', style: TextStyle(fontSize: 11)),
                 const Text('2:30 PM', style: TextStyle(fontSize: 11)),
                 const Text('today', style: TextStyle(fontSize: 11)),
               ],
@@ -273,12 +308,117 @@ class Explore extends StatefulWidget {
 class _ExploreState extends State<Explore> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Container(
-      child: Text(
-        "Explore",
-        style: TextStyle(fontSize: 24),
-      ),
-    ));
+    return const Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Card(
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(  
+                    children: [
+                      Icon(
+                        Icons.hotel,
+                        color: ColorsTravelMate.secundary,
+                        size: 30,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Hotels',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: ColorsTravelMate.secundary,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: ColorsTravelMate.secundary,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Card(
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(  
+                    children: [
+                      Icon(
+                        Icons.restaurant,
+                        color: ColorsTravelMate.secundary,
+                        size: 30,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Resturants',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: ColorsTravelMate.secundary,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: ColorsTravelMate.secundary,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Card(
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(  
+                    children: [
+                      Icon(
+                        Icons.local_activity,
+                        color: ColorsTravelMate.secundary,
+                        size: 30,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Activities',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: ColorsTravelMate.secundary,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: ColorsTravelMate.secundary,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

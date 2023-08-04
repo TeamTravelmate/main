@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import '../../themes/colors.dart';
 import '../../widgets/feed_widget.dart';
 import '../../widgets/popular_widget.dart';
-import '../Trip/publicTrip_page.dart';
 import '../Trip/tripPlanning_page.dart';
 import 'popularPlaces_page.dart';
 
+// ignore: camel_case_types
 class home extends StatelessWidget {
   const home({super.key});
 
@@ -153,6 +153,9 @@ class home extends StatelessWidget {
                   imagePath: 'assets/post.png',
                   likes: '100',
                   comments: '12',
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 const feedCard(
                   profile: 'assets/profile.png',
