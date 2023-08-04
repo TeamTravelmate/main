@@ -1,16 +1,40 @@
 import 'package:flutter/material.dart';
-import 'UIs/screens/profile/profile.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:main/UIs/screens/Registration/NameInputScreen.dart';
+import 'package:main/UIs/screens/Welcome/welcome.dart';
+import 'package:main/UIs/screens/Welcome/welcome_screen_2.dart';
+import 'package:main/UIs/screens/Welcome/welcome_screen_3.dart';
+import 'package:main/UIs/screens/login/login_page.dart';
+import 'UIs/screens/Welcome/welcome_screen_1.dart';
 
-main(){
-  runApp(MyApptest());
+
+// Main function
+void main() {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.dark,
+  ));
+
+  runApp(const MyApp());
 }
 
-class MyApptest extends StatelessWidget{
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,        //remove the debug lable
-      home: Profile(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: GoogleFonts.poppins().fontFamily,
+        primarySwatch: Colors.blueGrey,
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      home: const Welcome(),
     );
   }
+  
 }

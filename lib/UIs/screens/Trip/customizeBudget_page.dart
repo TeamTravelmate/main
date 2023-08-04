@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../themes/colors.dart';
 import '../../widgets/inputField_widget.dart';
+import 'package:info_popup/info_popup.dart';
 
 class CustomizeBudget extends StatelessWidget {
   const CustomizeBudget({super.key});
@@ -390,7 +391,35 @@ class CustomizeBudget extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  FloatingActionButton(
+                  InfoPopupWidget(
+                customContent: Container(
+                  decoration: BoxDecoration(
+                    color: ColorsTravelMate.tertiary,
+                    border: Border.all(
+                      color: ColorsTravelMate.primary,
+                      style: BorderStyle.solid,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    'View & share the budget \nwith your trip mates by \ncategory or day by day \nexpenses.',
+                    style: TextStyle(
+                      color: ColorsTravelMate.primary,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                arrowTheme: const InfoPopupArrowTheme(
+                  color: ColorsTravelMate.primary,
+                  arrowDirection: ArrowDirection.up,
+                ),
+                dismissTriggerBehavior: PopupDismissTriggerBehavior.onTapArea,
+                areaBackgroundColor: Colors.transparent,
+                indicatorOffset: Offset.zero,
+                contentOffset: Offset.zero,
+                child: FloatingActionButton(
                     onPressed: () {
                       showModalBottomSheet(
                         context: context,
@@ -462,6 +491,7 @@ class CustomizeBudget extends StatelessWidget {
                     foregroundColor: ColorsTravelMate.tertiary,
                     child: const Icon(Icons.bar_chart_outlined),
                   ),
+              ),  
                 ],
               ),
             )
