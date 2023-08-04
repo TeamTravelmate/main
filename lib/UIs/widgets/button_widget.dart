@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:main/UIs/themes/colors.dart';
 import 'package:main/UIs/widgets/text_custom.dart';
 
+// ignore: camel_case_types
 class buttonWidget extends StatelessWidget {
   const buttonWidget({
     super.key,
@@ -9,7 +10,7 @@ class buttonWidget extends StatelessWidget {
     this.onPressed,
     this.height = 50,
     this.border = 8.0,
-    this.fontSize = 20,
+    this.fontSize = 16,
     this.backgroundColor = ColorsTravelMate.primary,
     this.textColor = ColorsTravelMate.tertiary,
     required this.labelText,
