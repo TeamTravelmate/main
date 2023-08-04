@@ -75,7 +75,7 @@ class Contacts extends StatelessWidget {
                     return ContactCard(
                       name: 'Aruni Shanthini', // Replace with contact name
                       imagePath:
-                          'images/circle-woman.png', // Replace with contact image path
+                          'assets/img/water.png', // Replace with contact image path
                       phoneNumber:
                           '123456789', // Replace with contact phone number
                     );
@@ -134,7 +134,7 @@ class ContactCard extends StatelessWidget {
           SizedBox(width: 60),
           IconButton(
             icon: Image.asset(
-              'images/phone.png',
+              'assets/img/phone.png',
               width: 20,
               height: 20,
             ),
@@ -145,7 +145,7 @@ class ContactCard extends StatelessWidget {
           ),
           IconButton(
             icon: Image.asset(
-              'images/comment.png',
+              'assets/img/comment.png',
               width: 20,
               height: 20,
             ),

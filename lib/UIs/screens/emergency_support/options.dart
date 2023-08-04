@@ -112,7 +112,7 @@ class Options extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Image.asset(
-                        'images/megaphone.png',
+                        'assets/img/megaphone.png',
                         width: 50,
                         height: 50,
                       ),
@@ -153,7 +153,7 @@ class Options extends StatelessWidget {
               //       children: [
               //         // Icon(Icons.phone),
               //         Image.asset(
-              //           'images/phone-call.png',
+              //           'assets/img/phone-call.png',
               //           width: 50,
               //           height: 50,
               //         ),

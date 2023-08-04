@@ -57,7 +57,7 @@ class SOS_Confirmed extends StatelessWidget {
                 ),
                 SizedBox(height: 50),
                 Image.asset(
-                  'images/water.png',
+                  'assets/img/water.png',
                   width: 200,
                   height: 200,
                 ),
