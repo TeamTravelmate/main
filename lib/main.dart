@@ -6,6 +6,8 @@ import 'package:main/UIs/screens/Welcome/welcome.dart';
 import 'package:main/UIs/screens/Welcome/welcome_screen_2.dart';
 import 'package:main/UIs/screens/Welcome/welcome_screen_3.dart';
 import 'package:main/UIs/screens/login/login_page.dart';
+import 'package:main/UIs/widgets/bottom_nav.dart';
+import 'package:main/UIs/screens/profile/profile.dart';
 import 'UIs/screens/Welcome/welcome_screen_1.dart';
 
 
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const Welcome(),
+      home: Profile(),
     );
   }
   

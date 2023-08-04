@@ -24,7 +24,7 @@ class NewPost extends StatelessWidget {
                 CircleAvatar(
                   radius: 30.0,
                   backgroundColor: Colors.grey[200],
-                  backgroundImage: AssetImage('assets/13.jpg'),
+                  backgroundImage: AssetImage('assets/profile_pic.jpeg'),
                 ),
                 SizedBox(width: 8.0),
                 Text(
