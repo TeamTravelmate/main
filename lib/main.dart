@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'UIs/screens/home/home_page.dart';
+import 'UIs/screens/search/search_page.dart';
 
 void main() {
   runApp(MyApp());

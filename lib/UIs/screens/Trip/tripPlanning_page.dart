@@ -39,7 +39,7 @@ class trip extends StatelessWidget {
           backgroundColor: ColorsTravelMate.tertiary,
           foregroundColor: ColorsTravelMate.primary,
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(15),
+            preferredSize: const Size.fromHeight(5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
