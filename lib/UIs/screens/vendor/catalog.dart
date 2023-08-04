@@ -151,7 +151,7 @@ class Catalog extends StatelessWidget{
                                     left: 60.0,
                                   ),
                                   child: Image(
-                                    image: AssetImage('images/cart.png'),
+                                    image: AssetImage('assets/img/cart.png'),
                                   ),
                                 ),
                               ],
@@ -248,7 +248,7 @@ class Catalog extends StatelessWidget{
                                     left: 60.0,
                                   ),
                                   child: Image(
-                                    image: AssetImage('images/cart.png'),
+                                    image: AssetImage('assets/img/cart.png'),
                                   ),
                                 ),
                               ],
@@ -349,7 +349,7 @@ class Catalog extends StatelessWidget{
                                     left: 60.0,
                                   ),
                                   child: Image(
-                                    image: AssetImage('images/cart.png'),
+                                    image: AssetImage('assets/img/cart.png'),
                                   ),
                                 ),
                               ],
@@ -446,7 +446,7 @@ class Catalog extends StatelessWidget{
                                     left: 60.0,
                                   ),
                                   child: Image(
-                                    image: AssetImage('images/cart.png'),
+                                    image: AssetImage('assets/img/cart.png'),
                                   ),
                                 ),
                               ],
@@ -547,7 +547,7 @@ class Catalog extends StatelessWidget{
                                     left: 60.0,
                                   ),
                                   child: Image(
-                                    image: AssetImage('images/cart.png'),
+                                    image: AssetImage('assets/img/cart.png'),
                                   ),
                                 ),
                               ],
@@ -644,7 +644,7 @@ class Catalog extends StatelessWidget{
                                     left: 60.0,
                                   ),
                                   child: Image(
-                                    image: AssetImage('images/cart.png'),
+                                    image: AssetImage('assets/img/cart.png'),
                                   ),
                                 ),
                               ],

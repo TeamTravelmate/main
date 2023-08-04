@@ -4,6 +4,7 @@ import 'package:main/UIs/screens/Trip/tripPlanning_page.dart';
 import 'package:main/UIs/screens/friendList/friend_list.dart';
 import 'package:main/UIs/screens/home/home_page.dart';
 import 'package:main/UIs/screens/search/search_page.dart';
+import 'package:main/UIs/screens/vendor/home_page.dart';
 
 
 class BottomNav extends StatefulWidget {
@@ -18,7 +19,7 @@ class _BottomNavState extends State<BottomNav> {
     const home(),
     const SearchPlace(),
     trip(),
-    const MarketplacePage(),
+    const HomePage(),
     const FriendsList(),
   ];
 
