@@ -1,4 +1,4 @@
-import 'package:main/UIs/widgets/textCustom.dart';
+import 'package:main/UIs/widgets/text_custom.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';

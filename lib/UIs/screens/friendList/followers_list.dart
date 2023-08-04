@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:main/Domain/models/user.dart';
 import 'package:main/UIs/widgets/list_tile.dart';
-import 'package:main/UIs/widgets/textCustom.dart';
+import 'package:main/UIs/widgets/text_custom.dart';
 
 class FollowersList extends StatefulWidget {
   const FollowersList({super.key});
