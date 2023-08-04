@@ -3,6 +3,9 @@ import 'package:main/UIs/screens/Chat/chat_page.dart';
 import 'package:main/UIs/screens/Marketplace/marketplace_page.dart';
 import 'package:main/UIs/screens/Search/search_page.dart';
 import 'package:main/UIs/screens/Trip%20Planning/trip_planning.dart';
+import 'package:main/UIs/screens/Trip/tripPlanning2_page.dart';
+import 'package:main/UIs/screens/Trip/tripPlanning_page.dart';
+import 'package:main/UIs/screens/friendList/friend_list.dart';
 import 'package:main/UIs/screens/home/home_page.dart';
 
 
@@ -15,11 +18,11 @@ class BottomNav extends StatefulWidget {
 
 class _BottomNavState extends State<BottomNav> {
   List pages = [
-    const HomePage(),
-    const SearchPage(),
-    const TripPlanningPage(),
+    const home(),
+    const SearchPlace(),
+    trip(),
     const MarketplacePage(),
-    const ChatPage(),
+    const FriendsList(),
   ];
 
   int currIndex = 0;

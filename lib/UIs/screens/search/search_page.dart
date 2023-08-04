@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:main/UIs/themes/colors.dart';
-import 'package:main/UIs/widgets/textCustom.dart';
+import 'package:main/UIs/widgets/text_custom.dart';
 
 class SearchPlace extends StatelessWidget {
   const SearchPlace({super.key});
