@@ -3,20 +3,44 @@ import '../themes/colors.dart';
 
 // ignore: camel_case_types
 class tripCard extends StatelessWidget {
-  const tripCard({super.key,
-  required this.tripLocationTitle,
-  required this.location,
-  required this.tripDuration,
-  required this.tripmates,
+  const tripCard({
+    super.key,
+    required this.tripLocationTitle,
+    required this.location,
+    required this.tripDuration,
+    required this.tripmates,
+    this.isMap = false,
+  });
+  //another constructor for the map button
+  const tripCard.map({
+    super.key,
+    required this.tripLocationTitle,
+    required this.location,
+    required this.tripDuration,
+    required this.tripmates,
+    this.isMap = true,
   });
 
   final String tripLocationTitle;
   final String location;
   final String tripDuration;
   final String tripmates;
+  final bool isMap;
 
   @override
   Widget build(BuildContext context) {
+    var mapBtn = Padding(
+      padding: const EdgeInsets.only(bottom: 40.0),
+      child: FloatingActionButton.small(
+          onPressed: () {},
+          backgroundColor: ColorsTravelMate.tertiary,
+          shape: const CircleBorder(
+              side: BorderSide(color: ColorsTravelMate.primary)),
+          child: const Icon(
+            Icons.map_outlined,
+            color: ColorsTravelMate.primary,
+          )),
+    );
     return Card(
       child: SizedBox(
         height: 150,
@@ -60,9 +84,12 @@ class tripCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Icon(
-                        Icons.location_on_rounded,
-                        color: ColorsTravelMate.primary,
+                      Padding(
+                        padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 60),
+                        child: const Icon(
+                          Icons.location_on_rounded,
+                          color: ColorsTravelMate.primary,
+                        ),
                       ),
                       Text(
                         location,
@@ -72,9 +99,12 @@ class tripCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      const Icon(
-                        Icons.calendar_month,
-                        color: ColorsTravelMate.primary,
+                      Padding(
+                        padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 60),
+                        child: const Icon(
+                          Icons.calendar_month,
+                          color: ColorsTravelMate.primary,
+                        ),
                       ),
                       Text(
                         tripDuration,
@@ -84,14 +114,20 @@ class tripCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      const Icon(
-                        Icons.supervised_user_circle_sharp,
-                        color: ColorsTravelMate.primary,
+                      Padding(
+                        padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 60),
+                        child: const Icon(
+                          Icons.supervised_user_circle_sharp,
+                          color: ColorsTravelMate.primary,
+                        ),
                       ),
-                      Image.asset(
-                        'assets/profile.png',
-                        width: 20,
-                        height: 20,
+                      Padding(
+                        padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 60),
+                        child: Image.asset(
+                          'assets/profile.png',
+                          width: 20,
+                          height: 20,
+                        ),
                       ),
                       Text(
                         tripmates,
@@ -101,18 +137,7 @@ class tripCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 40.0),
-                child: FloatingActionButton.small(
-                    onPressed: () {},
-                    backgroundColor: ColorsTravelMate.tertiary,
-                    shape: const CircleBorder(
-                        side: BorderSide(color: ColorsTravelMate.primary)),
-                    child: const Icon(
-                      Icons.map_outlined,
-                      color: ColorsTravelMate.primary,
-                    )),
-              )
+              !isMap ? mapBtn : Container(),
             ],
           ),
         ),
