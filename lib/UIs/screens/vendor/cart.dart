@@ -1,9 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/vendor/checkout.dart';
-// import 'package:main/UIs/screens/widgets/bottom_nav.dart';
 
-class Cart extends StatelessWidget {
-  const Cart({super.key});
+class Cart extends StatefulWidget {
+  @override
+  State<Cart> createState() => CartState();
+}
+
+class CartState extends State<Cart>{
+  int _counter1 = 0;
+  int _counter2 = 0;
+  void _incrementCounter1() {
+    setState(() {
+      _counter1++;
+    });
+  }
+  void _decrementCounter1() {
+    setState(() {
+      _counter1--;
+    });
+  }
+  void _incrementCounter2() {
+    setState(() {
+      _counter2++;
+    });
+  }
+  void _decrementCounter2() {
+    setState(() {
+      _counter2--;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,35 +150,90 @@ class Cart extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 50.0,
-                              height: 10.0,
-                              margin: EdgeInsets.only(
-                                  right: 20.0,
-                                  left: 2.0
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: 10,
+                              left: 5
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                // width: 50.0,
+                                // height: 10.0,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Container(
+                                        width: 30,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50),
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.2), // Set the shadow color with some opacity
+                                              spreadRadius: 2, // Set the spread radius of the shadow
+                                              blurRadius: 4, // Set the blur radius of the shadow
+                                              offset: Offset(2, 2), // Set the offset of the shadow
+                                            ),
+                                          ],
+                                        ),
+                                        child: IconButton(
+                                          icon: Icon(
+                                            Icons.remove,
+                                            color: Colors.grey,
+                                          ),
+                                          onPressed: _decrementCounter1,
+                                        ),
+                                      ),
+                                      SizedBox(width: 8,),
+                                      Text(
+                                        '$_counter1',
+                                        style: TextStyle(fontSize: 18.0),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(width: 8,),
+                                      Container(
+                                        width: 30,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50),
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.2), // Set the shadow color with some opacity
+                                              spreadRadius: 2, // Set the spread radius of the shadow
+                                              blurRadius: 2,
+                                              offset: Offset(2, 2),
+                                            ),
+                                          ],
+                                        ),
+                                        child: IconButton(
+                                          icon: Icon(
+                                            Icons.add,
+                                            color: Colors.grey,
+                                          ),
+                                          alignment: Alignment.center,
+                                          onPressed: _incrementCounter1,
+                                        ),
+                                      ),
+                                    ],
+                                  )
                               ),
-
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/img/cart.png'),
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left: 40.0
                                 ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                  left: 50.0
-                              ),
-                              child: Text(
-                                'Rs. 300',
-                                style: TextStyle(
-                                    fontSize: 20.0
+                                child: Text(
+                                  'Rs. 300',
+                                  style: TextStyle(
+                                      fontSize: 20.0
+                                  ),
                                 ),
-                              ),
-                            )
-                          ],
+                              )
+                            ],
+                          ),
                         )
                       ],
                     )
@@ -247,35 +327,90 @@ class Cart extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 50.0,
-                              height: 10.0,
-                              margin: EdgeInsets.only(
-                                  right: 20.0,
-                                  left: 2.0
+                        Container(
+                          margin: EdgeInsets.only(
+                            top: 10,
+                            left: 5,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                // width: 50.0,
+                                // height: 10.0,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Container(
+                                        width: 30,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50),
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.2), // Set the shadow color with some opacity
+                                              spreadRadius: 2, // Set the spread radius of the shadow
+                                              blurRadius: 4, // Set the blur radius of the shadow
+                                              offset: Offset(2, 2), // Set the offset of the shadow
+                                            ),
+                                          ],
+                                        ),
+                                        child: IconButton(
+                                          icon: Icon(
+                                            Icons.remove,
+                                            color: Colors.grey,
+                                          ),
+                                          onPressed: _decrementCounter2,
+                                        ),
+                                      ),
+                                      SizedBox(width: 8,),
+                                      Text(
+                                        '$_counter2',
+                                        style: TextStyle(fontSize: 18.0),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(width: 8,),
+                                      Container(
+                                        width: 30,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50),
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.2), // Set the shadow color with some opacity
+                                              spreadRadius: 2, // Set the spread radius of the shadow
+                                              blurRadius: 2,
+                                              offset: Offset(2, 2),
+                                            ),
+                                          ],
+                                        ),
+                                        child: IconButton(
+                                          icon: Icon(
+                                            Icons.add,
+                                            color: Colors.grey,
+                                          ),
+                                          alignment: Alignment.center,
+                                          onPressed: _incrementCounter2,
+                                        ),
+                                      ),
+                                    ],
+                                  )
                               ),
-
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/img/cart.png'),
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left: 40.0
                                 ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                  left: 50.0
-                              ),
-                              child: Text(
-                                'Rs. 100',
-                                style: TextStyle(
-                                    fontSize: 20.0
+                                child: Text(
+                                  'Rs. 100',
+                                  style: TextStyle(
+                                      fontSize: 20.0
+                                  ),
                                 ),
-                              ),
-                            )
-                          ],
+                              )
+                            ],
+                          ),
                         )
                       ],
                     )

@@ -1,8 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/vendor/cart.dart';
 
-class Product extends StatelessWidget{
-  const Product({super.key});
+
+class Product extends StatefulWidget {
+  @override
+  State<Product> createState() => ProductState();
+}
+
+class ProductState extends State<Product>{
+  int _counter1 = 0;
+  int _counter2 = 0;
+  void _incrementCounter1() {
+    setState(() {
+      _counter1++;
+    });
+  }
+  void _decrementCounter1() {
+    setState(() {
+      _counter1--;
+    });
+  }
+  void _incrementCounter2() {
+    setState(() {
+      _counter2++;
+    });
+  }
+  void _decrementCounter2() {
+    setState(() {
+      _counter2--;
+    });
+  }
 
   @override
   Widget build(BuildContext context){
@@ -197,7 +224,8 @@ class Product extends StatelessWidget{
             Container(
               margin: EdgeInsets.only(
                   left: 20.0,
-                  right: 20.0
+                  right: 20.0,
+                  bottom: 5
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -210,8 +238,60 @@ class Product extends StatelessWidget{
                     ),
                   ),
                   Container(
-                    child: Image(
-                      image: AssetImage('assets/img/Counter.png'),
+                    margin: EdgeInsets.only(
+                      top: 10,
+                      left: 5,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          // width: 50.0,
+                            height: 40.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey.shade300,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.remove,
+                                    color: Colors.black,
+                                  ),
+                                  onPressed: _decrementCounter2,
+                                ),
+                                SizedBox(width: 8,),
+                                Container(
+                                  width: 38,
+                                  height: 39,
+                                  padding: EdgeInsets.only(
+                                      top: 8
+                                  ),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                                      color: Colors.white
+                                  ),
+                                  child: Text(
+                                    '$_counter2',
+                                    style: TextStyle(fontSize: 20.0),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                SizedBox(width: 8,),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.add,
+                                    color: Colors.black,
+                                  ),
+                                  alignment: Alignment.center,
+                                  onPressed: _incrementCounter2,
+                                ),
+                              ],
+                            )
+                        ),
+                      ],
                     ),
                   )
                 ],
@@ -260,7 +340,7 @@ class Product extends StatelessWidget{
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Cart())
+                                  builder: (context) =>  Cart())
                           );
                         },
                         style: ElevatedButton.styleFrom(
@@ -282,9 +362,14 @@ class Product extends StatelessWidget{
 
                             Container(
                               margin: EdgeInsets.only(
-                                  right: 30.0
+                                  right: 26.0
                               ),
-                              child: Text('Add to cart'),
+                              child: Text(
+                                'Add to cart',
+                                style: TextStyle(
+                                    fontSize: 20
+                                ),
+                              ),
                             )
 
                           ],

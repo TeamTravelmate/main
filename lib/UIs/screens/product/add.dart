@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/product/update.dart';
 
-class Add extends StatelessWidget {
-  const Add({super.key});
+class Add extends StatefulWidget {
+  @override
+  AddState createState() => AddState();
+}
+class AddState extends State<Add> {
 
   get selectedOption => null;
+  bool _isChecked = false;
+  bool isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +44,7 @@ class Add extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.only(
-                    left:40.0,
+                    left: 40.0,
                     right: 40.0,
                     bottom: 2.0,
                     top: 15.0
@@ -81,7 +86,7 @@ class Add extends StatelessWidget {
 
               Container(
                 margin: EdgeInsets.only(
-                  left:40.0,
+                  left: 40.0,
                   right: 40.0,
                   bottom: 2.0,
                 ),
@@ -137,7 +142,7 @@ class Add extends StatelessWidget {
 
               Container(
                 margin: EdgeInsets.only(
-                  left:40.0,
+                  left: 40.0,
                   right: 40.0,
                   bottom: 2.0,
                 ),
@@ -178,7 +183,7 @@ class Add extends StatelessWidget {
 
               Container(
                 margin: EdgeInsets.only(
-                  left:40.0,
+                  left: 40.0,
                   right: 40.0,
                   bottom: 2.0,
                 ),
@@ -234,7 +239,7 @@ class Add extends StatelessWidget {
 
               Container(
                 margin: EdgeInsets.only(
-                  left:40.0,
+                  left: 40.0,
                   right: 40.0,
                   bottom: 2.0,
                 ),
@@ -275,7 +280,7 @@ class Add extends StatelessWidget {
 
               Container(
                 margin: EdgeInsets.only(
-                  left:40.0,
+                  left: 40.0,
                   right: 40.0,
                   bottom: 2.0,
                 ),
@@ -316,7 +321,7 @@ class Add extends StatelessWidget {
 
               Container(
                 margin: EdgeInsets.only(
-                  left:40.0,
+                  left: 40.0,
                   right: 40.0,
                   bottom: 2.0,
                 ),
@@ -379,8 +384,17 @@ class Add extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.check_box_outline_blank),
-                    SizedBox(width: 5.0,),
+                    Checkbox(
+                      activeColor: Color(0xFF0C1C33),
+                      value: _isChecked,
+                      // This determines the state of the checkbox
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          _isChecked = newValue ??
+                              false; // Update the state of the checkbox when it's clicked
+                        });
+                      },
+                    ),
                     Text(
                       'I agree to the ',
                       style: TextStyle(
@@ -408,14 +422,15 @@ class Add extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Update())
+                              builder: (context) => Update())
                       );
                     },
                     style: ElevatedButton.styleFrom(
                       onPrimary: Colors.white,
                       primary: Color(0xff0C1C33),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5), // Adjust the radius here
+                        borderRadius: BorderRadius.circular(
+                            5), // Adjust the radius here
                       ),
                     ),
                     child: Row(
@@ -444,5 +459,5 @@ class Add extends StatelessWidget {
     );
   }
 
-  void setState(Null Function() param0) {}
+// void setState(Null Function() param0) {}
 }

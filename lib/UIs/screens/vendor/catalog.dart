@@ -105,7 +105,7 @@ class Catalog extends StatelessWidget{
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const Product()));
+                                        builder: (context) =>  Product()));
                               },
                             ),
 
@@ -202,7 +202,7 @@ class Catalog extends StatelessWidget{
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const Product()));
+                                        builder: (context) =>  Product()));
                               },
                             ),
 
@@ -303,7 +303,7 @@ class Catalog extends StatelessWidget{
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const Product()));
+                                        builder: (context) =>  Product()));
                               },
                             ),
 
@@ -400,7 +400,7 @@ class Catalog extends StatelessWidget{
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const Product()));
+                                        builder: (context) =>  Product()));
                               },
                             ),
 
@@ -501,7 +501,7 @@ class Catalog extends StatelessWidget{
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const Product()));
+                                        builder: (context) =>  Product()));
                               },
                             ),
 
@@ -598,7 +598,7 @@ class Catalog extends StatelessWidget{
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const Product()));
+                                        builder: (context) =>  Product()));
                               },
                             ),
 

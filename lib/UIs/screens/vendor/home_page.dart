@@ -11,19 +11,17 @@ class HomePage extends StatelessWidget{
       home: Scaffold(
         body: Column(
           children: [
-          Container(
-            margin: EdgeInsets.only(
-                left: 20.0,
-            bottom: 20,
-            top: 40),
-            child: const Text(
-            'TOUR ESSENTIALS',
-            style: TextStyle(
-              fontSize: 18.0,
+            Container(
+              margin: EdgeInsets.only(
+                  top: 50,
+              bottom: 5),
+              child: const Text(
+                'TOUR ESSENTIALS',
+                style: TextStyle(
+                  fontSize: 18.0,
+                ),
+              ),
             ),
-              textAlign: TextAlign.center,
-            ),
-          ),
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -586,6 +584,5 @@ class HomePage extends StatelessWidget{
         ),
       ),
     );
-    
   }
 }
