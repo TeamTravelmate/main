@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/map/map_todo.dart';
 import '../themes/colors.dart';
 
 // ignore: camel_case_types
@@ -32,7 +33,9 @@ class tripCard extends StatelessWidget {
     var mapBtn = Padding(
       padding: const EdgeInsets.only(bottom: 40.0),
       child: FloatingActionButton.small(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const MapToDoScreen()));
+          },
           backgroundColor: ColorsTravelMate.tertiary,
           shape: const CircleBorder(
               side: BorderSide(color: ColorsTravelMate.primary)),
