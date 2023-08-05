@@ -9,9 +9,10 @@ import 'package:main/UIs/screens/addCard/address.dart';
 import 'package:main/UIs/screens/leaderboard/leaderboard.dart';
 import 'package:main/UIs/screens/login/login_page.dart';
 import 'package:main/UIs/screens/myorders/orders_1.dart';
+import 'package:main/UIs/screens/emergency_support/emergency_support_home.dart';
+import 'package:main/UIs/screens/login/login_page.dart';
 import 'package:main/UIs/widgets/bottom_nav.dart';
 import 'UIs/screens/Welcome/welcome_screen_1.dart';
-
 
 // Main function
 void main() {
@@ -23,7 +24,6 @@ void main() {
 
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -40,5 +40,4 @@ class MyApp extends StatelessWidget {
       home: const BottomNav(),
     );
   }
-  
 }
