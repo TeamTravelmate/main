@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:main/UIs/screens/Welcome/welcome.dart';
 import 'package:main/UIs/screens/Welcome/welcome_screen_1.dart';
 import 'package:main/UIs/themes/colors.dart';
 
@@ -68,7 +69,7 @@ class WelcomeScreenThree extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const WelcomeScreenOne(),
+                        builder: (context) => const Welcome(),
                       ),
                     );
                   },
