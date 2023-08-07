@@ -54,7 +54,7 @@ class MapToDoScreen extends StatelessWidget {
   }
 }
 
-class MapSlidingPanel extends StatelessWidget {
+class MapSlidingPanel extends StatefulWidget {
   const MapSlidingPanel({
     super.key,
     required this.sc,
@@ -65,54 +65,25 @@ class MapSlidingPanel extends StatelessWidget {
   final BuildContext context;
 
   @override
+  State<MapSlidingPanel> createState() => _MapSlidingPanelState();
+}
+
+class _MapSlidingPanelState extends State<MapSlidingPanel> {
+  bool _isExpanded = false;
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.only(top:8.0),
-        child: Timeline.tileBuilder(
-          controller: sc,
-          theme: TimelineThemeData(
-            color: ColorsTravelMate.primary,
-            nodePosition: 0.2,
-            connectorTheme: const ConnectorThemeData(
-              thickness: 2.5,
-            ),
-          ),
-          builder: TimelineTileBuilder.connected(
-            connectionDirection: ConnectionDirection.after,
-            itemCount: 3,
-            indicatorBuilder: (_, index) => const DotIndicator(
-              size: 20,
-              color: ColorsTravelMate.primary,
-            ),
-            connectorBuilder: (_, index, ___) => const SolidLineConnector(
-              color: ColorsTravelMate.secundary,
-            ),
-            oppositeContentsBuilder: (_, index) => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextCustom(
-                text: "Day ${index + 1}",
-                color: ColorsTravelMate.primary,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            contentsBuilder: (_, index) => SizedBox(
-              width: MediaQuery.of(context).size.width / 1.25,
-              child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    child: const TodoDayTile(
-                      locations: "Galle Face Green, Lotus tower, Floating market",
-                      approxBudget: "Rs. 5000",
-                      weather: "Sunny",
-                    ),
-                    onTap: () {
-                      print("Day ${index + 1} tapped");
-                    },
-                  )),
-            ),
-          ),
-        ),
+        child: _isExpanded
+        ?TripDayView(locations: "Galle Face Green, Lotus tower, Floating market", approxBudget: "Rs. 5000", weather: "Rainy", backMethod: _expandDayView,)
+        :TripTimeline(sc: widget.sc, displayDayMethod: _expandDayView,)
       );
+  }
+
+  void _expandDayView() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+    });
   }
 }

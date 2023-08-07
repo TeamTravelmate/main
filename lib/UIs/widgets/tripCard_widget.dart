@@ -33,8 +33,12 @@ class tripCard extends StatelessWidget {
     var mapBtn = Padding(
       padding: const EdgeInsets.only(bottom: 40.0),
       child: FloatingActionButton.small(
+        heroTag: UniqueKey().toString(),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const MapToDoScreen()));
+            //just push the map page
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const MapToDoScreen();
+            }));
           },
           backgroundColor: ColorsTravelMate.tertiary,
           shape: const CircleBorder(
@@ -88,7 +92,8 @@ class tripCard extends StatelessWidget {
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 60),
+                        padding: EdgeInsets.only(
+                            right: MediaQuery.of(context).size.width / 60),
                         child: const Icon(
                           Icons.location_on_rounded,
                           color: ColorsTravelMate.primary,
@@ -103,7 +108,8 @@ class tripCard extends StatelessWidget {
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 60),
+                        padding: EdgeInsets.only(
+                            right: MediaQuery.of(context).size.width / 60),
                         child: const Icon(
                           Icons.calendar_month,
                           color: ColorsTravelMate.primary,
@@ -118,14 +124,16 @@ class tripCard extends StatelessWidget {
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 60),
+                        padding: EdgeInsets.only(
+                            right: MediaQuery.of(context).size.width / 60),
                         child: const Icon(
                           Icons.supervised_user_circle_sharp,
                           color: ColorsTravelMate.primary,
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 60),
+                        padding: EdgeInsets.only(
+                            right: MediaQuery.of(context).size.width / 60),
                         child: Image.asset(
                           'assets/profile.png',
                           width: 20,
