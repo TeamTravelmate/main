@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/login/passwordReset_page.dart';
 import 'package:main/UIs/themes/colors.dart';
 import 'package:main/UIs/widgets/button_widget.dart';
+import 'login_page.dart';
 
-class NewPassword extends StatelessWidget {
+class NewPassword extends StatefulWidget {
   const NewPassword({super.key});
 
+  @override
+  State<NewPassword> createState() => _NewPasswordState();
+}
+
+class _NewPasswordState extends State<NewPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,8 +19,8 @@ class NewPassword extends StatelessWidget {
         padding: const EdgeInsets.only(
           top: 100,
           bottom: 100,
-          left: 50,
-          right: 50,
+          left: 46,
+          right: 46,
         ),
         child: Column(
           children: [
@@ -69,7 +75,10 @@ class NewPassword extends StatelessWidget {
             ),
             TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()));
                 },
                 child: Text(
                   'Back to Login',
