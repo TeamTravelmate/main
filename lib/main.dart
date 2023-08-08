@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const AdMate2(),
+      home: const WelcomeScreenOne(),
     );
   }
 }

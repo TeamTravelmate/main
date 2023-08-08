@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/Trip/tripView_page.dart';
 import '../../themes/colors.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/inputField_widget.dart';
@@ -308,7 +309,7 @@ class Customize extends StatelessWidget {
         buttonWidget(
           width: double.infinity,
           labelText: 'Next',
-          path: Plan(),
+          path: joinedTripView(),
         ),
       ],
     );
