@@ -3,9 +3,16 @@ import 'package:main/UIs/screens/login/passwordReset_page.dart';
 import 'package:main/UIs/themes/colors.dart';
 import 'package:main/UIs/widgets/button_widget.dart';
 
-class ForgotPassword extends StatelessWidget {
+import 'login_page.dart';
+
+class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
 
+  @override
+  State<ForgotPassword> createState() => _ForgotPasswordState();
+}
+
+class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,8 +47,9 @@ class ForgotPassword extends StatelessWidget {
             const SizedBox(
               height: 50,
             ),
-            const TextField(
-              decoration: InputDecoration(
+            TextField(
+              controller: TextEditingController(),
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Email',
                 hintText: 'abc@gmail.com',
@@ -58,7 +66,10 @@ class ForgotPassword extends StatelessWidget {
             ),
             TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()));
                 },
                 child: Text(
                   'Back to Login',
