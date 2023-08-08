@@ -84,7 +84,7 @@ class UpdateState extends State<Update> {
                                   bottom: 4.0
                               ),
                               child: Image.asset(
-                                'images/fedex.png',
+                                'assets/img/fedex.png',
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -124,7 +124,7 @@ class UpdateState extends State<Update> {
                                   bottom: 4.0
                               ),
                               child: Image.asset(
-                                'images/dhl.png',
+                                'assets/img/dhl.png',
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -199,7 +199,7 @@ class UpdateState extends State<Update> {
                                 height: 130.0,
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
-                                        image: AssetImage('images/tent3.jpg'),
+                                        image: AssetImage('assets/img/tent3.jpg'),
                                         fit: BoxFit.cover
                                     ),
                                     borderRadius: BorderRadius.all(Radius.circular(5.0))
@@ -504,7 +504,7 @@ class UpdateState extends State<Update> {
                                 height: 130.0,
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
-                                        image: AssetImage('images/bpillow.jpg'),
+                                        image: AssetImage('assets/img/pillow.jpg'),
                                         fit: BoxFit.cover
                                     ),
                                     borderRadius: BorderRadius.all(Radius.circular(5.0))

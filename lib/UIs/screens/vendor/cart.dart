@@ -49,7 +49,7 @@ class CartState extends State<Cart>{
                   child: Row(
                     // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.arrow_back_ios_new_outlined),
+                      Icon(Icons.arrow_back),
                       SizedBox(width: 120.0,),
                       Text(
                         'My Cart',
@@ -94,6 +94,7 @@ class CartState extends State<Cart>{
                       ],
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
 
                         Row(
@@ -116,36 +117,26 @@ class CartState extends State<Cart>{
                                     left: 20.0,
                                     right: 10.0
                                 ),
-                                child: Image(
-                                  image: AssetImage('assets/img/menu.png'),
-                                )
+                                child: Icon(Icons.more_vert),
                             )
 
                           ],
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                              ),
-                              child: Text(
-                                'Colour: Black',
-                                style: TextStyle(
-                                    fontSize: 10.0
-                                ),
+                            SizedBox(width: 5,),
+                            Text(
+                              'Colour: Black',
+                              style: TextStyle(
+                                  fontSize: 12.0
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                  left: 10.0,
-                                  right: 80.0
-                              ),
-                              child: Text(
-                                'Size: L',
-                                style: TextStyle(
-                                    fontSize: 10.0
-                                ),
+                            SizedBox(width: 20,),
+                            Text(
+                              'Size: L',
+                              style: TextStyle(
+                                  fontSize: 12.0
                               ),
                             ),
                           ],
@@ -270,6 +261,7 @@ class CartState extends State<Cart>{
                       ],
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
 
                         Row(
@@ -292,37 +284,26 @@ class CartState extends State<Cart>{
                                     left: 20.0,
                                     right: 10.0
                                 ),
-                                child: Image(
-                                  image: AssetImage('assets/img/menu.png'),
-                                )
+                                child: Icon(Icons.more_vert),
                             )
 
                           ],
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                  right: 10.0
-                              ),
-                              child: Text(
-                                'Colour: Blue',
-                                style: TextStyle(
-                                    fontSize: 10.0
-                                ),
+                            SizedBox(width: 5,),
+                            Text(
+                              'Colour: Blue',
+                              style: TextStyle(
+                                  fontSize: 12.0
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                  left: 10.0,
-                                  right: 80.0
-                              ),
-                              child: Text(
-                                'Size: L',
-                                style: TextStyle(
-                                    fontSize: 10.0
-                                ),
+                            SizedBox(width: 20,),
+                            Text(
+                              'Size: L',
+                              style: TextStyle(
+                                  fontSize: 12.0
                               ),
                             ),
                           ],
