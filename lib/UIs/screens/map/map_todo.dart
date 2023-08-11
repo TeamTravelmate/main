@@ -20,7 +20,7 @@ class _MapToDoScreenState extends State<MapToDoScreen> {
     return Scaffold(
       body: SlidingUpPanel(
         margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-        body: CustomMap(),
+        body: Placeholder(), //replace this with CustomMap() to view map
         panelBuilder: (sc) => MapSlidingPanel(sc: sc, context: context),
         collapsed: Container(
           decoration: const BoxDecoration(
