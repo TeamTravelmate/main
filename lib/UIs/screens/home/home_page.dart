@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/profile/profile.dart';
+import 'package:main/UIs/widgets/side_drawer.dart';
 import '../../themes/colors.dart';
 import '../../widgets/feed_widget.dart';
 import '../../widgets/popular_widget.dart';
@@ -14,35 +15,29 @@ class home extends StatelessWidget {
   Widget build(BuildContext context) {
     const shape = StadiumBorder();
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
-        child: AppBar(
-          leading: const Icon(Icons.menu),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Image.asset(
-                'assets/logo-travelmate.png',
-                height: 160,
-                width: 240,
-              ),
-              FloatingActionButton.small(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Profile(),
-                    ),
-                  );
-                },
-                backgroundColor: ColorsTravelMate.secundary,
-                child: Image.asset('assets/profile.png', height: 40, width: 40),
-              ),
-            ],
-          ),
-          backgroundColor: ColorsTravelMate.tertiary,
-          foregroundColor: ColorsTravelMate.primary,
+      drawer: const SideDrawer(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Image.asset(
+          'assets/logo-travelmate.png',
+          width: 200,
         ),
+        actions: [
+           FloatingActionButton.small(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Profile(),
+                  ),
+                );
+              },
+              
+              child: Image.asset('assets/profile.png', height: 30, width: 30),
+            ),
+        ],
+        backgroundColor: ColorsTravelMate.tertiary,
+        foregroundColor: ColorsTravelMate.primary,
       ),
       body: SingleChildScrollView(
         child: Container(

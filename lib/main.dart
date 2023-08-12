@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:main/Domain/provider/register_form_provider.dart';
 import 'package:main/UIs/screens/Ad%20Mate/ad_mate.dart';
 import 'package:main/UIs/screens/Ad%20Mate/ad_mate_res.dart';
 import 'package:main/UIs/screens/Registration/NameInputScreen.dart';
@@ -15,6 +16,7 @@ import 'package:main/UIs/screens/emergency_support/emergency_support_home.dart';
 import 'package:main/UIs/screens/login/login_page.dart';
 import 'package:main/UIs/widgets/bottom_nav.dart';
 import 'package:main/UIs/screens/profile/profile.dart';
+import 'package:provider/provider.dart';
 import 'UIs/screens/Welcome/welcome_screen_1.dart';
 
 // Main function
@@ -25,7 +27,9 @@ void main() {
     statusBarBrightness: Brightness.dark,
   ));
 
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -33,14 +37,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: GoogleFonts.poppins().fontFamily,
-        primarySwatch: Colors.blueGrey,
-        scaffoldBackgroundColor: Colors.white,
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => RegistrationFormProvider())],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: GoogleFonts.poppins().fontFamily,
+          primarySwatch: Colors.blueGrey,
+          scaffoldBackgroundColor: Colors.white,
+        ),
+        home: const WelcomeScreenOne(),
       ),
-      home: const WelcomeScreenOne(),
     );
   }
 }
