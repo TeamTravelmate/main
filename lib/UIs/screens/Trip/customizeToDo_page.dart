@@ -27,6 +27,7 @@ class CustomizeToDo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Card(
+                elevation: 5,
                 child: Column(
                   children: [
                     const Text('Checklist', style: TextStyle(fontSize: 18)),
@@ -131,10 +132,18 @@ class CustomizeToDo extends StatelessWidget {
                                   );
                                 },
                                 icon: const Icon(Icons.add_circle_rounded,
-                                    color: Colors.grey),
+                                    color: ColorsTravelMate.secundary),
                                 label: const Text(
                                   'Add Item',
                                   style: TextStyle(fontSize: 12),
+                                ),
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStatePropertyAll(
+                                      ColorsTravelMate.secundary.withOpacity(0.4)
+                                  ),
+                                  foregroundColor: const MaterialStatePropertyAll(
+                                      ColorsTravelMate.secundary
+                                  ),
                                 ),
                               ),
                             ],
@@ -149,9 +158,11 @@ class CustomizeToDo extends StatelessWidget {
                 height: 10,
               ),
               Card(
+                elevation: 5,
                 child: Padding(
                   padding: const EdgeInsets.all(14.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text('Notes', style: TextStyle(fontSize: 18)),
                       const Text(
@@ -161,7 +172,7 @@ class CustomizeToDo extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Icon(Icons.notifications),
+                          const Icon(Icons.notifications, color: ColorsTravelMate.secundary),
                           TextButton(
                             onPressed: () {
                               showModalBottomSheet(
@@ -233,17 +244,13 @@ class CustomizeToDo extends StatelessWidget {
                               );
                             },
                             style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.grey),
-                              foregroundColor: MaterialStateProperty.all(
-                                  ColorsTravelMate.tertiary),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  backgroundColor: MaterialStatePropertyAll(
+                                      ColorsTravelMate.secundary.withOpacity(0.4)
+                                  ),
+                                  foregroundColor: const MaterialStatePropertyAll(
+                                      ColorsTravelMate.secundary
+                                  ),
                                 ),
-                              ),
-                            ),
                             child: const Text('Add'),
                           ),
                         ],

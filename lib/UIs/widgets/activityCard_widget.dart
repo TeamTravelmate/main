@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:main/UIs/themes/colors.dart';
 import 'inputField_widget.dart';
 
 class ActivityCard extends StatelessWidget {
   const ActivityCard({
     super.key,
     required this.title,
-    required this.icon,
+    // required this.icon,
+    required this.imagepath,
     required this.locationTitle,
     required this.time,
     required this.age,
@@ -13,7 +15,8 @@ class ActivityCard extends StatelessWidget {
   });
 
   final String title;
-  final Icon icon;
+  // final Icon icon;
+  final String imagepath;
   final String locationTitle;
   final String time;
   final String age;
@@ -22,6 +25,7 @@ class ActivityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 2.5,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
@@ -32,7 +36,11 @@ class ActivityCard extends StatelessWidget {
                 style:
                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              leading: icon,
+              // leading: icon, iconColor: ColorsTravelMate.secundary, 
+              leading: CircleAvatar(
+                        backgroundImage: AssetImage(imagepath),
+                        radius: 40,
+                      ),
               trailing: SizedBox(
                 width: 30,
                 height: 30,
@@ -45,7 +53,7 @@ class ActivityCard extends StatelessWidget {
                       builder: (BuildContext context) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 50, vertical: 5),
+                              horizontal: 20, vertical: 2),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -141,10 +149,28 @@ class ActivityCard extends StatelessWidget {
                                 children: [
                                   TextButton(
                                     onPressed: () {},
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              ColorsTravelMate.secundary.withOpacity(0.4),
+                                              ),
+                                      foregroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              ColorsTravelMate.secundary),
+                                    ),
                                     child: const Text('Rent Essentials'),
                                   ),
                                   TextButton(
                                     onPressed: () {},
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              ColorsTravelMate.secundary.withOpacity(0.4),
+                                              ),
+                                      foregroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              ColorsTravelMate.secundary),
+                                    ),
                                     child: const Text('Reserve Slot'),
                                   ),
                                 ],
@@ -155,8 +181,8 @@ class ActivityCard extends StatelessWidget {
                       },
                     );
                   },
-                  backgroundColor: Colors.grey[300],
-                  foregroundColor: Colors.grey,
+                  backgroundColor: ColorsTravelMate.secundary.withOpacity(0.5),
+                  foregroundColor: ColorsTravelMate.tertiary,
                   child: const Icon(Icons.add),
                 ),
               ),
@@ -167,7 +193,7 @@ class ActivityCard extends StatelessWidget {
             const Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: Icon(Icons.access_time_rounded),
                 ),
                 Text('Duration: 2 - 3 Hours')
@@ -176,7 +202,7 @@ class ActivityCard extends StatelessWidget {
             Row(
               children: [
                 const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: Icon(Icons.person),
                 ),
                 Text(age)

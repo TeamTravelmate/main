@@ -143,6 +143,10 @@ flutter:
         - assets/jungle beach.jpg
         - assets/icons/
         - assets/weather/
+        - assets/gregory.jpg
+        - assets/gregoryLake.jpg
+        - assets/cycling.jpg
+        - assets/safari.jpg
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

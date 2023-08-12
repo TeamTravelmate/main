@@ -7,7 +7,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
 import 'package:timelines/timelines.dart';
-
 import '../../widgets/tripCard_widget.dart';
 
 class MapToDoScreen extends StatelessWidget {
@@ -42,9 +41,9 @@ class MapToDoScreen extends StatelessWidget {
           ),
           child: const tripCard.map(
             tripLocationTitle: "Colombo",
-            location: "Sri Lanka",
-            tripDuration: "3 days",
-            tripmates: "3",
+            location: "Colombo, Sri Lanka",
+            tripDuration: "Aug 20, 2023 - Aug 23, 2023",
+            tripmates: "Kumar & 3 others",
           ),
         ),
         minHeight: MediaQuery.of(context).size.height / 6,
