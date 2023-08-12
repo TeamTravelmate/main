@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/profile/profile.dart';
 import '../../themes/colors.dart';
 import '../../widgets/feed_widget.dart';
 import '../../widgets/popular_widget.dart';
@@ -27,12 +28,12 @@ class home extends StatelessWidget {
               ),
               FloatingActionButton.small(
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => profile(),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Profile(),
+                    ),
+                  );
                 },
                 backgroundColor: ColorsTravelMate.secundary,
                 child: Image.asset('assets/profile.png', height: 40, width: 40),
