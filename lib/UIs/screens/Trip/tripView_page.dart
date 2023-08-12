@@ -318,7 +318,7 @@ class _ExploreState extends State<Explore> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(  
+                  Row(
                     children: [
                       Icon(
                         Icons.hotel,
@@ -354,7 +354,7 @@ class _ExploreState extends State<Explore> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(  
+                  Row(
                     children: [
                       Icon(
                         Icons.restaurant,
@@ -390,7 +390,7 @@ class _ExploreState extends State<Explore> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(  
+                  Row(
                     children: [
                       Icon(
                         Icons.local_activity,

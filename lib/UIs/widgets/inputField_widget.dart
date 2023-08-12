@@ -6,20 +6,20 @@ class TextFieldWidget extends StatelessWidget {
     required this.labelText,
     required this.hintText,
     required this.prefixIcon,
-    });
-    final String labelText;
-    final String hintText;
-    final Icon prefixIcon;
+  });
+  final String labelText;
+  final String hintText;
+  final Icon prefixIcon;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-          decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            labelText: labelText,
-            hintText: hintText,
-            prefixIcon: prefixIcon,
-          ),
-        );
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(),
+        labelText: labelText,
+        hintText: hintText,
+        prefixIcon: prefixIcon,
+      ),
+    );
   }
 }

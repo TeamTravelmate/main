@@ -19,8 +19,7 @@ class CustomizeHotels extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SingleChildScrollView(
-                child:
-                  Row(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -44,7 +43,8 @@ class CustomizeHotels extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 132, 201, 209),
+                          backgroundColor:
+                              const Color.fromARGB(255, 132, 201, 209),
                           foregroundColor: ColorsTravelMate.tertiary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -60,7 +60,8 @@ class CustomizeHotels extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 132, 201, 209),
+                          backgroundColor:
+                              const Color.fromARGB(255, 132, 201, 209),
                           foregroundColor: ColorsTravelMate.tertiary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -76,7 +77,8 @@ class CustomizeHotels extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 132, 201, 209),
+                          backgroundColor:
+                              const Color.fromARGB(255, 132, 201, 209),
                           foregroundColor: ColorsTravelMate.tertiary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -89,7 +91,7 @@ class CustomizeHotels extends StatelessWidget {
                     ),
                   ],
                 ),
-                            ),
+              ),
               const SizedBox(height: 20),
               const CardWidget(
                 height: 30,
@@ -161,13 +163,14 @@ class CardWidget extends StatelessWidget {
     required this.width,
     required this.imagePath,
     required this.titleText,
-    required this.subtitleText,});
+    required this.subtitleText,
+  });
 
-    final double height;
-    final double width;
-    final String imagePath;
-    final Text titleText;
-    final Text subtitleText;
+  final double height;
+  final double width;
+  final String imagePath;
+  final Text titleText;
+  final Text subtitleText;
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +180,8 @@ class CardWidget extends StatelessWidget {
         children: <Widget>[
           ListTile(
             leading: SizedBox(
-              child: Image(image: AssetImage(imagePath),
+              child: Image(
+                image: AssetImage(imagePath),
                 height: 300,
                 width: 200,
                 alignment: Alignment.topLeft,
@@ -185,53 +189,54 @@ class CardWidget extends StatelessWidget {
               ),
             ),
             title: Padding(
-                        padding: const EdgeInsets.all(6.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            SizedBox(
-                              height: height,
-                              width: width,
-                              child: FloatingActionButton(
-                                onPressed: () {},
-                                backgroundColor: ColorsTravelMate.tertiary,
-                                child: const Icon(Icons.favorite, color: Colors.red),
-                              ),
-                            ),
-                            const SizedBox(width: 4),
-                            SizedBox(
-                              height: height,
-                              width: width,
-                              child: FloatingActionButton(
-                                onPressed: () {},
-                                backgroundColor: ColorsTravelMate.tertiary,
-                                child: const Icon(
-                                  Icons.map_sharp,
-                                  color: ColorsTravelMate.secundary,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 4),
-                            SizedBox(
-                              height: height,
-                              width: width,
-                              child: FloatingActionButton(
-                                onPressed: () {},
-                                backgroundColor: ColorsTravelMate.tertiary,
-                                child: const Icon(
-                                  Icons.add,
-                                  color: ColorsTravelMate.primary,
-                                ),
-                              ),
-                            ),
-                          ],
+                padding: const EdgeInsets.all(6.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        SizedBox(
+                          height: height,
+                          width: width,
+                          child: FloatingActionButton(
+                            onPressed: () {},
+                            backgroundColor: ColorsTravelMate.tertiary,
+                            child:
+                                const Icon(Icons.favorite, color: Colors.red),
+                          ),
                         ),
-                          titleText,
-                          ],)
-                      ),
+                        const SizedBox(width: 4),
+                        SizedBox(
+                          height: height,
+                          width: width,
+                          child: FloatingActionButton(
+                            onPressed: () {},
+                            backgroundColor: ColorsTravelMate.tertiary,
+                            child: const Icon(
+                              Icons.map_sharp,
+                              color: ColorsTravelMate.secundary,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        SizedBox(
+                          height: height,
+                          width: width,
+                          child: FloatingActionButton(
+                            onPressed: () {},
+                            backgroundColor: ColorsTravelMate.tertiary,
+                            child: const Icon(
+                              Icons.add,
+                              color: ColorsTravelMate.primary,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    titleText,
+                  ],
+                )),
             subtitle: subtitleText,
           ),
         ],

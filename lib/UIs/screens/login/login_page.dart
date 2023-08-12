@@ -177,9 +177,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: GestureDetector(
                         onTap: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ForgotPassword()));
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ForgotPassword()));
                         },
                         child: const Text(
                           "Forgot Password?",
@@ -222,7 +223,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           };
 
                           // Send the POST request to the backend API
-                          final Uri loginUri = Uri.parse('http://192.168.198.1:3000/login'); 
+                          final Uri loginUri =
+                              Uri.parse('http://192.168.198.1:3000/login');
                           print(loginUri);
                           final response = await http.post(
                             loginUri,
@@ -237,7 +239,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 jsonDecode(response.body);
 
                             // Handle the API response here, e.g., save the user data or token.
-                            print('Login Successful: ${responseData['message']}');
+                            print(
+                                'Login Successful: ${responseData['message']}');
                             print('User Data: ${responseData['user']}');
                             print('Token: ${responseData['token']}');
 
@@ -266,7 +269,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     Text('Error occurred while logging in.'),
                               ),
                             );
-                          };
+                          }
+                          ;
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(15.0),

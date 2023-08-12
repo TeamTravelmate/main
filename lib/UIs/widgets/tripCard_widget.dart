@@ -3,11 +3,12 @@ import '../themes/colors.dart';
 
 // ignore: camel_case_types
 class tripCard extends StatelessWidget {
-  const tripCard({super.key,
-  required this.tripLocationTitle,
-  required this.location,
-  required this.tripDuration,
-  required this.tripmates,
+  const tripCard({
+    super.key,
+    required this.tripLocationTitle,
+    required this.location,
+    required this.tripDuration,
+    required this.tripmates,
   });
 
   final String tripLocationTitle;

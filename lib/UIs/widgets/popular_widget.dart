@@ -28,7 +28,7 @@ class popularTrips extends StatelessWidget {
               width: 80,
               decoration: BoxDecoration(
                 border: Border.all(width: 3, color: ColorsTravelMate.secundary),
-                borderRadius: BorderRadius.circular(100), 
+                borderRadius: BorderRadius.circular(100),
               ),
               child: FloatingActionButton.large(
                 onPressed: () {
@@ -41,14 +41,16 @@ class popularTrips extends StatelessWidget {
                 },
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage(imagePath,),
+                  backgroundImage: AssetImage(
+                    imagePath,
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: 10),
             Text(title,
-                style:
-                    const TextStyle(fontSize: 12, color: ColorsTravelMate.primary)),
+                style: const TextStyle(
+                    fontSize: 12, color: ColorsTravelMate.primary)),
           ],
         ),
       ),

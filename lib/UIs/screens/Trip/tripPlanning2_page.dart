@@ -294,7 +294,6 @@ class CustomFacilities extends StatelessWidget {
                     title: 'Resturants',
                     icon: Icons.restaurant_menu),
               ),
-
               const SizedBox(width: 30),
               InfoPopupWidget(
                 customContent: Container(

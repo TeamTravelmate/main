@@ -29,7 +29,8 @@ class ActivityCard extends StatelessWidget {
             ListTile(
               title: Text(
                 title,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               leading: icon,
               trailing: SizedBox(
@@ -72,8 +73,8 @@ class ActivityCard extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                0, 0, 5, 0),
+                                            padding:
+                                                EdgeInsets.fromLTRB(0, 0, 5, 0),
                                             child:
                                                 Icon(Icons.location_on_rounded),
                                           ),
@@ -83,8 +84,8 @@ class ActivityCard extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                0, 0, 5, 0),
+                                            padding:
+                                                EdgeInsets.fromLTRB(0, 0, 5, 0),
                                             child:
                                                 Icon(Icons.access_time_rounded),
                                           ),
@@ -94,8 +95,8 @@ class ActivityCard extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                0, 0, 5, 0),
+                                            padding:
+                                                EdgeInsets.fromLTRB(0, 0, 5, 0),
                                             child: Icon(Icons.person),
                                           ),
                                           Text(age)
@@ -104,8 +105,8 @@ class ActivityCard extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                0, 0, 5, 0),
+                                            padding:
+                                                EdgeInsets.fromLTRB(0, 0, 5, 0),
                                             child: Icon(
                                                 Icons.currency_exchange_sharp),
                                           ),

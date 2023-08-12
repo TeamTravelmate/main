@@ -10,25 +10,27 @@ class WelcomeScreenTwo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration:  const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/img/ls_2.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/img/ls_2.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: SafeArea(
           child: Center(
             child: Column(
-              
               children: [
-                const SizedBox(height:200,),
+                const SizedBox(
+                  height: 200,
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(50), // Adjust the padding as needed
-                       // Adjust the color and opacity as needed
+                      padding: const EdgeInsets.all(
+                          50), // Adjust the padding as needed
+                      // Adjust the color and opacity as needed
                       child: const Text(
                         '“The journey of a thousand miles begins with a single step.”',
                         textAlign: TextAlign.center,
@@ -41,9 +43,9 @@ class WelcomeScreenTwo extends StatelessWidget {
                     ),
                   ],
                 ),
-
-                const SizedBox(height: 1,),
-
+                const SizedBox(
+                  height: 1,
+                ),
                 const Text(
                   'Lao Tzu',
                   textAlign: TextAlign.center,
@@ -53,10 +55,10 @@ class WelcomeScreenTwo extends StatelessWidget {
                     fontSize: 23,
                   ),
                 ),
-
-                const SizedBox(height: 160,),
-
-                 GestureDetector(
+                const SizedBox(
+                  height: 160,
+                ),
+                GestureDetector(
                   onTap: () {
                     // Navigate to the other screen here
                     Navigator.push(
@@ -68,7 +70,7 @@ class WelcomeScreenTwo extends StatelessWidget {
                   },
                   child: SvgPicture.asset('assets/svg/next-btn.svg'),
                 ),
-                 const SizedBox(height: 55),
+                const SizedBox(height: 55),
                 SvgPicture.asset('assets/svg/step-2.svg'),
               ],
             ),

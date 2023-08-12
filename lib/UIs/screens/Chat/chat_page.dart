@@ -13,11 +13,10 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
-          child: const Text('Chat Page')
-        ),
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height,
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+            child: const Text('Chat Page')),
       ),
     );
   }

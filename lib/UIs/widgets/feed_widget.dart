@@ -51,13 +51,14 @@ class feedCard extends StatelessWidget {
                     },
                     backgroundColor: ColorsTravelMate.secundary,
                     child: Image.asset(profile)),
-                title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+                title: Text(title,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
                 subtitle: Row(
                   children: [
                     Icon(subtitleIcon, size: 20),
                     Text(subtitle,
-                        style:
-                            const TextStyle(fontSize: 11, fontWeight: FontWeight.bold))
+                        style: const TextStyle(
+                            fontSize: 11, fontWeight: FontWeight.bold))
                   ],
                 ),
                 trailing: const Icon(
