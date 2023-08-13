@@ -13,11 +13,10 @@ class _MarketplacePageState extends State<MarketplacePage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
-          child: const Text('Marketplace Page')
-        ),
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height,
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+            child: const Text('Marketplace Page')),
       ),
     );
   }

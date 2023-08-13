@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:main/UIs/screens/Ad%20Mate/ad_mate.dart';
 import 'package:main/UIs/screens/Ad%20Mate/ad_mate_res.dart';
@@ -18,6 +19,7 @@ import 'package:main/UIs/screens/profile/profile.dart';
 import 'UIs/screens/Trip/publicTripViewPage.dart';
 import 'UIs/screens/Trip/tripView_page.dart';
 import 'UIs/screens/Welcome/welcome_screen_1.dart';
+import 'UIs/screens/home/home_page.dart';
 
 // Main function
 void main() {
@@ -35,14 +37,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: GoogleFonts.poppins().fontFamily,
         primarySwatch: Colors.blueGrey,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home:  publicTripView(),
+      home: const home(),
+
     );
   }
 }
+

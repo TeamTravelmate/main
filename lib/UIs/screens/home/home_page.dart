@@ -63,7 +63,7 @@ class home extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  height: 150,
+                  height: 180,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: const <Widget>[
@@ -98,12 +98,10 @@ class home extends StatelessWidget {
                 Container(
                   decoration: const ShapeDecoration(
                       shape: shape,
-                      gradient: LinearGradient(
-                          colors: 
-                          [
-                            ColorsTravelMate.secundary,
-                            ColorsTravelMate.tertiary,
-                          ])),
+                      gradient: LinearGradient(colors: [
+                        ColorsTravelMate.secundary,
+                        ColorsTravelMate.tertiary,
+                      ])),
                   child: TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -116,7 +114,8 @@ class home extends StatelessWidget {
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.transparent),
-                      padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
+                      padding:
+                          MaterialStateProperty.all(const EdgeInsets.all(10)),
                       foregroundColor:
                           MaterialStateProperty.all(ColorsTravelMate.tertiary),
                     ),
@@ -176,5 +175,3 @@ class home extends StatelessWidget {
     );
   }
 }
-
-

@@ -64,10 +64,13 @@ class publicTripView extends StatelessWidget {
                               fontSize: 24,
                               fontWeight: FontWeight.bold),
                         ),
-                        Text('Days',
-                        style: TextStyle(
-                              color: ColorsTravelMate.tertiary,
-                              fontSize: 16,),),
+                        Text(
+                          'Days',
+                          style: TextStyle(
+                            color: ColorsTravelMate.tertiary,
+                            fontSize: 16,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -90,10 +93,13 @@ class publicTripView extends StatelessWidget {
                               fontSize: 24,
                               fontWeight: FontWeight.bold),
                         ),
-                        Text('Hours',
-                        style: TextStyle(
-                              color: ColorsTravelMate.tertiary,
-                              fontSize: 16,),),
+                        Text(
+                          'Hours',
+                          style: TextStyle(
+                            color: ColorsTravelMate.tertiary,
+                            fontSize: 16,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -116,10 +122,13 @@ class publicTripView extends StatelessWidget {
                               fontSize: 24,
                               fontWeight: FontWeight.bold),
                         ),
-                        Text('Mins',
-                        style: TextStyle(
-                              color: ColorsTravelMate.tertiary,
-                              fontSize: 16,),),
+                        Text(
+                          'Mins',
+                          style: TextStyle(
+                            color: ColorsTravelMate.tertiary,
+                            fontSize: 16,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -142,17 +151,21 @@ class publicTripView extends StatelessWidget {
                               fontSize: 24,
                               fontWeight: FontWeight.bold),
                         ),
-                        Text('Sec',
-                        style: TextStyle(
-                              color: ColorsTravelMate.tertiary,
-                              fontSize: 16,),),
+                        Text(
+                          'Sec',
+                          style: TextStyle(
+                            color: ColorsTravelMate.tertiary,
+                            fontSize: 16,
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 200),
-              buttonWidget(width: 200, labelText: 'Join Tour', path: joinedTripView())
+              buttonWidget(
+                  width: 200, labelText: 'Join Tour', path: joinedTripView())
             ],
           ),
         ),
