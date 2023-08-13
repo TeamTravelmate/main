@@ -76,7 +76,7 @@ class _ImageProfileState extends State<ImageProfile> {
               radius: 70.0,
               backgroundImage:
               // _imageFile == null?
-              AssetImage('assets/2.jpeg')
+              AssetImage('assets/profile_pic.jpeg')
             // : FileImage(File(_imageFile.path)),
 
           ),
@@ -216,7 +216,7 @@ class EditProfileFormState extends State<EditProfileForm> {
                 child: TextFormField(
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    labelText: "Name",
+                    labelText: "Sheromi Zoysa",
                     prefixIcon: Icon(Icons.people),
                     border: myinputborder(),
                     enabledBorder: myinputborder(),
@@ -249,23 +249,13 @@ class EditProfileFormState extends State<EditProfileForm> {
                 child: TextFormField(
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    labelText: "Email",
-                    prefixIcon: Icon(Icons.email),
+                    labelText: "sheromi@gmail.com",
+                    prefixIcon: Icon(Icons.lock),
                     border: myinputborder(),
                     enabledBorder: myinputborder(),
                     focusedBorder: myfocusborder(),
                   ),
-
-                  validator: (text){
-                    if(text!.isEmpty){
-                      return 'Email Cannot be Empty';
-                    }
-                    return null;
-                  },
-
-                  onSaved: (text){
-                    email= text!;
-                  },
+                  enabled : false,
 
                 ),
               ),
@@ -281,7 +271,7 @@ class EditProfileFormState extends State<EditProfileForm> {
                 child: TextFormField(
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
-                    labelText: "Phone No",
+                    labelText: "0719628544",
                     prefixIcon: Icon(Icons.phone),
                     border: myinputborder(),
                     enabledBorder: myinputborder(),
@@ -308,35 +298,6 @@ class EditProfileFormState extends State<EditProfileForm> {
               ),
             ),
 
-
-
-            Padding(
-              padding: EdgeInsets.only(bottom: 20.0),
-              child: SizedBox(
-                width: 340.0,
-                height: 55.0,
-
-                child: TextFormField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: "Password",
-                    prefixIcon: Icon(Icons.lock),
-                    border: myinputborder(),
-                    enabledBorder: myinputborder(),
-                    focusedBorder: myfocusborder(),
-                  ),
-
-                  validator: (text){
-                    if(text!.isEmpty){
-                      return 'Password Cannot be Empty';
-                    }
-                    return null;
-                  },
-
-
-                ),
-              ),
-            ),
 
             SizedBox(
               height: 50,

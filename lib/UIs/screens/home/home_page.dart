@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/profile/profile.dart';
 import '../../themes/colors.dart';
 import '../../widgets/feed_widget.dart';
 import '../../widgets/popular_widget.dart';
@@ -27,12 +28,12 @@ class home extends StatelessWidget {
               ),
               FloatingActionButton.small(
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => profile(),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Profile(),
+                    ),
+                  );
                 },
                 backgroundColor: ColorsTravelMate.secundary,
                 child: Image.asset('assets/profile.png', height: 40, width: 40),
@@ -45,9 +46,10 @@ class home extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
+
           child: Padding(
             padding: const EdgeInsets.only(
-              left: 20.0,
+              bottom: 20.0,
             ),
             child: Column(
               children: [
@@ -62,13 +64,14 @@ class home extends StatelessWidget {
                   ),
                 ),
                 Container(
+                  margin: const EdgeInsets.only(left:15.0),
                   height: 150,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: const <Widget>[
                       popularTrips(
                         path: popularDestinations(),
-                        title: 'Nuwara Eliya',
+                        title: 'Nanuoya',
                         imagePath: 'assets/nuwara eliya.jpg',
                       ),
                       popularTrips(
@@ -98,7 +101,7 @@ class home extends StatelessWidget {
                   decoration: const ShapeDecoration(
                       shape: shape,
                       gradient: LinearGradient(
-                          colors: 
+                          colors:
                           [
                             ColorsTravelMate.secundary,
                             ColorsTravelMate.tertiary,
@@ -114,10 +117,10 @@ class home extends StatelessWidget {
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all(Colors.transparent),
+                      MaterialStateProperty.all(Colors.transparent),
                       padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
                       foregroundColor:
-                          MaterialStateProperty.all(ColorsTravelMate.tertiary),
+                      MaterialStateProperty.all(ColorsTravelMate.tertiary),
                     ),
                     child: Container(
                       width: 350,
@@ -149,7 +152,7 @@ class home extends StatelessWidget {
                   title: 'Nimesh Jayasinha',
                   subtitle: 'Colombo, Sri Lanka',
                   post:
-                      'Can anyone recommend some place to travel on weekens???',
+                  'Can anyone recommend some place to travel on weekens???',
                   imagePath: 'assets/post.png',
                   likes: '100',
                   comments: '12',
@@ -162,7 +165,7 @@ class home extends StatelessWidget {
                   title: 'Nimesh Jayasinha',
                   subtitle: 'Colombo, Sri Lanka',
                   post:
-                      'Can anyone recommend some place to travel on weekens???',
+                  'Can anyone recommend some place to travel on weekens???',
                   imagePath: 'assets/post.png',
                   likes: '100',
                   comments: '12',
