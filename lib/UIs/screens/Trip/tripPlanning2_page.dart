@@ -11,7 +11,7 @@ import 'customizeResturants_page.dart';
 import 'customizeToDo_page.dart';
 import 'customizeVehicles_page.dart';
 import 'customizeWeather_page.dart';
-import 'publicTripsAll_page.dart';
+import 'publicTrip/publicTripsAll_page.dart';
 import 'tripView_page.dart';
 import 'package:info_popup/info_popup.dart';
 

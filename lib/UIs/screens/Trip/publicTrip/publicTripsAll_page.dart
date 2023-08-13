@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../themes/colors.dart';
-import '../../widgets/popular_widget.dart';
+import 'package:main/UIs/screens/Trip/publicTrip/publicTripViewPage.dart';
+import '../../../themes/colors.dart';
+import '../../../widgets/popular_widget.dart';
+import '../publicTripViewPage.dart';
 import 'publicTrip_page.dart';
 
 // ignore: camel_case_types
@@ -30,7 +32,7 @@ class publicTripsAll extends StatelessWidget {
             height: 180,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              children: const <Widget>[
+              children: <Widget>[
                 popularTrips(
                   path: publicTripView(),
                   title: 'Galle',

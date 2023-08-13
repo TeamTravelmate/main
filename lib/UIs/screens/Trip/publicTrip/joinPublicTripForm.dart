@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/addCard/paycard.dart';
-import '../../themes/colors.dart';
+import '../../../themes/colors.dart';
 import 'onlinePayment.dart';
 
 class publicTripForm extends StatefulWidget {
