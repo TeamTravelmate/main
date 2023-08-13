@@ -8,18 +8,8 @@ class Product extends StatefulWidget {
 }
 
 class ProductState extends State<Product>{
-  int _counter1 = 0;
   int _counter2 = 0;
-  void _incrementCounter1() {
-    setState(() {
-      _counter1++;
-    });
-  }
-  void _decrementCounter1() {
-    setState(() {
-      _counter1--;
-    });
-  }
+
   void _incrementCounter2() {
     setState(() {
       _counter2++;
@@ -27,7 +17,9 @@ class ProductState extends State<Product>{
   }
   void _decrementCounter2() {
     setState(() {
-      _counter2--;
+      if(_counter2 != 0){
+        _counter2--;
+      }
     });
   }
 

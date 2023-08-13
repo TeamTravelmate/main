@@ -16,7 +16,9 @@ class CartState extends State<Cart>{
   }
   void _decrementCounter1() {
     setState(() {
-      _counter1--;
+      if(_counter1 != 0){
+        _counter1--;
+      }
     });
   }
   void _incrementCounter2() {
@@ -26,7 +28,9 @@ class CartState extends State<Cart>{
   }
   void _decrementCounter2() {
     setState(() {
-      _counter2--;
+      if(_counter2 != 0){
+        _counter2--;
+      }
     });
   }
 
