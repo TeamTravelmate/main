@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/vendor/home_page.dart';
 import 'package:main/UIs/themes/colors.dart';
+import '../screens/Trip/booking_exProviders.dart';
 import 'inputField_widget.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 
@@ -180,7 +182,13 @@ class _ActivityCardState extends State<ActivityCard> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const HomePage()));
+                                      },
                                       style: ButtonStyle(
                                         backgroundColor:
                                             MaterialStateProperty.all<Color>(
@@ -194,7 +202,13 @@ class _ActivityCardState extends State<ActivityCard> {
                                       child: const Text('Rent Essentials'),
                                     ),
                                     TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const BookingCalendarDemoApp()));
+                                      },
                                       style: ButtonStyle(
                                         backgroundColor:
                                             MaterialStateProperty.all<Color>(
@@ -290,18 +304,23 @@ class _ActivityCardState extends State<ActivityCard> {
 
                 dropDownList: const [
                   DropDownValueModel(
-                      name: 'Experience Provider', value: "Experience Provider"),
+                      name: 'Experience Provider',
+                      value: "Experience Provider"),
                   DropDownValueModel(
-                      name: 'Experience Provider', value: "Experience Provider"),
+                      name: 'Experience Provider',
+                      value: "Experience Provider"),
                   DropDownValueModel(
-                      name: 'Experience Provider', value: "Experience Provider"),
+                      name: 'Experience Provider',
+                      value: "Experience Provider"),
                   DropDownValueModel(
-                      name: 'Experience Provider', value: "Experience Provider"),
+                      name: 'Experience Provider',
+                      value: "Experience Provider"),
                   DropDownValueModel(
-                      name: 'Experience Provider', value: "Experience Provider"),
+                      name: 'Experience Provider',
+                      value: "Experience Provider"),
                 ],
                 onChanged: (val) {},
-              ),  
+              ),
             ],
           ),
         ),
