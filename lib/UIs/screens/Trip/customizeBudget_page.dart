@@ -63,8 +63,48 @@ class CustomizeBudget extends StatelessWidget {
                           ),
                           const Text('Set Budget',
                               style: TextStyle(fontSize: 20)),
+                          const Text(
+                            'Add all your expenses here! TravelMate simplifies the budget handling for you!',
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
                           const SizedBox(
                             height: 20,
+                          ),
+                          // DropdownButton<String>(
+                          //   value: 'Category',
+                          //   items: <String>['Food', 'Accommodation', 'Travel']
+                          //       .map<DropdownMenuItem<String>>((String value) {
+                          //     return DropdownMenuItem<String>(
+                          //       value: value,
+                          //       child: Text(
+                          //         value,
+                          //         style: const TextStyle(fontSize: 14),
+                          //       ),
+                          //     );
+                          //   }).toList(),
+                          //   onChanged: (String? newValue) {
+                          //     // setState(() {
+                          //     //   dropdownValue = newValue!;
+                          //     // });
+                          //   },
+                          // ),
+                          const TextFieldWidget(
+                            labelText: 'Category',
+                            hintText: 'Food',
+                            prefixIcon: Icon(Icons.category_outlined),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const TextFieldWidget(
+                            labelText: 'Description',
+                            hintText: 'lunch',
+                            prefixIcon: Icon(Icons.description_outlined),
+                          ),
+                          const SizedBox(
+                            height: 10,
                           ),
                           const TextFieldWidget(
                             labelText: 'Enter Amount',
@@ -75,41 +115,60 @@ class CustomizeBudget extends StatelessWidget {
                             height: 10,
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
                                 onPressed: () {},
-                                child: const Text(
-                                  'Save',
-                                  style: TextStyle(color: Colors.grey),
+                                child: Text('Save'),
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      ColorsTravelMate.secundary
+                                          .withOpacity(0.3)),
+                                  foregroundColor: MaterialStateProperty.all(
+                                      ColorsTravelMate.secundary),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                  ),
                                 ),
                               ),
-                              const SizedBox(
-                                width: 160,
-                              ),
+                              // const SizedBox(
+                              //   width: 160,
+                              // ),
                               TextButton(
                                 onPressed: () {},
-                                child: const Text(
-                                  'Cancel',
-                                  style: TextStyle(color: Colors.red),
+                                child: const Text('Cancel'),
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.red.withOpacity(0.4)),
+                                  foregroundColor:
+                                      MaterialStateProperty.all(Colors.red),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                          TextButton.icon(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                                foregroundColor: Colors.grey,
-                                backgroundColor: Colors.white),
-                            icon: const Icon(Icons.share),
-                            label: const Text('Split expenses'),
-                          ),
-                          const Text(
-                            'TravelMate simplifies the budget handling! Add all the expenses and split with friends easily!',
-                            style: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
+                          // TextButton.icon(
+                          //   onPressed: () {},
+                          //   style: TextButton.styleFrom(
+                          //       foregroundColor: Colors.grey,
+                          //       backgroundColor: Colors.white),
+                          //   icon: const Icon(Icons.share),
+                          //   label: const Text('Split expenses'),
+                          // ),
+                          // const Text(
+                          //   'TravelMate simplifies the budget handling! Add all the expenses and split with friends easily!',
+                          //   style: TextStyle(
+                          //     color: Colors.grey,
+                          //   ),
+                          // ),
                         ],
                       ),
                     );
@@ -293,7 +352,7 @@ class CustomizeBudget extends StatelessWidget {
                                   prefixIcon: Icon(Icons.email),
                                 ),
                                 const SizedBox(
-                                  height: 40,
+                                  height: 20,
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -380,8 +439,14 @@ class CustomizeBudget extends StatelessWidget {
                                   style: TextButton.styleFrom(
                                       foregroundColor: Colors.grey,
                                       backgroundColor: Colors.white),
-                                  icon: const Icon(Icons.group_add_sharp),
-                                  label: const Text('Manage Tripmates'),
+                                  icon: const Icon(Icons.share),
+                                  label: const Text('Split expenses'),
+                                ),
+                                const Text(
+                                  'TravelMate simplifies the budget handling! Add all the expenses and split with friends easily!',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                  ),
                                 ),
                               ],
                             ),
