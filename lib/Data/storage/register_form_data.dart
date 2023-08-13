@@ -1,7 +1,7 @@
 class RegistrationFormData {
   String firstName = '';
   String lastName = '';
-  DateTime birthday = DateTime.now();
+  late DateTime birthday;
   String gender = '';
   String username = '';
   String email = '';

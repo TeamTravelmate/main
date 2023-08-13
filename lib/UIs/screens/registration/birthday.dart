@@ -16,76 +16,93 @@ class Birthday extends StatefulWidget {
 
 class _BirthdayState extends State<Birthday> {
   final _formKey = GlobalKey<FormState>();
+  
   DateTime selectedDate = DateTime.now();
 
   Future<void> _selectDate(BuildContext context) async {
-  final DateTime currentDate = DateTime.now();
-  final DateTime minDate = currentDate.subtract(const Duration(days: 365 * 13));
+    final DateTime currentDate = DateTime.now();
+    final DateTime minDate =
+        currentDate.subtract(const Duration(days: 365 * 13));
 
-  final DateTime? picked = await showDatePicker(
-    context: context,
-    initialDate: selectedDate,
-    firstDate: DateTime(1900, 8),
-    lastDate: currentDate,
-    selectableDayPredicate: (DateTime date) {
-      return date.isBefore(currentDate);
-    },
-  );
 
-  if (picked != null && picked != selectedDate) {
-    setState(() {
-      selectedDate = picked;
-    });
-
-    // Calculate age
-    int age = currentDate.year - picked.year;
-    if (currentDate.month < picked.month ||
-        (currentDate.month == picked.month && currentDate.day < picked.day)) {
-      age--;
-    }
-
-    
-
-    if (age < 13) {
-      if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("You must be at least 13 years old."),
-        ),
-      );
-    }
-
-    print(selectedDate);
-  } else if (picked != null && picked.isBefore(minDate)) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("You must be at least 13 years old."),
-      ),
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(1900, 8),
+      lastDate: currentDate,
+      selectableDayPredicate: (DateTime date) {
+        return date.isBefore(currentDate);
+      },
     );
+
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+        print("state changed to ");
+      });
+
+      // Calculate age
+      int age = currentDate.year - picked.year;
+      if (currentDate.month < picked.month ||
+          (currentDate.month == picked.month && currentDate.day < picked.day)) {
+        age--;
+      }
+
+      if (age < 13) {
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("You must be at least 13 years old."),
+          ),
+        );
+        return;
+      }
+
+      print(selectedDate);
+
+    } else {
+      print("Date not selected");
+    }
   }
-}
 
   void _nextButtonPressed() {
-  _formKey.currentState!.save();
+    _formKey.currentState!.save();
 
-  final modal = context.read<RegistrationFormProvider>();
+    final modal = context.read<RegistrationFormProvider>();
+    print("THis os");
 
-  if (modal.birthday == DateTime.now()) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Please select a date of birth."),
-      ),
+    // if (modal.birthday == DateTime.now()) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text("Please select a date of birth."),
+    //     ),
+    //   );
+    // }
+
+    // final DateTime currentDate = DateTime.now();
+    // int age = currentDate.year - modal.birthday.year;
+    // if (currentDate.month < modal.birthday.month ||
+    //     (currentDate.month == modal.birthday.month &&
+    //         currentDate.day < modal.birthday.day)) {
+    //   age--;
+    // }
+
+    // if (age < 13) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text("You must be at least 13 years old."),
+    //     ),
+    //   );
+    //   return;
+    // }
+
+    // Navigate to the next screen (replace 'NextScreen' with the actual screen you want to navigate to)
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => Gender()), // Replace with actual screen
     );
-    return;
   }
-  print(modal.birthday);
-
-  // Navigate to the next screen (replace 'NextScreen' with the actual screen you want to navigate to)
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => Gender()), // Replace with actual screen
-  );
-}
 
   @override
   Widget build(BuildContext context) {
@@ -144,35 +161,34 @@ class _BirthdayState extends State<Birthday> {
                           ),
                           const SizedBox(height: 30),
                           Consumer<RegistrationFormProvider>(
-                            builder: (context, modal, child) {
-                              return GestureDetector(
-                                onTap: () => _selectDate(context),
-                                child: AbsorbPointer(
-                                  child: TextFormField(
-                                    onChanged: (value) {
-                                      modal.updateBirthday(value as DateTime);
-                                      print(modal.birthday);
-                                    },
-                                    style: const TextStyle(
-                                        color: Color.fromARGB(255, 0, 0, 0)),
-                                    decoration: const InputDecoration(
-                                        filled: true,
-                                        fillColor: Color(0xffffffff),
-                                        hintText: 'Birthday',
-                                        hintStyle: TextStyle(color: Colors.black),
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        prefixIcon: Icon(Icons.calendar_today)),
-                                    controller: TextEditingController(
-                                      text: DateFormat('yyyy-MM-dd')
-                                          .format(selectedDate),
-                                    ),
+                              builder: (context, modal, child) {
+                            return GestureDetector(
+                              onTap: () => _selectDate(context),
+                              child: AbsorbPointer(
+                                child: TextFormField(
+                                  onChanged: (value) {
+                                    modal.updateBirthday(value as DateTime);
+                                    print(modal.birthday);
+                                  },
+                                  style: const TextStyle(
+                                      color: Color.fromARGB(255, 0, 0, 0)),
+                                  decoration: const InputDecoration(
+                                      filled: true,
+                                      fillColor: Color(0xffffffff),
+                                      hintText: 'Birthday',
+                                      hintStyle: TextStyle(color: Colors.black),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      prefixIcon: Icon(Icons.calendar_today)),
+                                  controller: TextEditingController(
+                                    text: DateFormat('yyyy-MM-dd')
+                                        .format(selectedDate),
                                   ),
                                 ),
-                              );
-                            }
-                          ),
+                              ),
+                            );
+                          }),
                           const SizedBox(height: 20),
                         ],
                       ),

@@ -9,7 +9,8 @@ import 'popularPlaces_page.dart';
 
 // ignore: camel_case_types
 class home extends StatelessWidget {
-  const home({super.key});
+  final token;
+  const home({@required this.token, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class home extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Profile(),
+                    builder: (context) => Profile(token: token),
                   ),
                 );
               },
