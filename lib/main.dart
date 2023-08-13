@@ -16,7 +16,7 @@ import 'package:main/UIs/screens/emergency_support/emergency_support_home.dart';
 import 'package:main/UIs/screens/login/login_page.dart';
 import 'package:main/UIs/widgets/bottom_nav.dart';
 import 'package:main/UIs/screens/profile/profile.dart';
-import 'UIs/screens/Trip/publicTripViewPage.dart';
+import 'UIs/screens/Trip/publicTrip/publicTripViewPage.dart';
 import 'UIs/screens/Trip/tripView_page.dart';
 import 'UIs/screens/Welcome/welcome_screen_1.dart';
 import 'UIs/screens/home/home_page.dart';
