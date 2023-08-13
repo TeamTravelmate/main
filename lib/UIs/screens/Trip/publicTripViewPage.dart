@@ -1,14 +1,17 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/Trip/joinPublicTripForm.dart';
+import 'package:main/UIs/screens/Trip/tripView_page.dart';
 import '../../themes/colors.dart';
+import '../../widgets/button_widget.dart';
 import '../../widgets/tripCard_widget.dart';
 
-class joinedTripView extends StatefulWidget {
+class publicTripView extends StatefulWidget {
   @override
-  _joinedTripViewState createState() => _joinedTripViewState();
+  _publicTripViewState createState() => _publicTripViewState();
 }
 
-class _joinedTripViewState extends State<joinedTripView> {
+class _publicTripViewState extends State<publicTripView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -49,28 +52,17 @@ class _joinedTripViewState extends State<joinedTripView> {
                                   ),
                                 ),
                               ),
-                              FloatingActionButton.small(
-                                backgroundColor: ColorsTravelMate.tertiary,
-                                onPressed: () {},
-                                child: const CircleAvatar(
-                                  backgroundColor: ColorsTravelMate.tertiary,
-                                  child: Icon(
-                                    Icons.camera_alt_outlined,
-                                    color: ColorsTravelMate.primary,
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),
                       ),
                       const Padding(
-                        padding: EdgeInsets.only(top: 250.0),
+                        padding: EdgeInsets.only(top: 150.0),
                         child: tripCard(
                           tripLocationTitle: 'Galle - Kandy\n',
                           location: '  Galle Fort, Unawatuna Beach',
                           tripDuration:
-                              '  July 3, 2023 - July 6, 2023 (3 days)',
+                          '  July 3, 2023 - July 6, 2023 (3 days)',
                           tripmates: '  Kumar & 5 others',
                         ),
                       ),
@@ -82,9 +74,9 @@ class _joinedTripViewState extends State<joinedTripView> {
                     unselectedLabelColor: ColorsTravelMate.primary,
                     labelPadding: EdgeInsets.all(0),
                     unselectedLabelStyle:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                    TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                     labelStyle:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                    TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                     tabs: [
                       Tab(
                         text: "Overview",
@@ -107,6 +99,8 @@ class _joinedTripViewState extends State<joinedTripView> {
                       ],
                     ),
                   ),
+                  buttonWidget(width: 200, labelText: 'Join Tour', path: publicTripForm()),
+                  SizedBox(height: 10,)
                 ],
               ),
             ),
@@ -126,43 +120,167 @@ class _OverviewState extends State<Overview> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AlertDialog(
-            backgroundColor: Colors.grey[300],
-            title: const Row(
+      padding: const EdgeInsets.symmetric(
+          horizontal: 20.0,
+      vertical: 10),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Available slots: 10',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  // fontStyle: FontStyle.italic,
+                  fontSize: 16
+              ),
+            ),
+            SizedBox(height: 10,),
+            Row(
               children: [
-                Icon(
-                  Icons.warning_amber_rounded,
-                  color: Colors.red,
-                  size: 30,
+                const Text('Start in:   ', style: TextStyle(fontSize: 20)),
+                Container(
+                  height: 65,
+                  width: 65,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: ColorsTravelMate.secundary,
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        '05',
+                        style: TextStyle(
+                            color: ColorsTravelMate.tertiary,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text('Days',
+                        style: TextStyle(
+                          color: ColorsTravelMate.tertiary,
+                          fontSize: 16,),),
+                    ],
+                  ),
                 ),
-                SizedBox(
-                  width: 6,
+                const SizedBox(width: 4),
+                Container(
+                  height: 65,
+                  width: 65,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: ColorsTravelMate.secundary,
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        '12',
+                        style: TextStyle(
+                            color: ColorsTravelMate.tertiary,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text('Hours',
+                        style: TextStyle(
+                          color: ColorsTravelMate.tertiary,
+                          fontSize: 16,),),
+                    ],
+                  ),
                 ),
-                Text(
-                  "We need more water bottles.\nMake sure to bring at least 1L\nwith you.",
-                  style: TextStyle(fontSize: 12),
+                const SizedBox(width: 4),
+                Container(
+                  height: 65,
+                  width: 65,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: ColorsTravelMate.secundary,
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        '30',
+                        style: TextStyle(
+                            color: ColorsTravelMate.tertiary,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text('Mins',
+                        style: TextStyle(
+                          color: ColorsTravelMate.tertiary,
+                          fontSize: 16,),),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Container(
+                  height: 65,
+                  width: 65,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: ColorsTravelMate.secundary,
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        '10',
+                        style: TextStyle(
+                            color: ColorsTravelMate.tertiary,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text('Sec',
+                        style: TextStyle(
+                          color: ColorsTravelMate.tertiary,
+                          fontSize: 16,),),
+                    ],
+                  ),
                 ),
               ],
             ),
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset(
-                  'assets/profile.png',
-                  width: 20,
-                  height: 20,
+            SizedBox(height: 10,),
+            Container(
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.symmetric(
+                vertical: 10
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.blueGrey,
+              ),
+              child: Text(
+                'Please bring enough water bottles!',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.white
                 ),
-                const Text('Kumara Gamage', style: TextStyle(fontSize: 11)),
-                const Text('2:30 PM', style: TextStyle(fontSize: 11)),
-                const Text('today', style: TextStyle(fontSize: 11)),
-              ],
+              ),
             ),
-          )
-        ],
+            Container(
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.symmetric(
+                  vertical: 10
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.blueGrey,
+              ),
+              child: Text(
+                'Make sure to bring caps, hats or umbrellas as it will be sunny there!',
+                style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -269,183 +387,179 @@ class _BudgetState extends State<Budget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
-      child: Column(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Total Budget Per Person: Rs.3500',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                  Text(
-                    'Total Budget: Rs.70000',
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                  SizedBox(height: 15,),
-                  SingleChildScrollView(
-                    child: Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 20
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Food',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              ),
-                              Text(
-                                'Rs.1000',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Breaksfast - ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12
-                                ),
-                              ),
-                              Text(
-                                'Rs. 300 ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Lunch - ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12
-                                ),
-                              ),
-                              Text(
-                                'Rs. 400 ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Dinner - ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12
-                                ),
-                              ),
-                              Text(
-                                'Rs. 300 ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Accomodation',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              ),
-                              Text(
-                                'Rs.800',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Transport',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              ),
-                              Text(
-                                'Rs.700',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Tour Guide Fee',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              ),
-                              Text(
-                                'Rs.1000',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                ]
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Total Budget Per Person: Rs.3500',
+              style: TextStyle(
+                fontSize: 18,
+              ),
             ),
-          )
-        ],
-      ),
+            Text(
+              'Total Budget: Rs.70000',
+              style: TextStyle(
+                fontSize: 15,
+              ),
+            ),
+            SizedBox(height: 15,),
+            SingleChildScrollView(
+              child: Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 20
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Food',
+                          style: TextStyle(
+                              color: ColorsTravelMate.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16
+                          ),
+                        ),
+                        Text(
+                          'Rs.1000',
+                          style: TextStyle(
+                              color: ColorsTravelMate.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Breaksfast - ',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12
+                          ),
+                        ),
+                        Text(
+                          'Rs. 300 ',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Lunch - ',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12
+                          ),
+                        ),
+                        Text(
+                          'Rs. 400 ',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Dinner - ',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12
+                          ),
+                        ),
+                        Text(
+                          'Rs. 300 ',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Accomodation',
+                          style: TextStyle(
+                              color: ColorsTravelMate.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16
+                          ),
+                        ),
+                        Text(
+                          'Rs.800',
+                          style: TextStyle(
+                              color: ColorsTravelMate.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Transport',
+                          style: TextStyle(
+                              color: ColorsTravelMate.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16
+                          ),
+                        ),
+                        Text(
+                          'Rs.700',
+                          style: TextStyle(
+                              color: ColorsTravelMate.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Tour Guide Fee',
+                          style: TextStyle(
+                              color: ColorsTravelMate.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16
+                          ),
+                        ),
+                        Text(
+                          'Rs.1000',
+                          style: TextStyle(
+                              color: ColorsTravelMate.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+        ]
+        ),
+      )
     );
   }
 }
@@ -470,7 +584,7 @@ class _ExploreState extends State<Explore> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(  
+                  Row(
                     children: [
                       Icon(
                         Icons.hotel,
@@ -506,7 +620,7 @@ class _ExploreState extends State<Explore> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(  
+                  Row(
                     children: [
                       Icon(
                         Icons.restaurant,
@@ -542,7 +656,7 @@ class _ExploreState extends State<Explore> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(  
+                  Row(
                     children: [
                       Icon(
                         Icons.local_activity,
@@ -603,8 +717,8 @@ class _PeopleState extends State<People> {
                     Text(
                       'A. M. Perera',
                       style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
+                        fontSize: 12,
+                        color: Colors.black
                       ),
                     ),
                   ],
