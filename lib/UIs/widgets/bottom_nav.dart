@@ -88,5 +88,41 @@ class _BottomNavState extends State<BottomNav> {
             ),
           ],
         ));
+        backgroundColor: Colors.white,
+        body: pages[currIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          unselectedFontSize: 0,
+          backgroundColor: Colors.white,
+          selectedItemColor: Colors.blueGrey,
+          unselectedItemColor: Colors.blueGrey.withOpacity(0.5),
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          elevation: 0,
+          currentIndex: currIndex,
+          onTap: onTap,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.apps),
+              label: "Home",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: "Search",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bookmark),
+              label: "Trip planning",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_bag_outlined),
+              label: "Marketplace",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.chat_bubble_outline_outlined),
+              label: "Chat",
+            ),
+          ],
+        ));
   }
 }

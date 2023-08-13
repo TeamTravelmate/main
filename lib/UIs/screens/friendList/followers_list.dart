@@ -10,7 +10,7 @@ class FollowersList extends StatefulWidget {
   _FollowersState createState() => _FollowersState();
 }
 
-class _FollowersState extends State<FollowersList>{
+class _FollowersState extends State<FollowersList> {
   List<User> _followers = [];
   String _userToken = '';
   User _user = User(avatar: '', name: '', email: '');
@@ -59,6 +59,4 @@ class _FollowersState extends State<FollowersList>{
       ),
     );
   }
-
-
 }

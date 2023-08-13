@@ -9,7 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  intl: ^0.17.0
   http: ^1.1.0
   url_launcher: ^6.1.11
   flutter_otp_text_field: ^1.1.0+2
@@ -44,6 +43,11 @@ dependencies:
   provider: ^6.0.5
   shared_preferences: ^2.2.0
   jwt_decoder: ^2.0.1
+  get: ^4.6.5
+  geolocator: ^9.0.2
+  intl: ^0.18.1
+  geocoding: ^2.0.4
+  sleek_circular_slider: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -140,6 +144,13 @@ flutter:
         - assets/tourPlan.jpg
         - assets/gregory lake.png
         - assets/jungle beach.jpg
+        - assets/icons/
+        - assets/weather/
+        - assets/gregory.jpg
+        - assets/gregoryLake.jpg
+        - assets/cycling.jpg
+        - assets/safari.jpg
+
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

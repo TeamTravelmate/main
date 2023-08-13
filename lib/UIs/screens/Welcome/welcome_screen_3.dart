@@ -6,7 +6,7 @@ import 'package:main/UIs/screens/Welcome/welcome_screen_1.dart';
 import 'package:main/UIs/themes/colors.dart';
 
 class WelcomeScreenThree extends StatelessWidget {
- const WelcomeScreenThree({super.key});
+  const WelcomeScreenThree({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,21 +21,18 @@ class WelcomeScreenThree extends StatelessWidget {
         child: SafeArea(
           child: Center(
             child: Column(
-              
               children: [
-               
-
-
-                const SizedBox(height:200,),
-                 Column(
+                const SizedBox(
+                  height: 200,
+                ),
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                  SizedBox(
+                    SizedBox(
                       width: 150, // Replace with your desired width
                       child: Image.asset('assets/img/TravelMate_Logo.png'),
-                  ),
-
+                    ),
                     const Text(
                       'Let\'s start',
                       textAlign: TextAlign.center,
@@ -45,25 +42,22 @@ class WelcomeScreenThree extends StatelessWidget {
                         fontSize: 28,
                       ),
                     ),
-
                     const Text(
                       'Wandering in Sri Lanka',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: 'Qwingley',                        
+                        fontFamily: 'Qwingley',
                         color: ColorsTravelMate.primary,
                         fontWeight: FontWeight.bold,
                         fontSize: 23,
-                     ) ,
+                      ),
                     ),
                   ],
                 ),
-
-                
-
-                const SizedBox(height: 250,),
-
-                 GestureDetector(
+                const SizedBox(
+                  height: 250,
+                ),
+                GestureDetector(
                   onTap: () {
                     // Navigate to the other screen here
                     Navigator.push(
@@ -75,7 +69,7 @@ class WelcomeScreenThree extends StatelessWidget {
                   },
                   child: SvgPicture.asset('assets/svg/next-btn.svg'),
                 ),
-                 const SizedBox(height: 55),
+                const SizedBox(height: 55),
                 SvgPicture.asset('assets/svg/screen-steps.svg'),
               ],
             ),

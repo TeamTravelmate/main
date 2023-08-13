@@ -3,10 +3,16 @@ import 'package:main/UIs/screens/login/setPassword_page.dart';
 import '../../themes/colors.dart';
 import '../../widgets/button_widget.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'login_page.dart';
 
-class PasswordReset extends StatelessWidget {
+class PasswordReset extends StatefulWidget {
   const PasswordReset({super.key});
 
+  @override
+  State<PasswordReset> createState() => _PasswordResetState();
+}
+
+class _PasswordResetState extends State<PasswordReset> {
   @override
   Widget build(BuildContext context) {
     Text text;
@@ -81,9 +87,7 @@ class PasswordReset extends StatelessWidget {
               path: NewPassword(),
             ),
             TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: () {},
               child: text = Text.rich(
                 TextSpan(
                   text: 'Didn\'t receive the code? ',
@@ -101,7 +105,10 @@ class PasswordReset extends StatelessWidget {
             ),
             TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()));
                 },
                 child: Text(
                   'Back to Login',

@@ -3,7 +3,7 @@ import 'package:main/UIs/screens/Trip/tripView_page.dart';
 import '../../themes/colors.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/inputField_widget.dart';
-import 'publicTripsAll_page.dart';
+import 'publicTrip/publicTripsAll_page.dart';
 import 'tripPlanning2_page.dart';
 
 // ignore: must_be_immutable, camel_case_types

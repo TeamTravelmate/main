@@ -61,9 +61,50 @@ class CustomizeBudget extends StatelessWidget {
                           const SizedBox(
                             height: 40,
                           ),
-                          const Text('Set Budget', style: TextStyle(fontSize: 20)),
+                          const Text('Set Budget',
+                              style: TextStyle(fontSize: 20)),
+                          const Text(
+                            'Add all your expenses here! TravelMate simplifies the budget handling for you!',
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
                           const SizedBox(
                             height: 20,
+                          ),
+                          // DropdownButton<String>(
+                          //   value: 'Category',
+                          //   items: <String>['Food', 'Accommodation', 'Travel']
+                          //       .map<DropdownMenuItem<String>>((String value) {
+                          //     return DropdownMenuItem<String>(
+                          //       value: value,
+                          //       child: Text(
+                          //         value,
+                          //         style: const TextStyle(fontSize: 14),
+                          //       ),
+                          //     );
+                          //   }).toList(),
+                          //   onChanged: (String? newValue) {
+                          //     // setState(() {
+                          //     //   dropdownValue = newValue!;
+                          //     // });
+                          //   },
+                          // ),
+                          const TextFieldWidget(
+                            labelText: 'Category',
+                            hintText: 'Food',
+                            prefixIcon: Icon(Icons.category_outlined),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const TextFieldWidget(
+                            labelText: 'Description',
+                            hintText: 'lunch',
+                            prefixIcon: Icon(Icons.description_outlined),
+                          ),
+                          const SizedBox(
+                            height: 10,
                           ),
                           const TextFieldWidget(
                             labelText: 'Enter Amount',
@@ -74,41 +115,60 @@ class CustomizeBudget extends StatelessWidget {
                             height: 10,
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
                                 onPressed: () {},
-                                child: const Text(
-                                  'Save',
-                                  style: TextStyle(color: Colors.grey),
+                                child: Text('Save'),
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      ColorsTravelMate.secundary
+                                          .withOpacity(0.3)),
+                                  foregroundColor: MaterialStateProperty.all(
+                                      ColorsTravelMate.secundary),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                  ),
                                 ),
                               ),
-                              const SizedBox(
-                                width: 160,
-                              ),
+                              // const SizedBox(
+                              //   width: 160,
+                              // ),
                               TextButton(
                                 onPressed: () {},
-                                child: const Text(
-                                  'Cancel',
-                                  style: TextStyle(color: Colors.red),
+                                child: const Text('Cancel'),
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.red.withOpacity(0.4)),
+                                  foregroundColor:
+                                      MaterialStateProperty.all(Colors.red),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                          TextButton.icon(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                                foregroundColor: Colors.grey,
-                                backgroundColor: Colors.white),
-                            icon: const Icon(Icons.share),
-                            label: const Text('Split expenses'),
-                          ),
-                          const Text(
-                            'TravelMate simplifies the budget handling! Add all the expenses and split with friends easily!',
-                            style: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
+                          // TextButton.icon(
+                          //   onPressed: () {},
+                          //   style: TextButton.styleFrom(
+                          //       foregroundColor: Colors.grey,
+                          //       backgroundColor: Colors.white),
+                          //   icon: const Icon(Icons.share),
+                          //   label: const Text('Split expenses'),
+                          // ),
+                          // const Text(
+                          //   'TravelMate simplifies the budget handling! Add all the expenses and split with friends easily!',
+                          //   style: TextStyle(
+                          //     color: Colors.grey,
+                          //   ),
+                          // ),
                         ],
                       ),
                     );
@@ -211,7 +271,8 @@ class CustomizeBudget extends StatelessWidget {
                                         children: [
                                           FloatingActionButton(
                                             onPressed: () {},
-                                            backgroundColor: const Color(0xffE0E0E0),
+                                            backgroundColor:
+                                                const Color(0xffE0E0E0),
                                             foregroundColor:
                                                 const Color.fromARGB(
                                                     255, 69, 68, 68),
@@ -291,7 +352,7 @@ class CustomizeBudget extends StatelessWidget {
                                   prefixIcon: Icon(Icons.email),
                                 ),
                                 const SizedBox(
-                                  height: 40,
+                                  height: 20,
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -300,7 +361,8 @@ class CustomizeBudget extends StatelessWidget {
                                       children: [
                                         FloatingActionButton(
                                           onPressed: () {},
-                                          backgroundColor: const Color(0xffE0E0E0),
+                                          backgroundColor:
+                                              const Color(0xffE0E0E0),
                                           foregroundColor: const Color.fromARGB(
                                               255, 69, 68, 68),
                                           child: const Icon(Icons.link),
@@ -324,7 +386,8 @@ class CustomizeBudget extends StatelessWidget {
                                       children: [
                                         FloatingActionButton(
                                           onPressed: () {},
-                                          backgroundColor: const Color(0xffE0E0E0),
+                                          backgroundColor:
+                                              const Color(0xffE0E0E0),
                                           foregroundColor: const Color.fromARGB(
                                               255, 69, 68, 68),
                                           child: const Icon(Icons.message),
@@ -348,7 +411,8 @@ class CustomizeBudget extends StatelessWidget {
                                       children: [
                                         FloatingActionButton(
                                           onPressed: () {},
-                                          backgroundColor: const Color(0xffE0E0E0),
+                                          backgroundColor:
+                                              const Color(0xffE0E0E0),
                                           foregroundColor: const Color.fromARGB(
                                               255, 69, 68, 68),
                                           child: const Icon(Icons.upload),
@@ -375,8 +439,14 @@ class CustomizeBudget extends StatelessWidget {
                                   style: TextButton.styleFrom(
                                       foregroundColor: Colors.grey,
                                       backgroundColor: Colors.white),
-                                  icon: const Icon(Icons.group_add_sharp),
-                                  label: const Text('Manage Tripmates'),
+                                  icon: const Icon(Icons.share),
+                                  label: const Text('Split expenses'),
+                                ),
+                                const Text(
+                                  'TravelMate simplifies the budget handling! Add all the expenses and split with friends easily!',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                  ),
                                 ),
                               ],
                             ),
@@ -392,106 +462,107 @@ class CustomizeBudget extends StatelessWidget {
                     height: 10,
                   ),
                   InfoPopupWidget(
-                customContent: Container(
-                  decoration: BoxDecoration(
-                    color: ColorsTravelMate.tertiary,
-                    border: Border.all(
-                      color: ColorsTravelMate.primary,
-                      style: BorderStyle.solid,
-                      width: 1,
+                    customContent: Container(
+                      decoration: BoxDecoration(
+                        color: ColorsTravelMate.tertiary,
+                        border: Border.all(
+                          color: ColorsTravelMate.primary,
+                          style: BorderStyle.solid,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: const Text(
+                        'View & share the budget \nwith your trip mates by \ncategory or day by day \nexpenses.',
+                        style: TextStyle(
+                          color: ColorsTravelMate.primary,
+                          fontSize: 12,
+                        ),
+                      ),
                     ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  child: const Text(
-                    'View & share the budget \nwith your trip mates by \ncategory or day by day \nexpenses.',
-                    style: TextStyle(
+                    arrowTheme: const InfoPopupArrowTheme(
                       color: ColorsTravelMate.primary,
-                      fontSize: 12,
+                      arrowDirection: ArrowDirection.up,
+                    ),
+                    dismissTriggerBehavior:
+                        PopupDismissTriggerBehavior.onTapArea,
+                    areaBackgroundColor: Colors.transparent,
+                    indicatorOffset: Offset.zero,
+                    contentOffset: Offset.zero,
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          builder: (BuildContext context) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 50, vertical: 15),
+                              child: Column(
+                                // mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Divider(
+                                    color: Colors.grey,
+                                    thickness: 4,
+                                    indent: 110,
+                                    endIndent: 110,
+                                  ),
+                                  const SizedBox(
+                                    height: 50,
+                                  ),
+                                  const Text(
+                                    'Spending Breakdown',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  const SizedBox(
+                                    height: 60,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {},
+                                        style: TextButton.styleFrom(
+                                          backgroundColor: Colors.grey.shade200,
+                                          foregroundColor: const Color.fromARGB(
+                                              255, 69, 68, 68),
+                                        ),
+                                        child: const Text('Category'),
+                                      ),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {},
+                                        style: TextButton.styleFrom(
+                                          backgroundColor: Colors.white,
+                                          foregroundColor: const Color.fromARGB(
+                                              255, 69, 68, 68),
+                                        ),
+                                        child: const Text('Day by Day'),
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 60,
+                                  ),
+                                  const Text(
+                                    'No expenses added',
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      backgroundColor: ColorsTravelMate.primary,
+                      foregroundColor: ColorsTravelMate.tertiary,
+                      child: const Icon(Icons.bar_chart_outlined),
                     ),
                   ),
-                ),
-                arrowTheme: const InfoPopupArrowTheme(
-                  color: ColorsTravelMate.primary,
-                  arrowDirection: ArrowDirection.up,
-                ),
-                dismissTriggerBehavior: PopupDismissTriggerBehavior.onTapArea,
-                areaBackgroundColor: Colors.transparent,
-                indicatorOffset: Offset.zero,
-                contentOffset: Offset.zero,
-                child: FloatingActionButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                        builder: (BuildContext context) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 50, vertical: 15),
-                            child: Column(
-                              // mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Divider(
-                                  color: Colors.grey,
-                                  thickness: 4,
-                                  indent: 110,
-                                  endIndent: 110,
-                                ),
-                                const SizedBox(
-                                  height: 50,
-                                ),
-                                const Text(
-                                  'Spending Breakdown',
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                const SizedBox(
-                                  height: 60,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      style: TextButton.styleFrom(
-                                        backgroundColor: Colors.grey.shade200,
-                                        foregroundColor:
-                                            const Color.fromARGB(255, 69, 68, 68),
-                                      ),
-                                      child: const Text('Category'),
-                                    ),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      style: TextButton.styleFrom(
-                                        backgroundColor: Colors.white,
-                                        foregroundColor: const Color.fromARGB(
-                                            255, 69, 68, 68),
-                                      ),
-                                      child: const Text('Day by Day'),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 60,
-                                ),
-                                const Text(
-                                  'No expenses added',
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    },
-                    backgroundColor: ColorsTravelMate.primary,
-                    foregroundColor: ColorsTravelMate.tertiary,
-                    child: const Icon(Icons.bar_chart_outlined),
-                  ),
-              ),  
                 ],
               ),
             )

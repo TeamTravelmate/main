@@ -21,18 +21,18 @@ class SearchPlace extends StatelessWidget {
             height: 50,
             width: 300,
             child: TextField(
-                  textInputAction: TextInputAction.search,
-                  onChanged: (value) {
-                    //Do something with the user input.
-                  },
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                  ),
+              textInputAction: TextInputAction.search,
+              onChanged: (value) {
+                //Do something with the user input.
+              },
+              decoration: InputDecoration(
+                hintText: 'Search',
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.0),
                 ),
+              ),
+            ),
           ),
         ),
       ),
@@ -71,10 +71,11 @@ class SearchPlace extends StatelessWidget {
 }
 
 class PlaceCard extends StatelessWidget {
-  const PlaceCard({super.key,
-  required this.imagePath,
-  required this.title,
-  required this.subtitle,
+  const PlaceCard({
+    super.key,
+    required this.imagePath,
+    required this.title,
+    required this.subtitle,
   });
 
   final String imagePath;
