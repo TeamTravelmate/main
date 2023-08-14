@@ -120,7 +120,7 @@ class CustomFacilities extends StatelessWidget {
                 areaBackgroundColor: Colors.transparent,
                 indicatorOffset: Offset.zero,
                 contentOffset: Offset.zero,
-                child: const Facility(
+                child: Facility(
                     widgetName: CustomizeDestination(),
                     title: 'Destinations',
                     icon: Icons.location_city_outlined),
@@ -293,7 +293,7 @@ class CustomFacilities extends StatelessWidget {
                 indicatorOffset: Offset.zero,
                 contentOffset: Offset.zero,
                 child: const Facility(
-                    widgetName: CustomizeResturants(),
+                    widgetName: Placeholder(),
                     title: 'Resturants',
                     icon: Icons.restaurant_menu),
               ),

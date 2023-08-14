@@ -79,7 +79,7 @@ class _joinedTripViewState extends State<joinedTripView> {
                           ),
                         ),
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(top: 250.0),
                         child: tripCard(
                           tripLocationTitle: 'Galle - Kandy\n',

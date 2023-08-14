@@ -1,14 +1,14 @@
 import 'dart:convert';
+import 'package:google_places_flutter/model/prediction.dart';
+import 'package:main/Data/env/apiKeys.dart';
 
 import 'package:flutter/material.dart';
 import 'package:main/Domain/models/trip.dart';
 import 'package:main/UIs/screens/Trip/tripView_page.dart';
 import '../../themes/colors.dart';
-import '../../widgets/button_widget.dart';
-import '../../widgets/inputField_widget.dart';
 import 'publicTrip/publicTripsAll_page.dart';
-import 'tripPlanning2_page.dart';
 import 'package:http/http.dart' as http;
+import 'package:google_places_flutter/google_places_flutter.dart';
 
 // ignore: must_be_immutable, camel_case_types
 class trip extends StatelessWidget {
@@ -105,7 +105,7 @@ class _CustomizeState extends State<Customize> {
         body: jsonEncode(trip.toJson()),
       );
       print(response.statusCode);
-      
+
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -117,7 +117,8 @@ class _CustomizeState extends State<Customize> {
         var tripId = responseData['trip']['id'];
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => joinedTripView(tripId: tripId)),
+          MaterialPageRoute(
+              builder: (context) => joinedTripView(tripId: tripId)),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -138,20 +139,40 @@ class _CustomizeState extends State<Customize> {
           key: _formKey,
           child: Column(
             children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Where to go?',
-                  hintText: 'Eg. Galle, Trincomalee',
-                  prefixIcon: Icon(Icons.location_on),
+              // TextFormField(
+              //   decoration: const InputDecoration(
+              //     labelText: 'Where to go?',
+              //     hintText: 'Eg. Galle, Trincomalee',
+              //     prefixIcon: Icon(Icons.location_on),
+              //   ),
+              //   controller: _destinationController,
+              //   validator: (value) {
+              //     if (value!.isEmpty) {
+              //       return 'Please enter a destination';
+              //     }
+              //     return null;
+              //   },
+              // ),
+              GooglePlaceAutoCompleteTextField(
+                textEditingController: _destinationController,
+                googleAPIKey: mapApi,
+                countries: ["LK"],
+                // isCrossBtnShown: false,
+                inputDecoration: InputDecoration(
+                  hintText: "Where to go?",
+                  prefixIcon: const Icon(Icons.location_on),
                 ),
-                controller: _destinationController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter a destination';
-                  }
-                  return null;
+                boxDecoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  
+                ),
+                itemClick: (Prediction prediction) {
+                  _destinationController.text = prediction.description!;
                 },
+                isLatLngRequired: false,
               ),
+
               const SizedBox(height: 20),
               TextFormField(
                 decoration: const InputDecoration(
@@ -269,7 +290,6 @@ class _CustomizeState extends State<Customize> {
               const SizedBox(
                 height: 20,
               ),
-             
               const SizedBox(
                 height: 20,
               ),
