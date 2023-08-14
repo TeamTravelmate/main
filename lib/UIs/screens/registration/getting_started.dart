@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/Welcome/welcome.dart';
 
 class Getting_Started extends StatelessWidget {
   const Getting_Started({Key? key});
@@ -258,7 +259,7 @@ class Getting_Started extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Getting_Started(),
+                                  builder: (context) => const Welcome(),
                                 ),
                               );
                             },

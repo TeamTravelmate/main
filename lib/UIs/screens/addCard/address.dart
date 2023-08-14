@@ -1,5 +1,6 @@
 import 'package:main/UIs/screens/addCard/paycard.dart';
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/vendor/checkout.dart';
 
 class Address extends StatelessWidget {
   const Address({super.key});
@@ -290,7 +291,7 @@ class Address extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>  PayCard()
+                              builder: (context) =>  Checkout()
                           )
                       );
                     },

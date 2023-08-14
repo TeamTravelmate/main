@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../themes/colors.dart';
 import '../../widgets/button_widget.dart';
+import '../Marketplace/marketplace_page.dart';
+import '../vendor/home_page.dart';
 import 'customizeActivities_page.dart';
 import 'customizeBudget_page.dart';
 import 'customizeDestination_page.dart';
@@ -9,7 +11,7 @@ import 'customizeResturants_page.dart';
 import 'customizeToDo_page.dart';
 import 'customizeVehicles_page.dart';
 import 'customizeWeather_page.dart';
-import 'publicTripsAll_page.dart';
+import 'publicTrip/publicTripsAll_page.dart';
 import 'tripView_page.dart';
 import 'package:info_popup/info_popup.dart';
 
@@ -82,8 +84,9 @@ class CustomFacilities extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
-      width: double.infinity,
+      width: size.width * 0.95,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -122,7 +125,7 @@ class CustomFacilities extends StatelessWidget {
                     title: 'Destinations',
                     icon: Icons.location_city_outlined),
               ),
-              const SizedBox(width: 20),
+              const SizedBox(width: 25),
               InfoPopupWidget(
                 customContent: Container(
                   decoration: BoxDecoration(
@@ -155,7 +158,7 @@ class CustomFacilities extends StatelessWidget {
                     title: 'Weather',
                     icon: Icons.cloud),
               ),
-              const SizedBox(width: 30),
+              const SizedBox(width: 25),
               InfoPopupWidget(
                 customContent: Container(
                   decoration: BoxDecoration(
@@ -188,7 +191,7 @@ class CustomFacilities extends StatelessWidget {
                     title: 'Hotels',
                     icon: Icons.hotel),
               ),
-              const SizedBox(width: 30),
+              const SizedBox(width: 25),
               InfoPopupWidget(
                 customContent: Container(
                   decoration: BoxDecoration(
@@ -260,7 +263,7 @@ class CustomFacilities extends StatelessWidget {
                     title: 'Vehicles',
                     icon: Icons.car_rental_outlined),
               ),
-              const SizedBox(width: 30),
+              const SizedBox(width: 25),
               InfoPopupWidget(
                 customContent: Container(
                   decoration: BoxDecoration(
@@ -294,8 +297,7 @@ class CustomFacilities extends StatelessWidget {
                     title: 'Resturants',
                     icon: Icons.restaurant_menu),
               ),
-
-              const SizedBox(width: 30),
+              const SizedBox(width: 25),
               InfoPopupWidget(
                 customContent: Container(
                   decoration: BoxDecoration(
@@ -329,7 +331,7 @@ class CustomFacilities extends StatelessWidget {
                     title: 'Activities',
                     icon: Icons.hiking),
               ),
-              const SizedBox(width: 30),
+              const SizedBox(width: 25),
               InfoPopupWidget(
                 customContent: Container(
                   decoration: BoxDecoration(
@@ -371,34 +373,51 @@ class CustomFacilities extends StatelessWidget {
           ),
           Column(
             children: [
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20, bottom: 20),
-                  child: ListTile(
-                    leading: const Icon(Icons.shopping_bag_rounded,
-                        color: ColorsTravelMate.secundary, size: 60),
-                    title: const Text(
-                      'Travel Essentials Marketplace',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: ColorsTravelMate.primary),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomePage(),
                     ),
-                    subtitle: const Text(
-                      '\nExplore, Plan, and Embark! \n All Tour Essentials in One Convenient place!',
-                      style: TextStyle(
-                        fontSize: 13,
+                  );
+                },
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20, bottom: 20),
+                    child: ListTile(
+                      leading: const Icon(Icons.shopping_bag_rounded,
+                          color: ColorsTravelMate.secundary, size: 60),
+                      title: const Text(
+                        'Travel Essentials Marketplace',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: ColorsTravelMate.primary),
                       ),
-                    ),
-                    trailing: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 60, 0, 10),
-                      child: ElevatedButton(
-                          onPressed: () {},
-                          child: const Icon(
-                            Icons.arrow_circle_right_rounded,
-                            size: 40,
-                            color: ColorsTravelMate.primary,
-                          )),
+                      subtitle: const Text(
+                        '\nExplore, Plan, and Embark! \n All Tour Essentials in One Convenient place!',
+                        style: TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                      trailing: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 60, 0, 10),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const HomePage(),
+                                ),
+                              );
+                            },
+                            child: const Icon(
+                              Icons.arrow_circle_right_rounded,
+                              size: 40,
+                              color: ColorsTravelMate.primary,
+                            )),
+                      ),
                     ),
                   ),
                 ),

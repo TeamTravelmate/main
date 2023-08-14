@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../../Domain/models/tripLuq.dart';
 import '../../../Domain/models/user.dart';
+import 'package:timelines/timelines.dart';
 import '../../widgets/tripCard_widget.dart';
 
 class MapToDoScreen extends StatefulWidget {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:main/UIs/screens/Trip/customizeDestination_page.dart';
 import 'package:main/UIs/screens/Trip/customizeResturants_page.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: GoogleFonts.poppins().fontFamily,
@@ -27,3 +28,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

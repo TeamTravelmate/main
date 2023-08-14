@@ -39,7 +39,7 @@ class NewPost extends StatelessWidget {
 
                 Expanded(
                   child: Container(
-                    width:50.0,
+                    width:30.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                       border: Border.all(color: Colors.black, width: 2),
@@ -81,6 +81,8 @@ class NewPost extends StatelessWidget {
               ],
             ),
 
+            SizedBox(height:10.0),
+
 
             Container(
               padding: EdgeInsets.symmetric(vertical: 10), // Set your desired margin using EdgeInsets
@@ -93,26 +95,121 @@ class NewPost extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.only(top: 20.0, left: 15.0), // Adjust the value as per your requirement
+                  padding: EdgeInsets.only(top: 20.0), // Adjust the value as per your requirement
                   child: Column(
                     children: [
                       Container(
-                        height: 50.0,
+                        height: 100.0,
+                        width: double.infinity,
                         child: TextField(
                           decoration: InputDecoration.collapsed(hintText: "What's your travel experience"),
                         ),
                       ),
-                      Divider(
-                        height: 1, // Set the height of the divider
-                        color: Colors.grey, // Set the color of the divider
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 10), // Set your desired margin using EdgeInsets
+                        child: Divider(
+                          height: 1, // Set the height of the divider
+                          color: Colors.grey, // Set the color of the divider
+                        ),
                       ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.min,
+                        children:[
+
+                          Container(
+                            margin: EdgeInsets.only(left:5.0, top:16.0),
+                            child:
+                            Transform.scale(
+                              scale: 0.8,
+                              child: FloatingActionButton(
+                                onPressed: () {
+                                  // Your button's onPressed function here...
+                                },
+                                child: Icon(Icons.camera_alt, size:30),
+                                backgroundColor: Color(0xFF0C1C33),
+                                foregroundColor: Colors.white,// Replace this with your desired icon
+                              ),
+                            ),
+                          ),
+
+
+
+                          Container(
+                            margin: EdgeInsets.only(left:5.0, top:16.0),
+                            child:
+                            Transform.scale(
+                              scale: 0.8,
+                              child: FloatingActionButton(
+                                onPressed: () {
+                                  // Your button's onPressed function here...
+                                },
+                                child: Icon(Icons.photo, size:30),
+                                backgroundColor: Color(0xFF0C1C33),
+                                foregroundColor: Colors.white,// Replace this with your desired icon
+                              ),
+                            ),
+                          ),
+
+                          Container(
+                            margin: EdgeInsets.only(left:5.0, top:16.0),
+                            child:
+                            Transform.scale(
+                              scale: 0.8,
+                              child: FloatingActionButton(
+                                onPressed: () {
+                                  // Your button's onPressed function here...
+                                },
+                                child: Icon(Icons.location_pin, size:30),
+                                backgroundColor: Color(0xFF0C1C33),
+                                foregroundColor: Colors.white,// Replace this with your desired icon
+                              ),
+                            ),
+                          ),
+
+                          Container(
+                            margin: EdgeInsets.only(left:5.0, top:16.0),
+                            child:
+                            Transform.scale(
+                              scale: 0.8,
+                              child: FloatingActionButton(
+                                onPressed: () {
+                                  // Your button's onPressed function here...
+                                },
+                                child: Icon(Icons.emoji_emotions_outlined, size:30),
+                                backgroundColor: Color(0xFF0C1C33),
+                                foregroundColor: Colors.white,// Replace this with your desired icon
+                              ),
+                            ),
+                          ),
+
+
+                          Container(
+                            margin: EdgeInsets.only(left:5.0, top:16.0),
+                            child: FilledButton(
+                              child: Text('Post', style: TextStyle(fontSize: 15.0)),
+                              onPressed: () {
+
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Color(0xFF0C1C33),
+                                minimumSize: Size(100.0, 40.0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                              ),
+                            ),
+                          ),
+
+
+                        ]
+                      )
                     ],
                   ),
                 ),
               ),
             )
-
-
           ],
         ),
       ),

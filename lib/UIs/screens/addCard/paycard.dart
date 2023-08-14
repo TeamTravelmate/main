@@ -477,12 +477,12 @@ class PayCardState extends State<PayCard> {
                                   ),
                                   child: ElevatedButton(
                                       onPressed: (){
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) =>  PayCard()
-                                        //     )
-                                        // );
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>  PayCard()
+                                            )
+                                        );
                                       },
                                       style: ElevatedButton.styleFrom(
                                         onPrimary: Colors.white,

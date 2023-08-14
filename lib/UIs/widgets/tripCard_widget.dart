@@ -4,14 +4,14 @@ import '../themes/colors.dart';
 
 // ignore: camel_case_types
 class tripCard extends StatelessWidget {
-  const tripCard({
-    super.key,
-    required this.tripLocationTitle,
-    required this.location,
-    required this.tripDuration,
-    required this.tripmates,
-    this.isMap = false,
+  const tripCard({super.key,
+  required this.tripLocationTitle,
+  required this.location,
+  required this.tripDuration,
+  required this.tripmates,
+  this.isMap = false,
   });
+
   //another constructor for the map button
   const tripCard.map({
     super.key,
@@ -22,6 +22,7 @@ class tripCard extends StatelessWidget {
     this.isMap = true,
   });
 
+
   final String tripLocationTitle;
   final String location;
   final String tripDuration;
@@ -30,6 +31,7 @@ class tripCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     var mapBtn = Padding(
       padding: const EdgeInsets.only(bottom: 40.0),
       child: FloatingActionButton.small(
@@ -51,7 +53,7 @@ class tripCard extends StatelessWidget {
     return Card(
       child: SizedBox(
         height: 150,
-        width: double.infinity,
+        width: size.width * 0.95,
         child: ListTile(
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,7 +61,7 @@ class tripCard extends StatelessWidget {
               Text(
                 tripLocationTitle,
                 style: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   color: ColorsTravelMate.primary,
                   fontWeight: FontWeight.bold,
                 ),

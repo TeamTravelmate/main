@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/addCard/address.dart';
+import 'package:main/UIs/screens/addCard/paycard.dart';
 import 'package:main/UIs/screens/vendor/success.dart';
 
 class Checkout extends StatelessWidget{
@@ -40,16 +42,39 @@ class Checkout extends StatelessWidget{
             ),
             Container(
               margin: EdgeInsets.only(
-                left: 20.0,
-                right: 200.0,
-                top: 20.0,),
-              child: Text(
-                'Shipping address',
-                style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold
-                ),
-                textAlign: TextAlign.left,
+                  left: 20.0,
+                  right: 20.0,
+              top: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Shipping address',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Address()
+                          )
+                      );
+                    },
+                    child: Text(
+                      'Change',
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 18.0
+                      ),
+                      textAlign: TextAlign.end,
+                    ),
+                  )
+                ],
               ),
             ),
             Container(
@@ -65,51 +90,28 @@ class Checkout extends StatelessWidget{
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            margin: EdgeInsets.only(
-                                right: 40.0,
-                                bottom: 2.0
-                            ),
-                            child: Text(
-                              'Jane Doe',
-                              style: TextStyle(
-                                fontSize: 15.0,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: 40.0,
-                                bottom: 2.0
-                            ),
-                            child: Text(
-                              'Change',
-                              style: TextStyle(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Jane Doe',
+                                style: TextStyle(
                                   fontSize: 15.0,
-                                  color: Colors.red
+                                ),
+                                textAlign: TextAlign.left,
                               ),
-                              textAlign: TextAlign.end,
-                            ),
+                              Text(
+                                '3 Newbridge Court',
+                                textAlign: TextAlign.left,
+                              ),
+                              Text(
+                                'Chino Hills, CA 91709, United Sates',
+                                textAlign: TextAlign.left,
+                              )
+                            ],
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            '3 Newbridge Court',
-                            textAlign: TextAlign.left,
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'Chino Hills, CA 91709, United Sates',
-                            textAlign: TextAlign.left,
-                          )
-                        ],
-                      )
                     ],
                   ),
                 ),
@@ -131,13 +133,23 @@ class Checkout extends StatelessWidget{
                     ),
                     textAlign: TextAlign.left,
                   ),
-                  Text(
-                    'Change',
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 18.0
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PayCard()
+                          )
+                      );
+                    },
+                    child: Text(
+                      'Change',
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 18.0
+                      ),
+                      textAlign: TextAlign.end,
                     ),
-                    textAlign: TextAlign.end,
                   )
                 ],
               ),
