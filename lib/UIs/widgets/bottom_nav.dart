@@ -22,7 +22,7 @@ class _BottomNavState extends State<BottomNav> {
     const home(),
     const SearchPlace(),
     trip(),
-    const HomePage(),
+    HomePage(),
     const FriendsList(),
     Add(),
     Address(),
