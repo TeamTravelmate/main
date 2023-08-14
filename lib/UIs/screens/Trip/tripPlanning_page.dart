@@ -112,9 +112,12 @@ class _CustomizeState extends State<Customize> {
             content: Text('Trip Created Successfully!'),
           ),
         );
+
+        var responseData = json.decode(response.body);
+        var tripId = responseData['trip']['id'];
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => joinedTripView()),
+          MaterialPageRoute(builder: (context) => joinedTripView(tripId: tripId)),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -266,11 +269,7 @@ class _CustomizeState extends State<Customize> {
               const SizedBox(
                 height: 20,
               ),
-              const TextFieldWidget(
-                labelText: 'Invite By Email Address',
-                hintText: 'Email Address',
-                prefixIcon: Icon(Icons.email),
-              ),
+             
               const SizedBox(
                 height: 20,
               ),

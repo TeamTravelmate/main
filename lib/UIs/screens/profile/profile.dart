@@ -612,7 +612,6 @@ class _ProfileState extends State<Profile> {
                           ],
                         ),
                         const SizedBox(height: 5),
-
                       ],
                     ),
                   ),
@@ -954,6 +953,7 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
+
   Widget Tab1(BuildContext context){
     return Stack(
       children:[ SingleChildScrollView(

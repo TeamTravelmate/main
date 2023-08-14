@@ -5,6 +5,10 @@ import '../../themes/colors.dart';
 import '../../widgets/tripCard_widget.dart';
 
 class joinedTripView extends StatefulWidget {
+  final tripId;
+
+  const joinedTripView({@required this.tripId , super.key});
+
   @override
   _joinedTripViewState createState() => _joinedTripViewState();
 }

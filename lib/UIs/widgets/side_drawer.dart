@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:main/UIs/screens/Welcome/welcome.dart';
+import 'package:main/UIs/screens/profile/myTrips.dart';
+import 'package:main/UIs/themes/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SideDrawer extends StatefulWidget {
-  const SideDrawer({super.key});
-
-  
+  const SideDrawer({super.key});  
 
   @override
   State<SideDrawer> createState() => _SideDrawerState();
 }
 
 class _SideDrawerState extends State<SideDrawer> {
-   late String _loggedUserFullName = "Guest";
+   late String _loggedUserFullName = "Guest User";
 
 
   @override
@@ -23,15 +23,19 @@ class _SideDrawerState extends State<SideDrawer> {
   }
   
   Future<void> _loadLoggedInUserName() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var jwtToken = prefs.getString('token');
-    if (jwtToken != null) {
-      Map<String, dynamic> decodedToken = JwtDecoder.decode(jwtToken);
-      setState(() {
-        _loggedUserFullName = decodedToken['firstName'] + " " + decodedToken['lastName'];
-      });
-    }
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var jwtToken = prefs.getString('token');
+  if (jwtToken != null) {
+    print("JWT Token: $jwtToken"); // Debugging line
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(jwtToken);
+    print("Decoded Token: $decodedToken"); // Debugging line
+    setState(() {
+      _loggedUserFullName = decodedToken['firstName'] + " " + decodedToken['lastName'];
+    });
+  } else {
+    print("No JWT Token found."); // Debugging line
   }
+}
 
   void _logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -53,13 +57,13 @@ class _SideDrawerState extends State<SideDrawer> {
         children: <Widget>[
            DrawerHeader(
             decoration: const BoxDecoration(
-                color: Colors.green,
+                color: ColorsTravelMate.secundary,
                 image: DecorationImage(
                     fit: BoxFit.fill,
-                    image: AssetImage('assets/images/cover.jpg'))),
+                    image: AssetImage('assets/img/cover2.jpg'))),
             child: Text(
               _loggedUserFullName,
-              style: const TextStyle(color: Colors.white, fontSize: 25),
+              style: const TextStyle(color: ColorsTravelMate.primary, fontSize: 25, fontWeight: FontWeight.bold),
             ),
           ),
           ListTile(
@@ -74,8 +78,8 @@ class _SideDrawerState extends State<SideDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
-            onTap: () => {Navigator.of(context).pop()},
+            title: const Text('My Trips'),
+            onTap: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MyTripsList()))},
           ),
           ListTile(
             leading: const Icon(Icons.border_color),
