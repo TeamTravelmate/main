@@ -23,7 +23,7 @@ class _CustomMapState extends State<CustomMap> {
   void initState() {
     super.initState();
     //MediaQuery.of(context).size.height / 6
-    _mapBottomPadding = MediaQuery.of(context).size.height / 6;
+    // _mapBottomPadding = MediaQuery.of(context).size.height / 6;
     rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;
     });
