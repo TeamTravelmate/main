@@ -5,6 +5,8 @@ import 'package:main/Domain/models/trip.dart';
 import 'package:http/http.dart' as http;
 
 class MyTripsList extends StatefulWidget {
+  const MyTripsList({super.key});
+
   @override
   _MyTripsListState createState() => _MyTripsListState();
 }
@@ -20,7 +22,7 @@ class _MyTripsListState extends State<MyTripsList> {
 
   Future<List<Trip>> fetchTrips() async {
   final response = await http.get(
-    Uri.parse('http://192.168.198.1:3000/trip'), 
+    Uri.parse('http://192.168.198.1:3000/trip/:id'), 
   );
 
   if (response.statusCode == 200) {

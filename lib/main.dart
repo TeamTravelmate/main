@@ -11,6 +11,7 @@ import 'UIs/screens/Trip/publicTrip/publicTripViewPage.dart';
 import 'UIs/screens/Trip/tripView_page.dart';
 import 'UIs/screens/Welcome/welcome_screen_1.dart';
 import 'UIs/screens/home/home_page.dart';
+import 'UIs/screens/profile/myTrips.dart';
 
 // Main function
 void main() async {
@@ -46,7 +47,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blueGrey,
           scaffoldBackgroundColor: Colors.white,
         ),
-        home: (JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne(),
+        // home: (JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne(),
+        home: const MyTripsList(),
       ),
     );
   }
