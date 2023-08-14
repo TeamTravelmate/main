@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.17.0
   http: ^1.1.0
   url_launcher: ^6.1.11
   flutter_otp_text_field: ^1.1.0+2
@@ -34,11 +35,17 @@ dependencies:
   timelines: ^0.1.0
   image_picker: ^1.0.1
   galleryimage: ^2.0.1
+  file_picker: ^4.0.0
+
   flutter_staggered_grid_view: ^0.7.0
+  google_maps_flutter: ^2.4.0
+  google_places_flutter: ^2.0.6
   iconify_flutter: ^0.0.5
+  provider: ^6.0.5
+  shared_preferences: ^2.2.0
+  jwt_decoder: ^2.0.1
   get: ^4.6.5
   geolocator: ^9.0.2
-  intl: ^0.17.0
   geocoding: ^2.0.4
   sleek_circular_slider: ^2.0.1
   dropdown_textfield: ^1.0.8
@@ -139,6 +146,8 @@ flutter:
         - assets/tourPlan.jpg
         - assets/gregory lake.png
         - assets/jungle beach.jpg
+        - assets/map_style.txt
+        - assets/icons.png
         - assets/icons/
         - assets/weather/
         - assets/gregory.jpg
@@ -147,6 +156,10 @@ flutter:
         - assets/safari.jpg
         - assets/blog.png
 
+        - assets/man.jpg
+        - assets/woman.jpeg
+        - assets/woman2.jpg
+        - assets/upload.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

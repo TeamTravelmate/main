@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/Marketplace/marketplace_page.dart';
 import 'package:main/UIs/screens/Trip/tripPlanning_page.dart';
@@ -9,26 +10,36 @@ import 'package:main/UIs/screens/myorders/orders_1.dart';
 import 'package:main/UIs/screens/product/add.dart';
 import 'package:main/UIs/screens/search/search_page.dart';
 import 'package:main/UIs/screens/vendor/home_page.dart';
+import 'package:main/UIs/widgets/side_drawer.dart';
 
 class BottomNav extends StatefulWidget {
-  const BottomNav({super.key});
+  final token;
+  const BottomNav({@required this.token, super.key});
 
   @override
   State<BottomNav> createState() => _BottomNavState();
 }
 
 class _BottomNavState extends State<BottomNav> {
-  List pages = [
-    const home(),
-    const SearchPlace(),
-    trip(),
-    const HomePage(),
-    const FriendsList(),
-    Add(),
-    Address(),
-    LeaderBoard(),
-    Deliver()
-  ];
+  late List<Widget> pages;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    pages = [
+      home(token: widget.token),
+      const SearchPlace(),
+      trip(),
+      const HomePage(),
+      const FriendsList(),
+      Add(),
+      Address(),
+      LeaderBoard(),
+      Deliver()
+    ];
+  }
 
   int currIndex = 0;
 
