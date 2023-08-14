@@ -271,7 +271,6 @@ class EditProfileFormState extends State<EditProfileForm> {
                 child: TextFormField(
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
-                    labelText: "0719628544",
                     prefixIcon: Icon(Icons.phone),
                     border: myinputborder(),
                     enabledBorder: myinputborder(),

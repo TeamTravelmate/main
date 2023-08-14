@@ -8,6 +8,8 @@ import 'upgrade_profile.dart';
 import 'view_destinations.dart';
 import '../../widgets/feed_widget.dart';
 import 'create_newpost.dart';
+import '../friendList/followers_list.dart';
+import '../friendList/following_list.dart';
 
 class Profile extends StatefulWidget {
   final token;
@@ -89,10 +91,22 @@ class _ProfileState extends State<Profile> {
                               padding: EdgeInsets.only(top: 12.0),
                               child: Text('100', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
-                              child: Text('Followers', style: TextStyle(fontSize: 15)),
-                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                                  return FollowersList();
+                                }));
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
+                                child: Text(
+                                  'Followers',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                         Column(
@@ -101,10 +115,22 @@ class _ProfileState extends State<Profile> {
                               padding: EdgeInsets.only(top: 12.0),
                               child: Text('90', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
-                              child: Text('Following', style: TextStyle(fontSize: 15)),
-                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                                  return FollowingList();
+                                }));
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
+                                child: Text(
+                                  'Followers',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                            )
                           ],
                         )
                       ],

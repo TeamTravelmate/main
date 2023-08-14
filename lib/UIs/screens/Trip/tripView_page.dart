@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/Trip/tripPlanning2_page.dart';
 import '../../themes/colors.dart';
 import '../../widgets/tripCard_widget.dart';
+import 'upload_pic.dart';
 
 class joinedTripView extends StatefulWidget {
   final tripId;
@@ -66,7 +67,11 @@ class _joinedTripViewState extends State<joinedTripView> {
                               ),
                               FloatingActionButton.small(
                                 backgroundColor: ColorsTravelMate.tertiary,
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                                    return Uploadpic();
+                                  }));
+                                },
                                 child: const CircleAvatar(
                                   backgroundColor: ColorsTravelMate.tertiary,
                                   child: Icon(
