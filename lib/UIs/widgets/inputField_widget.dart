@@ -5,7 +5,7 @@ class TextFieldWidget extends StatelessWidget {
     super.key,
     required this.labelText,
     required this.hintText,
-    required this.prefixIcon,
+    required this.prefixIcon, required String? Function(dynamic value) validator,
   });
   final String labelText;
   final String hintText;

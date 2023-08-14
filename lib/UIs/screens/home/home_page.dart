@@ -42,9 +42,10 @@ class home extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
+
           child: Padding(
             padding: const EdgeInsets.only(
-              left: 20.0,
+              bottom: 20.0,
             ),
             child: Column(
               children: [
@@ -113,7 +114,7 @@ class home extends StatelessWidget {
                       padding:
                           MaterialStateProperty.all(const EdgeInsets.all(10)),
                       foregroundColor:
-                          MaterialStateProperty.all(ColorsTravelMate.tertiary),
+                      MaterialStateProperty.all(ColorsTravelMate.tertiary),
                     ),
                     child: Container(
                       width: 350,
@@ -171,3 +172,5 @@ class home extends StatelessWidget {
     );
   }
 }
+
+

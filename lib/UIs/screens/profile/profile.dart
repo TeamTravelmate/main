@@ -6,6 +6,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'edit_profile.dart';
 import 'upgrade_profile.dart';
 import 'view_destinations.dart';
+import '../../widgets/feed_widget.dart';
 import 'create_newpost.dart';
 
 class Profile extends StatefulWidget {
@@ -179,73 +180,73 @@ class _ProfileState extends State<Profile> {
 
 
 
-  Widget Tab1(BuildContext context){
-
-    List<String> posts=[
-      'assets/3.jpeg',
-      'assets/4.jpeg',
-      'assets/5.jpeg',
-      'assets/download.jpeg',
-      'assets/beach.jpg',
-      'assets/jungle.jpg',
-      'assets/tiger.jpeg',
-      'assets/river.jpg',
-      'assets/sigiriya.jpg',
-      'assets/travellers.jpg',
-      'assets/elephant.jpg',
-      'assets/fam.jpg',
-      'assets/ella.jpg',
-      'assets/beach2.jpeg',
-      'assets/3.jpeg',
-      'assets/4.jpeg',
-      'assets/5.jpeg',
-      'assets/download.jpeg',
-      'assets/beach.jpg',
-      'assets/jungle.jpg',
-      'assets/tiger.jpeg',
-
-    ];
-
-
-    return Container(
-      margin: const EdgeInsets.all(3.0),
-      child: Stack(
-        children: [
-          GridView.builder(
-            itemCount: posts.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 1.0,
-              mainAxisSpacing: 1.0,
-            ),
-            itemBuilder: (BuildContext context, int index) {
-              return SizedBox(
-                width: 100,
-                height: 100,
-                child: Image.asset(posts[index], fit: BoxFit.cover),
-              );
-            },
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: FloatingActionButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                    return NewPost();
-                  }));
-                },
-                child: const Icon(Icons.post_add, size:30),
-                backgroundColor: const Color(0xFF0C1C33),
-                foregroundColor: Colors.white,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget Tab1(BuildContext context){
+  //
+  //   List<String> posts=[
+  //     'assets/3.jpeg',
+  //     'assets/4.jpeg',
+  //     'assets/5.jpeg',
+  //     'assets/download.jpeg',
+  //     'assets/beach.jpg',
+  //     'assets/jungle.jpg',
+  //     'assets/tiger.jpeg',
+  //     'assets/river.jpg',
+  //     'assets/sigiriya.jpg',
+  //     'assets/travellers.jpg',
+  //     'assets/elephant.jpg',
+  //     'assets/fam.jpg',
+  //     'assets/ella.jpg',
+  //     'assets/beach2.jpeg',
+  //     'assets/3.jpeg',
+  //     'assets/4.jpeg',
+  //     'assets/5.jpeg',
+  //     'assets/download.jpeg',
+  //     'assets/beach.jpg',
+  //     'assets/jungle.jpg',
+  //     'assets/tiger.jpeg',
+  //
+  //   ];
+  //
+  //
+  //   return Container(
+  //     margin: EdgeInsets.all(3.0),
+  //     child: Stack(
+  //       children: [
+  //         GridView.builder(
+  //           itemCount: posts.length,
+  //           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+  //             crossAxisCount: 3,
+  //             crossAxisSpacing: 1.0,
+  //             mainAxisSpacing: 1.0,
+  //           ),
+  //           itemBuilder: (BuildContext context, int index) {
+  //             return SizedBox(
+  //               width: 100,
+  //               height: 100,
+  //               child: Image.asset(posts[index], fit: BoxFit.cover),
+  //             );
+  //           },
+  //         ),
+  //         Align(
+  //           alignment: Alignment.bottomRight,
+  //           child: Padding(
+  //             padding: EdgeInsets.all(16.0),
+  //             child: FloatingActionButton(
+  //               onPressed: () {
+  //                 Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+  //                   return NewPost();
+  //                 }));
+  //               },
+  //               child: Icon(Icons.post_add, size:30),
+  //               backgroundColor: Color(0xFF0C1C33),
+  //               foregroundColor: Colors.white,
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
 
 
@@ -260,7 +261,30 @@ class _ProfileState extends State<Profile> {
       "https://cosmosmagazine.com/wp-content/uploads/2020/02/191010_nature.jpg",
       "https://scx2.b-cdn.net/gfx/news/hires/2019/2-nature.jpg",
       "https://cosmosmagazine.com/wp-content/uploads/2020/02/191010_nature.jpg",
+
+    ];
+
+
+    List<String> listOfUrls2 = [
+      "https://upload.wikimedia.org/wikipedia/commons/7/77/Big_Nature_%28155420955%29.jpeg",
+      "https://cosmosmagazine.com/wp-content/uploads/2020/02/191010_nature.jpg",
       "https://scx2.b-cdn.net/gfx/news/hires/2019/2-nature.jpg",
+      "https://isha.sadhguru.org/blog/wp-content/uploads/2016/05/natures-temples.jpg",
+      "https://s23574.pcdn.co/wp-content/uploads/Singular-1140x703.jpg",
+      "https://www.expatica.com/app/uploads/sites/9/2017/06/Lake-Oeschinen-1200x675.jpg",
+    ];
+
+
+    List<String> listOfUrls3 = [
+      "https://googleflutter.com/sample_image.jpg",
+      "https://cosmosmagazine.com/wp-content/uploads/2020/02/191010_nature.jpg",
+      "https://scx2.b-cdn.net/gfx/news/hires/2019/2-nature.jpg",
+      "https://cosmosmagazine.com/wp-content/uploads/2020/02/191010_nature.jpg",
+      "https://scx2.b-cdn.net/gfx/news/hires/2019/2-nature.jpg",
+      "https://cosmosmagazine.com/wp-content/uploads/2020/02/191010_nature.jpg",
+      "https://scx2.b-cdn.net/gfx/news/hires/2019/2-nature.jpg",
+
+
     ];
 
     return Stack(
@@ -400,8 +424,8 @@ class _ProfileState extends State<Profile> {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                "Trip to Galle",
+                              Text(
+                                "Trip to Lipton's seat",
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -420,7 +444,7 @@ class _ProfileState extends State<Profile> {
                           height: 100.0,
                           width: 280.0,
                           child: GalleryImage(
-                            imageUrls: listOfUrls,
+                            imageUrls: listOfUrls2,
                             numOfShowImages: 3,
                             // Add any other properties that GalleryImage widget supports.
                           ),
@@ -430,7 +454,7 @@ class _ProfileState extends State<Profile> {
                         const Row(
                           children: [
                             Icon(Icons.location_pin),
-                            Text("Galle Fort, Unawatuna Beach",
+                            Text("Lipton's seat, Haputhale",
                                 style: TextStyle(
                                   fontSize: 15,
                                 )
@@ -443,7 +467,7 @@ class _ProfileState extends State<Profile> {
                         const Row(
                           children: [
                             Icon(Icons.calendar_month),
-                            Text("July 3, 2023  - July 6, 2023 (3 days)",
+                            Text("Feb 5, 2022  - Feb 9, 2022 (4 days)",
                                 style: TextStyle(
                                   fontSize: 15,
                                 )
@@ -456,7 +480,7 @@ class _ProfileState extends State<Profile> {
                         const Row(
                           children: [
                             Icon(Icons.person),
-                            Text("Kumar & 5 others",
+                            Text("Sew & 8 others",
                                 style: TextStyle(
                                   fontSize: 15,
                                 )
@@ -468,8 +492,8 @@ class _ProfileState extends State<Profile> {
 
                         const Row(
                           children: [
-                            Icon(Icons.surfing),
-                            Text("Surfing",
+                            Icon(Icons.hiking),
+                            Text("Hiking",
                                 style: TextStyle(
                                   fontSize: 15,
                                 )
@@ -510,8 +534,8 @@ class _ProfileState extends State<Profile> {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                "Trip to Galle",
+                              Text(
+                                "Trip to Nanuoya",
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -530,7 +554,7 @@ class _ProfileState extends State<Profile> {
                           height: 100.0,
                           width: 280.0,
                           child: GalleryImage(
-                            imageUrls: listOfUrls,
+                            imageUrls: listOfUrls3,
                             numOfShowImages: 3,
                             // Add any other properties that GalleryImage widget supports.
                           ),
@@ -540,7 +564,7 @@ class _ProfileState extends State<Profile> {
                         const Row(
                           children: [
                             Icon(Icons.location_pin),
-                            Text("Galle Fort, Unawatuna Beach",
+                            Text("Ella, Nanuoya",
                                 style: TextStyle(
                                   fontSize: 15,
                                 )
@@ -553,7 +577,7 @@ class _ProfileState extends State<Profile> {
                         const Row(
                           children: [
                             Icon(Icons.calendar_month),
-                            Text("July 3, 2023  - July 6, 2023 (3 days)",
+                            Text("Jan 15, 2022  - Jan 17, 2023 (2 days)",
                                 style: TextStyle(
                                   fontSize: 15,
                                 )
@@ -566,7 +590,7 @@ class _ProfileState extends State<Profile> {
                         const Row(
                           children: [
                             Icon(Icons.person),
-                            Text("Kumar & 5 others",
+                            Text("Nima & 12 others",
                                 style: TextStyle(
                                   fontSize: 15,
                                 )
@@ -579,7 +603,7 @@ class _ProfileState extends State<Profile> {
                         const Row(
                           children: [
                             Icon(Icons.surfing),
-                            Text("Surfing",
+                            Text("Swiminng",
                                 style: TextStyle(
                                   fontSize: 15,
                                 )
@@ -928,6 +952,64 @@ class _ProfileState extends State<Profile> {
           ),
         ],
       ),
+    );
+  }
+  Widget Tab1(BuildContext context){
+    return Stack(
+      children:[ SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const feedCard(
+              profile: 'assets/profile.png',
+              title: 'Nimesh Jayasinha',
+              subtitle: 'Colombo, Sri Lanka',
+              post:
+              'Can anyone recommend some place to travel on weekens???',
+              imagePath: 'assets/post.png',
+              likes: '100',
+              comments: '12',
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+
+            const feedCard(
+              profile: 'assets/profile.png',
+              title: 'Nimesh Jayasinha',
+              subtitle: 'Colombo, Sri Lanka',
+              post:
+              'Can anyone recommend some place to travel on weekens???',
+              imagePath: 'assets/post.png',
+              likes: '100',
+              comments: '12',
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+
+
+          ],
+        ),
+      ),
+
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                  return NewPost();
+                }));
+              },
+              child: Icon(Icons.post_add, size:30),
+              backgroundColor: Color(0xFF0C1C33),
+              foregroundColor: Colors.white,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -91,11 +91,15 @@ class CustomizeToDo extends StatelessWidget {
                                             const SizedBox(
                                               height: 20,
                                             ),
-                                            const TextFieldWidget(
+                                            TextFieldWidget(
                                               labelText: 'Checklist',
                                               hintText: 'Item',
                                               prefixIcon: Icon(
                                                   Icons.check_circle_sharp),
+                                              validator: (value) =>
+                                                  value!.isEmpty
+                                                      ? 'Please enter some text'
+                                                      : null,
                                             ),
                                             const SizedBox(
                                               height: 10,
@@ -139,11 +143,11 @@ class CustomizeToDo extends StatelessWidget {
                                 ),
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStatePropertyAll(
-                                      ColorsTravelMate.secundary.withOpacity(0.4)
-                                  ),
-                                  foregroundColor: const MaterialStatePropertyAll(
                                       ColorsTravelMate.secundary
-                                  ),
+                                          .withOpacity(0.4)),
+                                  foregroundColor:
+                                      const MaterialStatePropertyAll(
+                                          ColorsTravelMate.secundary),
                                 ),
                               ),
                             ],
@@ -172,7 +176,8 @@ class CustomizeToDo extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Icon(Icons.notifications, color: ColorsTravelMate.secundary),
+                          const Icon(Icons.notifications,
+                              color: ColorsTravelMate.secundary),
                           TextButton(
                             onPressed: () {
                               showModalBottomSheet(
@@ -203,11 +208,14 @@ class CustomizeToDo extends StatelessWidget {
                                         const SizedBox(
                                           height: 20,
                                         ),
-                                        const TextFieldWidget(
+                                        TextFieldWidget(
                                           labelText: 'Add reminder',
                                           hintText: 'Reminder',
                                           prefixIcon:
                                               Icon(Icons.notification_add),
+                                          validator: (value) => value!.isEmpty
+                                              ? 'reminder cannot be empty'
+                                              : null,
                                         ),
                                         const SizedBox(
                                           height: 10,
@@ -244,13 +252,11 @@ class CustomizeToDo extends StatelessWidget {
                               );
                             },
                             style: ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll(
-                                      ColorsTravelMate.secundary.withOpacity(0.4)
-                                  ),
-                                  foregroundColor: const MaterialStatePropertyAll(
-                                      ColorsTravelMate.secundary
-                                  ),
-                                ),
+                              backgroundColor: MaterialStatePropertyAll(
+                                  ColorsTravelMate.secundary.withOpacity(0.4)),
+                              foregroundColor: const MaterialStatePropertyAll(
+                                  ColorsTravelMate.secundary),
+                            ),
                             child: const Text('Add'),
                           ),
                         ],

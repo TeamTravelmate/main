@@ -15,7 +15,7 @@ class CustomizeActivities extends StatelessWidget {
         backgroundColor: ColorsTravelMate.tertiary,
         foregroundColor: ColorsTravelMate.primary,
       ),
-      body: const SingleChildScrollView( 
+      body: SingleChildScrollView( 
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: Column(
@@ -49,7 +49,8 @@ class CustomizeActivities extends StatelessWidget {
                   prefixIcon: Icon(
                     Icons.surfing,
                     color: ColorsTravelMate.primary,
-                  )),
+                  ),
+                  validator: (value) {},),
               SizedBox(
                 height: 10,
               ),
