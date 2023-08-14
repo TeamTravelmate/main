@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../themes/colors.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/inputField_widget.dart';
-import 'publicTripsAll_page.dart';
+import 'publicTrip/publicTripsAll_page.dart';
 import 'tripPlanning2_page.dart';
 
 // ignore: must_be_immutable, camel_case_types
@@ -78,22 +78,40 @@ class Customize extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const TextFieldWidget(
+        TextFieldWidget(
           labelText: 'Where to go?',
           hintText: 'Eg. Galle, Trincomalee',
           prefixIcon: Icon(Icons.location_on),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'required field';
+            }
+            return null;
+          },
         ),
         const SizedBox(height: 20),
-        const TextFieldWidget(
+        TextFieldWidget(
           labelText: 'Start Date',
           hintText: 'Select a start date',
           prefixIcon: Icon(Icons.calendar_month),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'required field';
+            }
+            return null;
+          },
         ),
         const SizedBox(height: 20),
-        const TextFieldWidget(
+        TextFieldWidget(
           labelText: 'No. of Days',
           hintText: 'Select no. of days',
           prefixIcon: Icon(Icons.date_range),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'required field';
+            }
+            return null;
+          },
         ),
         const SizedBox(height: 20),
         SizedBox(
@@ -158,10 +176,13 @@ class Customize extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        const TextFieldWidget(
+                        TextFieldWidget(
                           labelText: 'Invite By Email Address',
                           hintText: 'Email Address',
-                          prefixIcon: Icon(Icons.email),
+                          prefixIcon: const Icon(Icons.email),
+                          validator: (val) {
+                            if (!val.isValidEmail) return 'Enter valid email';
+                          },
                         ),
                         const SizedBox(
                           height: 20,

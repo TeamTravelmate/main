@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/Registration/name_reg.dart';
+import 'package:main/UIs/screens/Registration/register_1.dart';
 import 'package:main/UIs/screens/login/login_page.dart';
 import 'package:main/UIs/themes/colors.dart';
 
@@ -81,7 +83,12 @@ class Welcome extends StatelessWidget {
                         side: const BorderSide(color: ColorsTravelMate.primary),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                         Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const nameReg()));
+                      },
                       child: const Padding(
                         padding: EdgeInsets.all(15.0),
                         child: Text(

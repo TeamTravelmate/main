@@ -23,7 +23,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
             decoration: const InputDecoration(labelText: 'First name'),
             onChanged: (value) {
               firstName = value;
-            },          ),
+            },
+          ),
           TextField(
             decoration: const InputDecoration(labelText: 'Last name'),
             onChanged: (value) {
@@ -55,13 +56,14 @@ class SecondPage extends StatelessWidget {
   final String firstName;
   final String lastName;
 
-  SecondPage({super.key, 
+  SecondPage({
+    super.key,
     required this.firstName,
     required this.lastName,
   });
-  
+
   set password(String password) {}
-  
+
   set email(String email) {
     email = email;
   }

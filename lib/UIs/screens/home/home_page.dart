@@ -64,14 +64,13 @@ class home extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left:15.0),
-                  height: 150,
+                  height: 180,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: const <Widget>[
                       popularTrips(
                         path: popularDestinations(),
-                        title: 'Nanuoya',
+                        title: 'Nuwara Eliya',
                         imagePath: 'assets/nuwara eliya.jpg',
                       ),
                       popularTrips(
@@ -100,12 +99,10 @@ class home extends StatelessWidget {
                 Container(
                   decoration: const ShapeDecoration(
                       shape: shape,
-                      gradient: LinearGradient(
-                          colors:
-                          [
-                            ColorsTravelMate.secundary,
-                            ColorsTravelMate.tertiary,
-                          ])),
+                      gradient: LinearGradient(colors: [
+                        ColorsTravelMate.secundary,
+                        ColorsTravelMate.tertiary,
+                      ])),
                   child: TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -117,8 +114,9 @@ class home extends StatelessWidget {
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                      MaterialStateProperty.all(Colors.transparent),
-                      padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
+                          MaterialStateProperty.all(Colors.transparent),
+                      padding:
+                          MaterialStateProperty.all(const EdgeInsets.all(10)),
                       foregroundColor:
                       MaterialStateProperty.all(ColorsTravelMate.tertiary),
                     ),
@@ -152,7 +150,7 @@ class home extends StatelessWidget {
                   title: 'Nimesh Jayasinha',
                   subtitle: 'Colombo, Sri Lanka',
                   post:
-                  'Can anyone recommend some place to travel on weekens???',
+                      'Can anyone recommend some place to travel on weekens???',
                   imagePath: 'assets/post.png',
                   likes: '100',
                   comments: '12',
@@ -165,7 +163,7 @@ class home extends StatelessWidget {
                   title: 'Nimesh Jayasinha',
                   subtitle: 'Colombo, Sri Lanka',
                   post:
-                  'Can anyone recommend some place to travel on weekens???',
+                      'Can anyone recommend some place to travel on weekens???',
                   imagePath: 'assets/post.png',
                   likes: '100',
                   comments: '12',
