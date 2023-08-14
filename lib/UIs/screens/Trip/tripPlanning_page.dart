@@ -320,7 +320,13 @@ class Customize extends StatelessWidget {
                 ),
               ),
             ),
-            child: const Text('+ Invite Tripmates'),
+            child: const Text('+ Share your trip',
+              style: TextStyle(
+                color: Color(0xFF0C1C33), // Change this to the desired color
+                fontSize: 16.0, // Adjust the font size as needed
+                fontWeight: FontWeight.bold, // Adjust the font weight as needed
+              ),
+            ),
           ),
         ),
         const SizedBox(
