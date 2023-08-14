@@ -18,18 +18,18 @@ import 'package:info_popup/info_popup.dart';
 // ignore: must_be_immutable
 class Plan extends StatelessWidget {
   List<Tab> tabs = [
-    const Tab(
-      child: Text('Public Trips'),
-    ),
+    // const Tab(
+    //   child: Text('Public Trips'),
+    // ),
     const Tab(
       child: Text('Customize Trips'),
     )
   ];
 
   List<Widget> tabContent = [
-    Container(
-      child: const publicTripsAll(),
-    ),
+    // Container(
+    //   child: const publicTripsAll(),
+    // ),
     Container(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
       width: double.infinity,

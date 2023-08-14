@@ -10,6 +10,7 @@ class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       body: SafeArea(
         child: Column(
           children: [
@@ -87,7 +88,7 @@ class Welcome extends StatelessWidget {
                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const nameReg()));
+                                builder: (context) => const NameReg()));
                       },
                       child: const Padding(
                         padding: EdgeInsets.all(15.0),

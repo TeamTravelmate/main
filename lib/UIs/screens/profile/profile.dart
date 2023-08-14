@@ -1,13 +1,37 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:galleryimage/galleryimage.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'edit_profile.dart';
 import 'upgrade_profile.dart';
 import 'view_destinations.dart';
 import '../../widgets/feed_widget.dart';
 import 'create_newpost.dart';
 
+class Profile extends StatefulWidget {
+  final token;
+  const Profile({required this.token, super.key});
 
-class Profile extends StatelessWidget {
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  late String firstName;
+  late String lastName;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+
+    firstName = jwtDecodedToken['firstName'];
+    lastName = jwtDecodedToken['lastName'];
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,15 +42,15 @@ class Profile extends StatelessWidget {
           appBar: AppBar(
             centerTitle: true,
             backgroundColor: Colors.white,
-            iconTheme: IconThemeData(color: Color(0xFF0C1C33)),
-            title: Text(
+            iconTheme: const IconThemeData(color: Color(0xFF0C1C33)),
+            title: const Text(
               'Profile',
               style: TextStyle(color: Color(0xFF0C1C33)),
             ),
 
             leading: IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.menu)
+                icon: const Icon(Icons.menu)
             ),
             // Remove the Container from the bottom property of AppBar
             // Add the Container above the TabBar
@@ -35,28 +59,28 @@ class Profile extends StatelessWidget {
             children: [
               Container(
                 // Place the Container above the TabBar
-                padding: EdgeInsets.symmetric(vertical: 10.0),
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
                 width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       backgroundImage: AssetImage('assets/profile_pic.jpeg'),
                       radius: 50,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
-                        'Sheromi Zoysa',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        '$firstName $lastName',
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(top: 3.0),
                       child: Text('@sheromi99', style: TextStyle(fontSize: 15)),
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Column(
@@ -89,30 +113,30 @@ class Profile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         FilledButton(
-                          child: Text('Edit Profile', style: TextStyle(fontSize: 15.0)),
+                          child: const Text('Edit Profile', style: TextStyle(fontSize: 15.0)),
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(builder: (_) {
                               return EditProfile();
                             }));
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF0C1C33),
-                            minimumSize: Size(150.0, 40.0),
+                            primary: const Color(0xFF0C1C33),
+                            minimumSize: const Size(150.0, 40.0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
                         ),
                         FilledButton(
-                          child: Text('Upgrade Profile', style: TextStyle(fontSize: 15.0)),
+                          child: const Text('Upgrade Profile', style: TextStyle(fontSize: 15.0)),
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(builder: (_) {
                               return UpgradeProfile();
                             }));
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF0C1C33),
-                            minimumSize: Size(150.0, 40.0),
+                            primary: const Color(0xFF0C1C33),
+                            minimumSize: const Size(150.0, 40.0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
@@ -124,7 +148,7 @@ class Profile extends StatelessWidget {
                 ),
               ),
               // Place the TabBar below the Container
-              TabBar(
+              const TabBar(
                 indicatorWeight: 5.0,
                 labelColor: Color(0xFF0C1C33), // Set the color for the selected tab's label
                 unselectedLabelColor: Color(0xFF2FACBB),
@@ -269,9 +293,9 @@ class Profile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Container(
-                    margin: EdgeInsets.only(top:5.0, left:5.0, right:5.0),
+                    margin: const EdgeInsets.only(top:5.0, left:5.0, right:5.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
@@ -280,18 +304,18 @@ class Profile extends StatelessWidget {
                           color: Colors.grey.withOpacity(0.5), // Shadow color and opacity
                           spreadRadius: 2, // How far the shadow spreads from the container
                           blurRadius: 5, // The intensity of the shadow blur
-                          offset: Offset(0, 3), // The offset of the shadow from the container
+                          offset: const Offset(0, 3), // The offset of the shadow from the container
                         ),
                       ],
                     ),
-                    padding: EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
+                    padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 "Trip to Galle",
                                 style: TextStyle(
                                   fontSize: 20,
@@ -300,12 +324,12 @@ class Profile extends StatelessWidget {
                               ),
                               IconButton(
                                 onPressed: () {},
-                                icon: Icon(Icons.map_outlined),
+                                icon: const Icon(Icons.map_outlined),
 
                               )// Replace this with your desired icon
                             ]
                         ),
-                        SizedBox(height: 5.0),
+                        const SizedBox(height: 5.0),
 
                         SizedBox(
                           height: 100.0,
@@ -316,9 +340,9 @@ class Profile extends StatelessWidget {
                             // Add any other properties that GalleryImage widget supports.
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
 
-                        Row(
+                        const Row(
                           children: [
                             Icon(Icons.location_pin),
                             Text("Galle Fort, Unawatuna Beach",
@@ -329,9 +353,9 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
 
-                        Row(
+                        const Row(
                           children: [
                             Icon(Icons.calendar_month),
                             Text("July 3, 2023  - July 6, 2023 (3 days)",
@@ -342,9 +366,9 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
 
-                        Row(
+                        const Row(
                           children: [
                             Icon(Icons.person),
                             Text("Kumar & 5 others",
@@ -355,9 +379,9 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
 
-                        Row(
+                        const Row(
                           children: [
                             Icon(Icons.surfing),
                             Text("Surfing",
@@ -368,7 +392,7 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
 
                       ],
                     ),
@@ -378,9 +402,9 @@ class Profile extends StatelessWidget {
 
 
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Container(
-                    margin: EdgeInsets.only(top:5.0, left:5.0, right:5.0),
+                    margin: const EdgeInsets.only(top:5.0, left:5.0, right:5.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
@@ -389,11 +413,11 @@ class Profile extends StatelessWidget {
                           color: Colors.grey.withOpacity(0.5), // Shadow color and opacity
                           spreadRadius: 2, // How far the shadow spreads from the container
                           blurRadius: 5, // The intensity of the shadow blur
-                          offset: Offset(0, 3), // The offset of the shadow from the container
+                          offset: const Offset(0, 3), // The offset of the shadow from the container
                         ),
                       ],
                     ),
-                    padding: EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
+                    padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -409,12 +433,12 @@ class Profile extends StatelessWidget {
                               ),
                               IconButton(
                                 onPressed: () {},
-                                icon: Icon(Icons.map_outlined),
+                                icon: const Icon(Icons.map_outlined),
 
                               )// Replace this with your desired icon
                             ]
                         ),
-                        SizedBox(height: 5.0),
+                        const SizedBox(height: 5.0),
 
                         SizedBox(
                           height: 100.0,
@@ -425,9 +449,9 @@ class Profile extends StatelessWidget {
                             // Add any other properties that GalleryImage widget supports.
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
 
-                        Row(
+                        const Row(
                           children: [
                             Icon(Icons.location_pin),
                             Text("Lipton's seat, Haputhale",
@@ -438,9 +462,9 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
 
-                        Row(
+                        const Row(
                           children: [
                             Icon(Icons.calendar_month),
                             Text("Feb 5, 2022  - Feb 9, 2022 (4 days)",
@@ -451,9 +475,9 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
 
-                        Row(
+                        const Row(
                           children: [
                             Icon(Icons.person),
                             Text("Sew & 8 others",
@@ -464,9 +488,9 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
 
-                        Row(
+                        const Row(
                           children: [
                             Icon(Icons.hiking),
                             Text("Hiking",
@@ -477,7 +501,7 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
 
                       ],
                     ),
@@ -488,9 +512,9 @@ class Profile extends StatelessWidget {
 
 
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Container(
-                    margin: EdgeInsets.only(top:5.0, left:5.0, right:5.0),
+                    margin: const EdgeInsets.only(top:5.0, left:5.0, right:5.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
@@ -499,11 +523,11 @@ class Profile extends StatelessWidget {
                           color: Colors.grey.withOpacity(0.5), // Shadow color and opacity
                           spreadRadius: 2, // How far the shadow spreads from the container
                           blurRadius: 5, // The intensity of the shadow blur
-                          offset: Offset(0, 3), // The offset of the shadow from the container
+                          offset: const Offset(0, 3), // The offset of the shadow from the container
                         ),
                       ],
                     ),
-                    padding: EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
+                    padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -519,12 +543,12 @@ class Profile extends StatelessWidget {
                               ),
                               IconButton(
                                 onPressed: () {},
-                                icon: Icon(Icons.map_outlined),
+                                icon: const Icon(Icons.map_outlined),
 
                               )// Replace this with your desired icon
                             ]
                         ),
-                        SizedBox(height: 5.0),
+                        const SizedBox(height: 5.0),
 
                         SizedBox(
                           height: 100.0,
@@ -535,9 +559,9 @@ class Profile extends StatelessWidget {
                             // Add any other properties that GalleryImage widget supports.
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
 
-                        Row(
+                        const Row(
                           children: [
                             Icon(Icons.location_pin),
                             Text("Ella, Nanuoya",
@@ -548,9 +572,9 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
 
-                        Row(
+                        const Row(
                           children: [
                             Icon(Icons.calendar_month),
                             Text("Jan 15, 2022  - Jan 17, 2023 (2 days)",
@@ -561,9 +585,9 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
 
-                        Row(
+                        const Row(
                           children: [
                             Icon(Icons.person),
                             Text("Nima & 12 others",
@@ -574,9 +598,9 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
 
-                        Row(
+                        const Row(
                           children: [
                             Icon(Icons.surfing),
                             Text("Swiminng",
@@ -587,8 +611,7 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
-
+                        const SizedBox(height: 5),
                       ],
                     ),
                   ),
@@ -608,8 +631,8 @@ class Profile extends StatelessWidget {
                 onPressed: () {
                   // Your button's onPressed function here...
                 },
-                child: Icon(Icons.next_plan_outlined, size:30),
-                backgroundColor: Color(0xFF0C1C33),
+                child: const Icon(Icons.next_plan_outlined, size:30),
+                backgroundColor: const Color(0xFF0C1C33),
                 foregroundColor: Colors.white,// Replace this with your desired icon
               ),
             ),
@@ -630,9 +653,9 @@ class Profile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: Container(
-              margin: EdgeInsets.only(top:1.0, left:5.0, right:5.0),
+              margin: const EdgeInsets.only(top:1.0, left:5.0, right:5.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -641,30 +664,30 @@ class Profile extends StatelessWidget {
                     color: Colors.grey.withOpacity(0.5), // Shadow color and opacity
                     spreadRadius: 2, // How far the shadow spreads from the container
                     blurRadius: 5, // The intensity of the shadow blur
-                    offset: Offset(0, 3), // The offset of the shadow from the container
+                    offset: const Offset(0, 3), // The offset of the shadow from the container
                   ),
                 ],
               ),
-              padding: EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
+              padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         backgroundImage: AssetImage('assets/hiking.jpeg'),
                         radius: 40,
                       ),
 
                       Container(
                         width: 260.0,
-                        padding: EdgeInsets.only(left: 15.0),
+                        padding: const EdgeInsets.only(left: 15.0),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children:[
-                              Text("Hiking", style: TextStyle(fontSize: 18.0)),
-                              Text("250 points"),
+                              const Text("Hiking", style: TextStyle(fontSize: 18.0)),
+                              const Text("250 points"),
                               Align(
                                   alignment: Alignment.bottomRight,
                                   child: GestureDetector(
@@ -675,7 +698,7 @@ class Profile extends StatelessWidget {
 
                                     child: Container(
                                       color: Colors.transparent, // Make the link background transparent
-                                      child: Text(
+                                      child: const Text(
                                         "View Destinations",
                                         style: TextStyle(color:Color(0xFF2FACBB)
                                         ),
@@ -706,9 +729,9 @@ class Profile extends StatelessWidget {
 
 
           Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: Container(
-              margin: EdgeInsets.only(top:1.0, left:5.0, right:5.0),
+              margin: const EdgeInsets.only(top:1.0, left:5.0, right:5.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -717,30 +740,30 @@ class Profile extends StatelessWidget {
                     color: Colors.grey.withOpacity(0.5), // Shadow color and opacity
                     spreadRadius: 2, // How far the shadow spreads from the container
                     blurRadius: 5, // The intensity of the shadow blur
-                    offset: Offset(0, 3), // The offset of the shadow from the container
+                    offset: const Offset(0, 3), // The offset of the shadow from the container
                   ),
                 ],
               ),
-              padding: EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
+              padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         backgroundImage: AssetImage('assets/surfing.jpg'),
                         radius: 40,
                       ),
 
                       Container(
                         width: 260.0,
-                        padding: EdgeInsets.only(left: 15.0),
+                        padding: const EdgeInsets.only(left: 15.0),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children:[
-                              Text("Surfing", style: TextStyle(fontSize: 18.0)),
-                              Text("100 points"),
+                              const Text("Surfing", style: TextStyle(fontSize: 18.0)),
+                              const Text("100 points"),
                               Align(
                                   alignment: Alignment.bottomRight,
                                   child: GestureDetector(
@@ -753,7 +776,7 @@ class Profile extends StatelessWidget {
 
                                     child: Container(
                                       color: Colors.transparent, // Make the link background transparent
-                                      child: Text(
+                                      child: const Text(
                                         "View Destinations",
                                         style: TextStyle(color:Color(0xFF2FACBB)
                                         ),
@@ -782,9 +805,9 @@ class Profile extends StatelessWidget {
 
 
           Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: Container(
-              margin: EdgeInsets.only(top:1.0, left:5.0, right:5.0),
+              margin: const EdgeInsets.only(top:1.0, left:5.0, right:5.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -793,30 +816,30 @@ class Profile extends StatelessWidget {
                     color: Colors.grey.withOpacity(0.5), // Shadow color and opacity
                     spreadRadius: 2, // How far the shadow spreads from the container
                     blurRadius: 5, // The intensity of the shadow blur
-                    offset: Offset(0, 3), // The offset of the shadow from the container
+                    offset: const Offset(0, 3), // The offset of the shadow from the container
                   ),
                 ],
               ),
-              padding: EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
+              padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         backgroundImage: AssetImage('assets/snorkiln.png'),
                         radius: 40,
                       ),
 
                       Container(
                         width: 260.0,
-                        padding: EdgeInsets.only(left: 15.0),
+                        padding: const EdgeInsets.only(left: 15.0),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children:[
-                              Text("Snorkeling", style: TextStyle(fontSize: 18.0)),
-                              Text("80 points"),
+                              const Text("Snorkeling", style: TextStyle(fontSize: 18.0)),
+                              const Text("80 points"),
                               Align(
                                   alignment: Alignment.bottomRight,
                                   child: GestureDetector(
@@ -829,7 +852,7 @@ class Profile extends StatelessWidget {
 
                                     child: Container(
                                       color: Colors.transparent, // Make the link background transparent
-                                      child: Text(
+                                      child: const Text(
                                         "View Destinations",
                                         style: TextStyle(color:Color(0xFF2FACBB)
                                         ),
@@ -856,9 +879,9 @@ class Profile extends StatelessWidget {
 
 
           Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: Container(
-              margin: EdgeInsets.only(top:1.0, left:5.0, right:5.0),
+              margin: const EdgeInsets.only(top:1.0, left:5.0, right:5.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -867,30 +890,30 @@ class Profile extends StatelessWidget {
                     color: Colors.grey.withOpacity(0.5), // Shadow color and opacity
                     spreadRadius: 2, // How far the shadow spreads from the container
                     blurRadius: 5, // The intensity of the shadow blur
-                    offset: Offset(0, 3), // The offset of the shadow from the container
+                    offset: const Offset(0, 3), // The offset of the shadow from the container
                   ),
                 ],
               ),
-              padding: EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
+              padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         backgroundImage: AssetImage('assets/camping.png'),
                         radius: 40,
                       ),
 
                       Container(
                         width: 260.0,
-                        padding: EdgeInsets.only(left: 15.0),
+                        padding: const EdgeInsets.only(left: 15.0),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children:[
-                              Text("Camping", style: TextStyle(fontSize: 18.0)),
-                              Text("70 points"),
+                              const Text("Camping", style: TextStyle(fontSize: 18.0)),
+                              const Text("70 points"),
                               Align(
                                   alignment: Alignment.bottomRight,
                                   child: GestureDetector(
@@ -903,7 +926,7 @@ class Profile extends StatelessWidget {
 
                                     child: Container(
                                       color: Colors.transparent, // Make the link background transparent
-                                      child: Text(
+                                      child: const Text(
                                         "View Destinations",
                                         style: TextStyle(color:Color(0xFF2FACBB)
                                         ),
@@ -930,9 +953,6 @@ class Profile extends StatelessWidget {
       ),
     );
   }
-
-
-
 
   Widget Tab1(BuildContext context){
     return Stack(
@@ -993,15 +1013,3 @@ class Profile extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
