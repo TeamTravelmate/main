@@ -1,9 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/Trip/tripPlanning2_page.dart';
 import '../../themes/colors.dart';
 import '../../widgets/tripCard_widget.dart';
 
 class joinedTripView extends StatefulWidget {
+  final tripId;
+
+  const joinedTripView({@required this.tripId , super.key});
+
   @override
   _joinedTripViewState createState() => _joinedTripViewState();
 }
@@ -15,6 +20,16 @@ class _joinedTripViewState extends State<joinedTripView> {
         length: 5,
         initialIndex: 0,
         child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Plan()),
+            );
+            },
+            backgroundColor: ColorsTravelMate.primary,
+            child: const Icon(Icons.add),
+          ),
           backgroundColor: Colors.white,
           body: Padding(
             padding: const EdgeInsets.only(top: 30.0, left: 10, right: 10),
