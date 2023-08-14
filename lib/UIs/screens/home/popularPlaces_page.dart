@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:main/UIs/widgets/tripCard_widget.dart';
 import '../../themes/colors.dart';
+import '../profile/profile.dart';
 
 // ignore: camel_case_types
 class popularDestinations extends StatelessWidget {
-  const popularDestinations({super.key});
+
+  const popularDestinations({super.key, 
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
+        title: const Text(
               'Popular Places',
             ),
-            FloatingActionButton.small(
+        actions: [
+          FloatingActionButton.small(
               onPressed: () {
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(
-                //     builder: (context) => profile(),
+                //     builder: (context) => Profile(token: ),
                 //   ),
                 // );
               },
               backgroundColor: ColorsTravelMate.secundary,
               child: Image.asset('assets/profile.png', height: 40, width: 40),
             ),
-          ],
-        ),
+        ],
         backgroundColor: ColorsTravelMate.tertiary,
         foregroundColor: ColorsTravelMate.primary,
       ),
@@ -47,6 +47,7 @@ class popularDestinations extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: 20),
             SizedBox(
               height: 250,
               child: ListView(
@@ -54,7 +55,7 @@ class popularDestinations extends StatelessWidget {
                 children: const <Widget>[
                   popularPlaces(
                     title: 'Gregory Lake',
-                    imagePath: 'assets/gregory lake.png',
+                    imagePath: 'assets/gregory.jpg',
                   ),
                   popularPlaces(
                     title: 'Gregory Lake',
@@ -62,7 +63,7 @@ class popularDestinations extends StatelessWidget {
                   ),
                   popularPlaces(
                     title: 'Gregory Lake',
-                    imagePath: 'assets/gregory lake.png',
+                    imagePath: 'assets/gregoryLake.jpg',
                   ),
                 ],
               ),
@@ -113,19 +114,20 @@ class popularDestinations extends StatelessWidget {
                 right: 10.0,
               ),
               child: SizedBox(
-                height: 320,
+                height: 350,
                 child: Column(
                   children: [
                     tripCard(
-                        tripLocationTitle: 'Nuwara Eliya - Colombo\n',
+                        tripLocationTitle: 'Colombo - Nuwara Eliya\n',
                         location: '  Gregory Lake, Horton Plains',
-                        tripDuration: '  May 27, 2023 - May 29, 2023 (2 days)',
+                        tripDuration: '  August 20, 2023 - August 22, 2023',
                         tripmates: '  Kumar & 10 others'),
+                    SizedBox(height: 10),
                     tripCard(
-                        tripLocationTitle: 'Nuwara Eliya - Colombo\n',
-                        location: '  Gregory Lake, Horton Plains',
-                        tripDuration: '  May 27, 2023 - May 29, 2023 (2 days)',
-                        tripmates: '  Kumar & 10 others'),
+                        tripLocationTitle: 'Galle - Nuwara Eliya\n',
+                        location: '  Gregory Lake, Little England',
+                        tripDuration: '  August 27, 2023 - August 29, 2023',
+                        tripmates: '  Kumar & 5 others'),
                   ],
                 ),
               ),
@@ -153,10 +155,12 @@ class popularPlaces extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 10.0),
       child: Container(
-        height: 300,
+        height: 250,
         child: Column(
           children: [
-            Image.asset(imagePath, height: 220, width: 300),
+            Image.asset(imagePath, height: 200, width: 280,
+            fit: BoxFit.cover,
+            ),
             Text(title,
                 style: const TextStyle(
                     fontSize: 14, color: ColorsTravelMate.primary)),
@@ -178,11 +182,12 @@ class PlaceTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      height: 30,
       child: ElevatedButton(
         onPressed: () {},
         style: ElevatedButton.styleFrom(
-          backgroundColor: ColorsTravelMate.primary.withOpacity(0.025),
-          foregroundColor: ColorsTravelMate.primary,
+          backgroundColor: ColorsTravelMate.secundary,
+          foregroundColor: ColorsTravelMate.tertiary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
@@ -192,5 +197,5 @@ class PlaceTag extends StatelessWidget {
         ),
       ),
     );
-  }  
+  }
 }

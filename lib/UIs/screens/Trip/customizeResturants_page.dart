@@ -7,12 +7,11 @@ class CustomizeResturants extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Resturants'),
-        backgroundColor: ColorsTravelMate.tertiary,
-        foregroundColor: ColorsTravelMate.primary,
-      ),
-      body: Container()
-    );
+        appBar: AppBar(
+          title: const Text('Resturants'),
+          backgroundColor: ColorsTravelMate.tertiary,
+          foregroundColor: ColorsTravelMate.primary,
+        ),
+        body: Container());
   }
 }

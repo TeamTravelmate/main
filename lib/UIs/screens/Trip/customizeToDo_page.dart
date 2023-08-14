@@ -27,6 +27,7 @@ class CustomizeToDo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Card(
+                elevation: 5,
                 child: Column(
                   children: [
                     const Text('Checklist', style: TextStyle(fontSize: 18)),
@@ -59,78 +60,94 @@ class CustomizeToDo extends StatelessWidget {
                                   showModalBottomSheet(
                                     context: context,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30)),
+                                        borderRadius:
+                                            BorderRadius.circular(30)),
                                     builder: (BuildContext context) {
                                       return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 50, vertical: 5),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        const Divider(
-                                          color: Colors.grey,
-                                          thickness: 4,
-                                          indent: 110,
-                                          endIndent: 110,
-                                        ),
-                                        const SizedBox(
-                                          height: 40,
-                                        ),
-                                        const Text('Important Notes',
-                                            style: TextStyle(fontSize: 20)),
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        const Text('Explore, Plan, and Embark on Your Dream Adventure! Add tour essentials here...'),
-                                        const SizedBox(height: 20,),
-                                        const TextFieldWidget(
-                                          labelText: 'Checklist',
-                                          hintText: 'Item',
-                                          prefixIcon:
-                                              Icon(Icons.check_circle_sharp),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 50, vertical: 5),
+                                        child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
-                                            TextButton(
-                                              onPressed: () {},
-                                              child: const Text(
-                                                'Save',
-                                                style: TextStyle(
-                                                    color: Colors.grey),
-                                              ),
+                                            const Divider(
+                                              color: Colors.grey,
+                                              thickness: 4,
+                                              indent: 110,
+                                              endIndent: 110,
                                             ),
                                             const SizedBox(
-                                              width: 160,
+                                              height: 40,
                                             ),
-                                            TextButton(
-                                              onPressed: () {},
-                                              child: const Text(
-                                                'Cancel',
-                                                style: TextStyle(
-                                                    color: Colors.red),
-                                              ),
+                                            const Text('Important Notes',
+                                                style: TextStyle(fontSize: 20)),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            const Text(
+                                                'Explore, Plan, and Embark on Your Dream Adventure! Add tour essentials here...'),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            TextFieldWidget(
+                                              labelText: 'Checklist',
+                                              hintText: 'Item',
+                                              prefixIcon: Icon(
+                                                  Icons.check_circle_sharp),
+                                              validator: (value) =>
+                                                  value!.isEmpty
+                                                      ? 'Please enter some text'
+                                                      : null,
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                TextButton(
+                                                  onPressed: () {},
+                                                  child: const Text(
+                                                    'Save',
+                                                    style: TextStyle(
+                                                        color: Colors.grey),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 160,
+                                                ),
+                                                TextButton(
+                                                  onPressed: () {},
+                                                  child: const Text(
+                                                    'Cancel',
+                                                    style: TextStyle(
+                                                        color: Colors.red),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                      ],
-                                    ),
-                                  );
+                                      );
                                     },
                                   );
                                 },
                                 icon: const Icon(Icons.add_circle_rounded,
-                                    color: Colors.grey),
+                                    color: ColorsTravelMate.secundary),
                                 label: const Text(
                                   'Add Item',
                                   style: TextStyle(fontSize: 12),
+                                ),
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStatePropertyAll(
+                                      ColorsTravelMate.secundary
+                                          .withOpacity(0.4)),
+                                  foregroundColor:
+                                      const MaterialStatePropertyAll(
+                                          ColorsTravelMate.secundary),
                                 ),
                               ),
                             ],
@@ -145,9 +162,11 @@ class CustomizeToDo extends StatelessWidget {
                 height: 10,
               ),
               Card(
+                elevation: 5,
                 child: Padding(
                   padding: const EdgeInsets.all(14.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text('Notes', style: TextStyle(fontSize: 18)),
                       const Text(
@@ -157,7 +176,8 @@ class CustomizeToDo extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Icon(Icons.notifications),
+                          const Icon(Icons.notifications,
+                              color: ColorsTravelMate.secundary),
                           TextButton(
                             onPressed: () {
                               showModalBottomSheet(
@@ -188,11 +208,14 @@ class CustomizeToDo extends StatelessWidget {
                                         const SizedBox(
                                           height: 20,
                                         ),
-                                        const TextFieldWidget(
+                                        TextFieldWidget(
                                           labelText: 'Add reminder',
                                           hintText: 'Reminder',
                                           prefixIcon:
                                               Icon(Icons.notification_add),
+                                          validator: (value) => value!.isEmpty
+                                              ? 'reminder cannot be empty'
+                                              : null,
                                         ),
                                         const SizedBox(
                                           height: 10,
@@ -229,16 +252,10 @@ class CustomizeToDo extends StatelessWidget {
                               );
                             },
                             style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.grey),
-                              foregroundColor: MaterialStateProperty.all(
-                                  ColorsTravelMate.tertiary),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                              ),
+                              backgroundColor: MaterialStatePropertyAll(
+                                  ColorsTravelMate.secundary.withOpacity(0.4)),
+                              foregroundColor: const MaterialStatePropertyAll(
+                                  ColorsTravelMate.secundary),
                             ),
                             child: const Text('Add'),
                           ),

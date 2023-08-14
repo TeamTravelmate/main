@@ -125,7 +125,6 @@ class vehicle extends StatelessWidget {
   }
 }
 
-
 class All extends StatefulWidget {
   const All({Key? key}) : super(key: key);
 
@@ -390,4 +389,3 @@ class _OtherState extends State<Other> {
     );
   }
 }
-

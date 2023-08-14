@@ -87,9 +87,7 @@ class _PasswordResetState extends State<PasswordReset> {
               path: NewPassword(),
             ),
             TextButton(
-              onPressed: () {
-                
-              },
+              onPressed: () {},
               child: text = Text.rich(
                 TextSpan(
                   text: 'Didn\'t receive the code? ',
@@ -107,7 +105,10 @@ class _PasswordResetState extends State<PasswordReset> {
             ),
             TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()));
                 },
                 child: Text(
                   'Back to Login',

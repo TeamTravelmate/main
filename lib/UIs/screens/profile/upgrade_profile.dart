@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UpgradeProfile extends StatelessWidget {
   @override
@@ -59,13 +60,29 @@ class ExperienceProviderForm extends StatefulWidget {
 class ExperienceProviderFormState extends State<ExperienceProviderForm> {
   final _formKey = GlobalKey<FormState>();
 
+  late PickedFile? _imageFile;
 
-  List<String> languages = [
+
+
+  List<String> selectedItems = []; // To store the selected items
+
+  final List<String> items = [
     'English',
     'Sinhala',
-    'Tamil'
-    // Add more languages as needed
+    'Tamil',
   ];
+
+  void _handleCheckboxChange(bool? value, String item) {
+    setState(() {
+      if (value == true) {
+        selectedItems.add(item);
+      } else {
+        selectedItems.remove(item);
+      }
+    });
+  }
+
+
 
 
   List<String> filed = [
@@ -106,12 +123,10 @@ class ExperienceProviderFormState extends State<ExperienceProviderForm> {
 
 
 
-
-
-
           Form(
             key: _formKey,
             child: Container(
+              width: double.infinity,
               margin: const EdgeInsets.all(24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -149,82 +164,141 @@ class ExperienceProviderFormState extends State<ExperienceProviderForm> {
 
 
 
+
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: SizedBox(
+                      width: 340.0,
+                      height: 55.0,
+                      child: Stack(
+                        alignment: Alignment.centerRight,
+                        children: [
+                          TextFormField(
+                            enabled: false,
+                            decoration: InputDecoration(
+                              labelText: "Upload NIC copy",
+                              prefixIcon: Icon(Icons.file_copy),
+                              border: myinputborder(),
+                              enabledBorder: myinputborder(),
+                              focusedBorder: myfocusborder(),
+                            ),
+                            validator: (text) {
+                              if (text!.isEmpty) {
+                                return 'NIC Cannot be Empty';
+                              }
+                              return null;
+                            },
+                            onSaved: (text) {
+                              NIC = text!;
+                            },
+                          ),
+                          Positioned(
+                            right: 0,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                final pickedImage = await _pickImage(ImageSource.gallery);
+                                if (pickedImage != null) {
+                                  setState(() {
+                                    _imageFile = pickedImage as PickedFile?;
+                                  });
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.transparent,
+                                elevation: 0, // Set elevation to 0
+                                padding: EdgeInsets.zero,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0),
+                                  side: BorderSide(color: Colors.transparent),
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.upload,
+                                color: Color(0xFF0C1C33), // Change the color of the button icon
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+
+
+
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: Text(
+                      'Select languages that you can', // Your desired title here
+                      style: TextStyle(
+                        fontSize: 18.0,
+                         // Set text alignment to left
+                      ),
+
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+
+                  Column(
+                    children: items.map((item) {
+                      return CheckboxListTile(
+                        title: Text(item),
+                        value: selectedItems.contains(item),
+                        onChanged: (bool? value) {
+                          _handleCheckboxChange(value, item);
+                        },
+                      );
+                    }).toList(),
+                  ),
+
+                  SizedBox(height:10.0),
+
+                  // Padding(
+                  //   padding: EdgeInsets.only(bottom: 20.0),
+                  //   child: SizedBox(
+                  //     width: 340.0,
+                  //     height: 55.0,
+                  //     child: DropdownButtonFormField<String>(
+                  //       value: selectedLanguage,
+                  //       decoration: InputDecoration(
+                  //         labelText: "Languages",
+                  //         prefixIcon: Icon(Icons.language),
+                  //         border: myinputborder(),
+                  //         enabledBorder: myinputborder(),
+                  //         focusedBorder: myfocusborder(),
+                  //       ),
+                  //       onChanged: (newValue) {
+                  //         setState(() {
+                  //           selectedLanguage = newValue!;
+                  //         });
+                  //       },
+                  //       items: languages.map((language) {
+                  //         return DropdownMenuItem<String>(
+                  //           value: language,
+                  //           child: Text(language),
+                  //         );
+                  //       }).toList(),
+                  //       // validator: (value) {
+                  //       //   if (value == null || value.isEmpty) {
+                  //       //     return 'Please select a language';
+                  //       //   }
+                  //       //   return null;
+                  //       // },
+                  //       onSaved: (value) {
+                  //         selectedLanguage = value!; // Save the selected language to your variable.
+                  //       },
+                  //     ),
+                  //   ),
+                  // ),
+
                   Padding(
                     padding: EdgeInsets.only(bottom: 20.0),
                     child: SizedBox(
                       width: 340.0,
                       height: 55.0,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          labelText: "SLTDA License",
-                          prefixIcon: Icon(Icons.lock),
-                          border: myinputborder(),
-                          enabledBorder: myinputborder(),
-                          focusedBorder: myfocusborder(),
-                        ),
-
-                        validator: (text){
-                          if(text!.isEmpty){
-                            return 'Current Password Cannot be Empty';
-                          }
-                          return null;
-                        },
-
-                        onSaved: (text){
-                          name= text!;
-                        },
-
-                      ),
-                    ),
-                  ),
-
-
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 20.0),
-                    child: SizedBox(
-                      width: 340.0,
-                      height: 55.0,
-                      child: DropdownButtonFormField<String>(
-                        value: selectedLanguage,
-                        decoration: InputDecoration(
-                          labelText: "Languages",
-                          prefixIcon: Icon(Icons.language),
-                          border: myinputborder(),
-                          enabledBorder: myinputborder(),
-                          focusedBorder: myfocusborder(),
-                        ),
-                        onChanged: (newValue) {
-                          setState(() {
-                            selectedLanguage = newValue!;
-                          });
-                        },
-                        items: languages.map((language) {
-                          return DropdownMenuItem<String>(
-                            value: language,
-                            child: Text(language),
-                          );
-                        }).toList(),
-                        // validator: (value) {
-                        //   if (value == null || value.isEmpty) {
-                        //     return 'Please select a language';
-                        //   }
-                        //   return null;
-                        // },
-                        onSaved: (value) {
-                          selectedLanguage = value!; // Save the selected language to your variable.
-                        },
-                      ),
-                    ),
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 20.0),
-                    child: SizedBox(
-                      width: 340.0,
-                      height: 55.0,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: "Experiences",
+                          labelText: "No of trips",
                           prefixIcon: Icon(Icons.book),
                           border: myinputborder(),
                           enabledBorder: myinputborder(),
@@ -370,13 +444,28 @@ class ExperienceProviderFormState extends State<ExperienceProviderForm> {
           ),
         ],
       ),
+
     );
+
+
+
+
   }
+
+  Future<XFile?> _pickImage(ImageSource source) async {
+    final pickedFile = await ImagePicker().pickImage(source: source);
+    return pickedFile;
+  }
+
 }
 
 
 
 class Tab2 extends StatelessWidget {
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return TourGuideForm(); // Just return the MyCustomForm widget here
@@ -401,6 +490,29 @@ class TourGuideFormState extends State<TourGuideForm> {
     'Tamil'
     // Add more languages as needed
   ];
+
+
+  late PickedFile? _imageFile;
+
+
+
+  List<String> selectedItems = []; // To store the selected items
+
+  final List<String> items = [
+    'English',
+    'Sinhala',
+    'Tamil',
+  ];
+
+  void _handleCheckboxChange(bool? value, String item) {
+    setState(() {
+      if (value == true) {
+        selectedItems.add(item);
+      } else {
+        selectedItems.remove(item);
+      }
+    });
+  }
 
 
 
@@ -435,7 +547,10 @@ class TourGuideFormState extends State<TourGuideForm> {
 
           Form(
             key: _formKey,
-            child: Column(
+            child: Container(
+              width: double.infinity,
+              margin: const EdgeInsets.all(24.0),
+              child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
 
@@ -471,6 +586,154 @@ class TourGuideFormState extends State<TourGuideForm> {
 
 
 
+
+                Padding(
+                  padding: EdgeInsets.only(bottom: 20.0),
+                  child: SizedBox(
+                    width: 340.0,
+                    height: 55.0,
+                    child: Stack(
+                      alignment: Alignment.centerRight,
+                      children: [
+                        TextFormField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                            labelText: "Upload NIC copy",
+                            prefixIcon: Icon(Icons.file_copy),
+                            border: myinputborder(),
+                            enabledBorder: myinputborder(),
+                            focusedBorder: myfocusborder(),
+                          ),
+                          validator: (text) {
+                            if (text!.isEmpty) {
+                              return 'NIC Cannot be Empty';
+                            }
+                            return null;
+                          },
+                          onSaved: (text) {
+                            NIC = text!;
+                          },
+                        ),
+                        Positioned(
+                          right: 0,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              final pickedImage = await _pickImage(ImageSource.gallery);
+                              if (pickedImage != null) {
+                                setState(() {
+                                  _imageFile = pickedImage as PickedFile?;
+                                });
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.transparent,
+                              elevation: 0, // Set elevation to 0
+                              padding: EdgeInsets.zero,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(0),
+                                side: BorderSide(color: Colors.transparent),
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.upload,
+                              color: Color(0xFF0C1C33), // Change the color of the button icon
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+
+
+
+                Padding(
+                  padding: EdgeInsets.only(bottom: 20.0),
+                  child: SizedBox(
+                    width: 340.0,
+                    height: 55.0,
+                    child: Stack(
+                      alignment: Alignment.centerRight,
+                      children: [
+                        TextFormField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                            labelText: "Upload SLTDA License",
+                            prefixIcon: Icon(Icons.file_copy),
+                            border: myinputborder(),
+                            enabledBorder: myinputborder(),
+                            focusedBorder: myfocusborder(),
+                          ),
+                          validator: (text) {
+                            if (text!.isEmpty) {
+                              return 'NIC Cannot be Empty';
+                            }
+                            return null;
+                          },
+                          onSaved: (text) {
+                            NIC = text!;
+                          },
+                        ),
+                        Positioned(
+                          right: 0,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              final pickedImage = await _pickImage(ImageSource.gallery);
+                              if (pickedImage != null) {
+                                setState(() {
+                                  _imageFile = pickedImage as PickedFile?;
+                                });
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.transparent,
+                              elevation: 0, // Set elevation to 0
+                              padding: EdgeInsets.zero,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(0),
+                                side: BorderSide(color: Colors.transparent),
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.upload,
+                              color: Color(0xFF0C1C33), // Change the color of the button icon
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: Text(
+                    'Select languages that you can', // Your desired title here
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      // Set text alignment to left
+                    ),
+
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: items.map((item) {
+                    return CheckboxListTile(
+                      title: Text(item),
+                      value: selectedItems.contains(item),
+                      onChanged: (bool? value) {
+                        _handleCheckboxChange(value, item);
+                      },
+                    );
+                  }).toList(),
+                ),
+
+                SizedBox(height:10.0),
+
                 Padding(
                   padding: EdgeInsets.only(bottom: 20.0),
                   child: SizedBox(
@@ -478,75 +741,7 @@ class TourGuideFormState extends State<TourGuideForm> {
                     height: 55.0,
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText: "SLTDA License",
-                        prefixIcon: Icon(Icons.lock),
-                        border: myinputborder(),
-                        enabledBorder: myinputborder(),
-                        focusedBorder: myfocusborder(),
-                      ),
-
-                      validator: (text){
-                        if(text!.isEmpty){
-                          return 'Current Password Cannot be Empty';
-                        }
-                        return null;
-                      },
-
-                      onSaved: (text){
-                        name= text!;
-                      },
-
-                    ),
-                  ),
-                ),
-
-
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: SizedBox(
-                    width: 340.0,
-                    height: 55.0,
-                    child: DropdownButtonFormField<String>(
-                      value: selectedLanguage,
-                      decoration: InputDecoration(
-                        labelText: "Languages",
-                        prefixIcon: Icon(Icons.language),
-                        border: myinputborder(),
-                        enabledBorder: myinputborder(),
-                        focusedBorder: myfocusborder(),
-                      ),
-                      onChanged: (newValue) {
-                        setState(() {
-                          selectedLanguage = newValue!;
-                        });
-                      },
-                      items: languages.map((language) {
-                        return DropdownMenuItem<String>(
-                          value: language,
-                          child: Text(language),
-                        );
-                      }).toList(),
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return 'Please select a language';
-                      //   }
-                      //   return null;
-                      // },
-                      onSaved: (value) {
-                        selectedLanguage = value!; // Save the selected language to your variable.
-                      },
-                    ),
-                  ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: SizedBox(
-                    width: 340.0,
-                    height: 55.0,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "Experiences",
+                        labelText: "No of trips",
                         prefixIcon: Icon(Icons.book),
                         border: myinputborder(),
                         enabledBorder: myinputborder(),
@@ -688,10 +883,17 @@ class TourGuideFormState extends State<TourGuideForm> {
                 ),
               ],
             ),
+            ),
           ),
         ],
       ),
     );
+  }
+
+
+  Future<XFile?> _pickImage(ImageSource source) async {
+    final pickedFile = await ImagePicker().pickImage(source: source);
+    return pickedFile;
   }
 }
 
@@ -714,6 +916,8 @@ class VendorForm extends StatefulWidget {
 
 class VendorFormState extends State<VendorForm> {
   final _formKey = GlobalKey<FormState>();
+
+  late PickedFile? _imageFile;
 
 
   List<String> cateogory = [
@@ -788,46 +992,106 @@ class VendorFormState extends State<VendorForm> {
 
 
 
-
-
-
                 Padding(
                   padding: EdgeInsets.only(bottom: 20.0),
                   child: SizedBox(
                     width: 340.0,
                     height: 55.0,
-                    child: DropdownButtonFormField<String>(
-                      value: cat,
-                      decoration: InputDecoration(
-                        labelText: "Category",
-                        prefixIcon: Icon(Icons.category),
-                        border: myinputborder(),
-                        enabledBorder: myinputborder(),
-                        focusedBorder: myfocusborder(),
-                      ),
-                      onChanged: (newValue) {
-                        setState(() {
-                          cat = newValue!;
-                        });
-                      },
-                      items: cateogory.map((language) {
-                        return DropdownMenuItem<String>(
-                          value: language,
-                          child: Text(language),
-                        );
-                      }).toList(),
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return 'Please select a language';
-                      //   }
-                      //   return null;
-                      // },
-                      onSaved: (value) {
-                        cat = value!; // Save the selected language to your variable.
-                      },
+                    child: Stack(
+                      alignment: Alignment.centerRight,
+                      children: [
+                        TextFormField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                            labelText: "Upload NIC copy",
+                            prefixIcon: Icon(Icons.file_copy),
+                            border: myinputborder(),
+                            enabledBorder: myinputborder(),
+                            focusedBorder: myfocusborder(),
+                          ),
+                          validator: (text) {
+                            if (text!.isEmpty) {
+                              return 'NIC Cannot be Empty';
+                            }
+                            return null;
+                          },
+                          onSaved: (text) {
+                            NIC = text!;
+                          },
+                        ),
+                        Positioned(
+                          right: 0,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              final pickedImage = await _pickImage(ImageSource.gallery);
+                              if (pickedImage != null) {
+                                setState(() {
+                                  _imageFile = pickedImage as PickedFile?;
+                                });
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.transparent,
+                              elevation: 0, // Set elevation to 0
+                              padding: EdgeInsets.zero,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(0),
+                                side: BorderSide(color: Colors.transparent),
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.upload,
+                              color: Color(0xFF0C1C33), // Change the color of the button icon
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),
+
+
+
+
+
+
+                // Padding(
+                //   padding: EdgeInsets.only(bottom: 20.0),
+                //   child: SizedBox(
+                //     width: 340.0,
+                //     height: 55.0,
+                //     child: DropdownButtonFormField<String>(
+                //       value: cat,
+                //       decoration: InputDecoration(
+                //         labelText: "Category",
+                //         prefixIcon: Icon(Icons.category),
+                //         border: myinputborder(),
+                //         enabledBorder: myinputborder(),
+                //         focusedBorder: myfocusborder(),
+                //       ),
+                //       onChanged: (newValue) {
+                //         setState(() {
+                //           cat = newValue!;
+                //         });
+                //       },
+                //       items: cateogory.map((language) {
+                //         return DropdownMenuItem<String>(
+                //           value: language,
+                //           child: Text(language),
+                //         );
+                //       }).toList(),
+                //       // validator: (value) {
+                //       //   if (value == null || value.isEmpty) {
+                //       //     return 'Please select a language';
+                //       //   }
+                //       //   return null;
+                //       // },
+                //       onSaved: (value) {
+                //         cat = value!; // Save the selected language to your variable.
+                //       },
+                //     ),
+                //   ),
+                // ),
 
 
 
@@ -886,6 +1150,12 @@ class VendorFormState extends State<VendorForm> {
         ],
       ),
     );
+  }
+
+
+  Future<XFile?> _pickImage(ImageSource source) async {
+    final pickedFile = await ImagePicker().pickImage(source: source);
+    return pickedFile;
   }
 }
 

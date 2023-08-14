@@ -10,7 +10,7 @@ class FollowingList extends StatefulWidget {
   _FollowingListState createState() => _FollowingListState();
 }
 
-class _FollowingListState extends State<FollowingList>{
+class _FollowingListState extends State<FollowingList> {
   List<User> _following = [];
   String _userToken = '';
   User _user = User(avatar: '', name: '', email: '');

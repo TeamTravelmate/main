@@ -24,15 +24,15 @@ class WelcomeScreenOne extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                Image.asset('assets/img/logo-travelmate.png'),
-                const SizedBox(height: 46.1),
+                Image.asset('assets/img/logo-travelmate.png',),
+                const SizedBox(height: 20),
                 const Text(
                 'DISCOVER. EXPLORE. CONNECT.',
                 
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 18,
                     letterSpacing: 1.5, 
                   ),
                 ),
@@ -46,7 +46,7 @@ class WelcomeScreenOne extends StatelessWidget {
                         
                         color: ColorsTravelMate.primary,
                         fontWeight: FontWeight.w900,
-                        fontSize: 25, 
+                        fontSize: 20, 
                       ),
                     ),
                   ),
@@ -59,14 +59,14 @@ class WelcomeScreenOne extends StatelessWidget {
                           style: TextStyle(                            
                             color: ColorsTravelMate.primary,
                             fontWeight: FontWeight.w800,
-                            fontSize: 25, 
+                            fontSize: 20, 
                           ),
                         ),
                    ),
                  ),
                  const SizedBox(height: 75),
                  Image.asset('assets/img/travel-selfie.png'),
-                 const SizedBox(height: 120),
+                 const SizedBox(height: 80),
                 GestureDetector(
                   onTap: () {
                     // Navigate to the other screen here
