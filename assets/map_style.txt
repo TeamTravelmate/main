@@ -34,13 +34,13 @@
                 "visibility": "on"
             },
             {
-                "color": "#c7c7c7"
+                "color": "#fcfcfc"
             }
         ]
     },
     {
         "featureType": "landscape",
-        "elementType": "all",
+        "elementType": "geometry",
         "stylers": [
             {
                 "saturation": "-30"
@@ -76,7 +76,7 @@
     },
     {
         "featureType": "poi",
-        "elementType": "all",
+        "elementType": "geometry",
         "stylers": [
             {
                 "lightness": "-25"
@@ -132,21 +132,3 @@
         ]
     }
 ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

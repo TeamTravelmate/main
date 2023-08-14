@@ -3,6 +3,8 @@ import 'package:main/UIs/themes/colors.dart';
 import 'package:main/UIs/widgets/text_custom.dart';
 import 'package:timelines/timelines.dart';
 
+import '../../Domain/models/tripLuq.dart';
+
 class TodoDayTile extends StatelessWidget {
   const TodoDayTile({
     super.key,
@@ -93,9 +95,11 @@ class TripTimeline extends StatelessWidget {
     super.key,
     required this.sc,
     required this.displayDayMethod,
+    required this.tripDays,
   });
 
   final ScrollController sc;
+  final List<TripDay> tripDays;
   final void Function() displayDayMethod;
 
   @override
@@ -111,7 +115,7 @@ class TripTimeline extends StatelessWidget {
       ),
       builder: TimelineTileBuilder.connected(
         connectionDirection: ConnectionDirection.after,
-        itemCount: 3,
+        itemCount: tripDays.length,
         indicatorBuilder: (_, index) => OutlinedDotIndicator(
           key: Key("Day ${index + 1}"),
           size: 20,
@@ -135,9 +139,9 @@ class TripTimeline extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: TodoDayTile(
                 key: Key("Day ${index + 1}"),
-                locations: "Galle Face Green, Lotus tower, Floating market",
-                approxBudget: "Rs. 5000",
-                weather: "Sunny",
+                locations: tripDays[index].places,
+                approxBudget: tripDays[index].budget.toString(),
+                weather: tripDays[index].weather,
                 // displayDayMethod: () => print(this.key),
                 //print the key of the widget
                 displayDayMethod: displayDayMethod, //print the day number of the widget

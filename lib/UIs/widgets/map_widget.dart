@@ -10,6 +10,7 @@ class CustomMap extends StatefulWidget {
 class _CustomMapState extends State<CustomMap> {
   late GoogleMapController mapController;
   late String _mapStyle;
+  late double _mapBottomPadding;
 
   final LatLng _center = const LatLng(6.9020, 79.8611);
 
@@ -21,6 +22,8 @@ class _CustomMapState extends State<CustomMap> {
   @override
   void initState() {
     super.initState();
+    //MediaQuery.of(context).size.height / 6
+    _mapBottomPadding = MediaQuery.of(context).size.height / 6;
     rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;
     });

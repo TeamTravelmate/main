@@ -37,7 +37,7 @@ class tripCard extends StatelessWidget {
           onPressed: () {
             //just push the map page
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const MapToDoScreen();
+              return MapToDoScreen(tripId: 1,);
             }));
           },
           backgroundColor: ColorsTravelMate.tertiary,

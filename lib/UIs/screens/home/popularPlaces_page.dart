@@ -107,7 +107,7 @@ class popularDestinations extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(
                 left: 10.0,
                 right: 10.0,
