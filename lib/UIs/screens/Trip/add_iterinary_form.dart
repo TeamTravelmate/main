@@ -106,7 +106,7 @@ class _AddIterinaryFormState extends State<AddIterinaryForm> {
                     SizedBox(
                       height: 20,
                     ),
-                    buttonWidget(width: double.infinity, labelText: 'Add Iterinary', path: joinedTripView())
+                    buttonWidget(width: double.infinity, labelText: 'Add Iterinary', path: joinedTripView(tripId: 14,))
                   ],
                 ),
               ))
