@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:main/Domain/models/trip.dart';
+import 'package:main/UIs/screens/Trip/tripView_page.dart';
 import '../../themes/colors.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/inputField_widget.dart';
 import 'publicTrip/publicTripsAll_page.dart';
 import 'tripPlanning2_page.dart';
+import 'package:http/http.dart' as http;
 
 // ignore: must_be_immutable, camel_case_types
 class trip extends StatelessWidget {
@@ -70,274 +75,279 @@ class trip extends StatelessWidget {
   }
 }
 
-class Customize extends StatelessWidget {
+class Customize extends StatefulWidget {
   const Customize({super.key});
+
+  @override
+  State<Customize> createState() => _CustomizeState();
+}
+
+class _CustomizeState extends State<Customize> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _destinationController = TextEditingController();
+  final TextEditingController _startDateController = TextEditingController();
+  final TextEditingController _numberOfDaysController = TextEditingController();
+  int _userId = 1; // Extract this from your JWT token
+
+  Future<void> _sendTripRequest() async {
+    if (_formKey.currentState!.validate()) {
+      Trip trip = Trip(
+        userId: _userId,
+        destination: _destinationController.text,
+        startDate: _startDateController.text,
+        numberOfDays: int.parse(_numberOfDaysController.text),
+      );
+
+      final response = await http.post(
+        Uri.parse(
+            'http://192.168.198.1:3000/trip'), // Replace with your API endpoint
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(trip.toJson()),
+      );
+      print(response.statusCode);
+      
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Trip Created Successfully!'),
+          ),
+        );
+
+        var responseData = json.decode(response.body);
+        var tripId = responseData['trip']['id'];
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => joinedTripView(tripId: tripId)),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Error'),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        TextFieldWidget(
-          labelText: 'Where to go?',
-          hintText: 'Eg. Galle, Trincomalee',
-          prefixIcon: Icon(Icons.location_on),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'required field';
-            }
-            return null;
-          },
-        ),
-        const SizedBox(height: 20),
-        TextFieldWidget(
-          labelText: 'Start Date',
-          hintText: 'Select a start date',
-          prefixIcon: Icon(Icons.calendar_month),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'required field';
-            }
-            return null;
-          },
-        ),
-        const SizedBox(height: 20),
-        TextFieldWidget(
-          labelText: 'No. of Days',
-          hintText: 'Select no. of days',
-          prefixIcon: Icon(Icons.date_range),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'required field';
-            }
-            return null;
-          },
-        ),
-        const SizedBox(height: 20),
-        SizedBox(
-          width: double.infinity,
-          height: 80,
-          child: TextButton(
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
-                builder: (BuildContext context) {
-                  return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Divider(
-                          color: Colors.grey,
-                          thickness: 4,
-                          indent: 110,
-                          endIndent: 110,
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        const Text(
-                          'Share your trip',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {},
-                              style: TextButton.styleFrom(
-                                backgroundColor: Colors.grey.shade200,
-                                foregroundColor:
-                                    const Color.fromARGB(255, 69, 68, 68),
-                              ),
-                              child: const Text('Can Edit'),
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            ElevatedButton(
-                              onPressed: () {},
-                              style: TextButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                foregroundColor:
-                                    const Color.fromARGB(255, 69, 68, 68),
-                              ),
-                              child: const Text('View Only'),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFieldWidget(
-                          labelText: 'Invite By Email Address',
-                          hintText: 'Email Address',
-                          prefixIcon: const Icon(Icons.email),
-                          validator: (val) {
-                            if (!val.isValidEmail) return 'Enter valid email';
-                          },
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Column(
-                              children: [
-                                FloatingActionButton(
-                                  onPressed: () {},
-                                  backgroundColor: const Color(0xffE0E0E0),
-                                  foregroundColor:
-                                      const Color.fromARGB(255, 69, 68, 68),
-                                  child: const Icon(Icons.link),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 5),
-                                ),
-                                const Text(
-                                  'Copy Link',
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      color: Color.fromARGB(255, 69, 68, 68)),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 30,
-                            ),
-                            Column(
-                              children: [
-                                FloatingActionButton(
-                                  onPressed: () {},
-                                  backgroundColor: const Color(0xffE0E0E0),
-                                  foregroundColor:
-                                      const Color.fromARGB(255, 69, 68, 68),
-                                  child: const Icon(Icons.message),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 5),
-                                ),
-                                const Text(
-                                  'Text',
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      color: Color.fromARGB(255, 69, 68, 68)),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 30,
-                            ),
-                            Column(
-                              children: [
-                                FloatingActionButton(
-                                  onPressed: () {},
-                                  backgroundColor: const Color(0xffE0E0E0),
-                                  foregroundColor:
-                                      const Color.fromARGB(255, 69, 68, 68),
-                                  child: const Icon(Icons.upload),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 5),
-                                ),
-                                const Text(
-                                  'Other',
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      color: Color.fromARGB(255, 69, 68, 68)),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        // TextButton.icon(
-                        //   onPressed: () {
-                        //     showBottomSheet(
-                        //       context: context,
-                        //       builder: (BuildContext context) {
-                        //         return const Column(
-                        //           children: [
-                        //             Divider(
-                        //               color: Colors.grey,
-                        //               thickness: 4,
-                        //               indent: 110,
-                        //               endIndent: 110,
-                        //             ),
-                        //             SizedBox(
-                        //               height: 30,
-                        //             ),
-                        //             Text(
-                        //               'Invite your tripmates',
-                        //               style: TextStyle(fontSize: 20),
-                        //             ),
-                        //             SizedBox(
-                        //               height: 30,
-                        //             ),
-                        //             SizedBox(
-                        //               height: 20,
-                        //             ),
-                        //             TextFieldWidget(
-                        //               labelText: 'Invite By Email Address',
-                        //               hintText: 'Email Address',
-                        //               prefixIcon: Icon(Icons.email),
-                        //             ),
-                        //           ],
-                        //         );
-                        //       },
-                        //     );
-                        //   },
-                        //   style: TextButton.styleFrom(
-                        //       foregroundColor: Colors.grey,
-                        //       backgroundColor: Colors.white),
-                        //   icon: const Icon(Icons.group_add_sharp),
-                        //   label: const Text('Manage Tripmates'),
-                        // ),
-                      ],
-                    ),
-                  );
+        Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Where to go?',
+                  hintText: 'Eg. Galle, Trincomalee',
+                  prefixIcon: Icon(Icons.location_on),
+                ),
+                controller: _destinationController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a destination';
+                  }
+                  return null;
                 },
-              );
-            },
-            style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(ColorsTravelMate.tertiary),
-              foregroundColor:
-                  MaterialStateProperty.all(ColorsTravelMate.primary),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Start Date',
+                  hintText: 'Select a start date',
+                  prefixIcon: Icon(Icons.calendar_month),
+                ),
+                controller: _startDateController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a start date';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'No. of Days',
+                  hintText: 'Enter the no. of days',
+                  prefixIcon: Icon(Icons.people_alt),
+                ),
+                controller: _numberOfDaysController,
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter the number of days';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 80),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: TextButton(
+                  onPressed: () {
+                    _sendTripRequest();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(ColorsTravelMate.primary),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                  ),
+                  child: const Text('Create my Trip'),
                 ),
               ),
-            ),
-            child: const Text('+ Share your trip',
-              style: TextStyle(
-                color: Color(0xFF0C1C33), // Change this to the desired color
-                fontSize: 16.0, // Adjust the font size as needed
-                fontWeight: FontWeight.bold, // Adjust the font weight as needed
-              ),
-            ),
+              const SizedBox(height: 20),
+              TextButton(
+                  onPressed: () => newMethod,
+                  child: const Text("+ Invite Friends")),
+            ],
           ),
         ),
-        const SizedBox(
-          height: 260,
-        ),
-        buttonWidget(
-          width: double.infinity,
-          labelText: 'Next',
-          path: Plan(),
-        ),
       ],
+    );
+  }
+
+  Future<dynamic> newMethod(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      builder: (BuildContext context) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Divider(
+                color: Colors.grey,
+                thickness: 4,
+                indent: 110,
+                endIndent: 110,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const Text(
+                'Share your trip',
+                style: TextStyle(fontSize: 20),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.grey.shade200,
+                      foregroundColor: const Color.fromARGB(255, 69, 68, 68),
+                    ),
+                    child: const Text('Can Edit'),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: const Color.fromARGB(255, 69, 68, 68),
+                    ),
+                    child: const Text('View Only'),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+             
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      FloatingActionButton(
+                        onPressed: () {},
+                        backgroundColor: const Color(0xffE0E0E0),
+                        foregroundColor: const Color.fromARGB(255, 69, 68, 68),
+                        child: const Icon(Icons.link),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 5),
+                      ),
+                      const Text(
+                        'Copy Link',
+                        style: TextStyle(
+                            fontSize: 10,
+                            color: Color.fromARGB(255, 69, 68, 68)),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  Column(
+                    children: [
+                      FloatingActionButton(
+                        onPressed: () {},
+                        backgroundColor: const Color(0xffE0E0E0),
+                        foregroundColor: const Color.fromARGB(255, 69, 68, 68),
+                        child: const Icon(Icons.message),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 5),
+                      ),
+                      const Text(
+                        'Text',
+                        style: TextStyle(
+                            fontSize: 10,
+                            color: Color.fromARGB(255, 69, 68, 68)),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  Column(
+                    children: [
+                      FloatingActionButton(
+                        onPressed: () {},
+                        backgroundColor: const Color(0xffE0E0E0),
+                        foregroundColor: const Color.fromARGB(255, 69, 68, 68),
+                        child: const Icon(Icons.upload),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 5),
+                      ),
+                      const Text(
+                        'Other',
+                        style: TextStyle(
+                            fontSize: 10,
+                            color: Color.fromARGB(255, 69, 68, 68)),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

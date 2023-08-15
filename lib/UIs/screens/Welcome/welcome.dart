@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/Registration/name_reg.dart';
 import 'package:main/UIs/screens/Registration/register_1.dart';
 import 'package:main/UIs/screens/login/login_page.dart';
+import 'package:main/UIs/screens/login/reg_alt.dart';
 import 'package:main/UIs/themes/colors.dart';
 
 class Welcome extends StatelessWidget {
@@ -10,6 +11,7 @@ class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       body: SafeArea(
         child: Column(
           children: [
@@ -87,7 +89,7 @@ class Welcome extends StatelessWidget {
                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const nameReg()));
+                                builder: (context) => const RegisterAlt()));
                       },
                       child: const Padding(
                         padding: EdgeInsets.all(15.0),

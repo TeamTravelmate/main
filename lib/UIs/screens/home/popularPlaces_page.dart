@@ -5,6 +5,7 @@ import '../profile/profile.dart';
 
 // ignore: camel_case_types
 class popularDestinations extends StatelessWidget {
+
   const popularDestinations({super.key, 
   });
 
@@ -18,12 +19,12 @@ class popularDestinations extends StatelessWidget {
         actions: [
           FloatingActionButton.small(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Profile(),
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => Profile(token: ),
+                //   ),
+                // );
               },
               backgroundColor: ColorsTravelMate.secundary,
               child: Image.asset('assets/profile.png', height: 40, width: 40),

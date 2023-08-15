@@ -1,12 +1,14 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main/UIs/screens/login/forgotPassword_page.dart';
+import 'package:main/UIs/screens/login/reg_alt.dart';
+import 'package:main/UIs/screens/profile/profile.dart';
 import 'package:main/UIs/themes/colors.dart';
 import 'package:main/UIs/widgets/bottom_nav.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,6 +21,84 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  late SharedPreferences prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    initSharedPref();
+  }
+
+  void initSharedPref() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
+  void loginUser() async {
+    final email =
+        emailController.text.trim(); // Get the email input from the controller
+    final password =
+        passwordController.text; // Get the password input from the controller
+
+    // Create the JSON payload to send to the backend
+    final Map<String, String> data = {
+      'email': email,
+      'password': password,
+    };
+
+    // Send the POST request to the backend API
+    final Uri loginUri = Uri.parse('http://192.168.198.1:3000/login');
+    print(loginUri);
+    final response = await http.post(
+      loginUri,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(data),
+    );
+
+    
+    var responseData = jsonDecode(response.body);
+    print(responseData);
+    // Check the API response
+    if (response.statusCode == 200) {      // Successful login
+      
+      var token = responseData['token'];
+      if (responseData['status'] == true) {
+        prefs.setString('token', token);
+      }else {
+        print('Error 101');
+      }
+      
+
+      // Handle the API response here, e.g., save the user data or token.
+      print('Login Successful: ${responseData['message']}');
+      print('User Data: ${responseData['user']}');
+      print('Token: ${responseData['token']}');
+
+      // Navigate to the home page after successful login and replace the current route.
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => BottomNav(token: token)),
+      );
+    } else if (response.statusCode == 401) {
+      // Invalid email or password
+      print('Invalid email or password');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Login failed. Invalid email or password.'),
+        ),
+      );
+    } else {
+      // Other error
+      print('Error occurred while logging in');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error occurred while logging in.'),
+        ),
+      );
+    }
+    ;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,10 +257,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: GestureDetector(
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ForgotPassword()));
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ForgotPassword()));
                         },
                         child: const Text(
                           "Forgot Password?",
@@ -210,68 +289,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         color: ColorsTravelMate.primary,
-                        onPressed: () async {
-                          final email = emailController.text
-                              .trim(); // Get the email input from the controller
-                          final password = passwordController
-                              .text; // Get the password input from the controller
-
-                          // Create the JSON payload to send to the backend
-                          final Map<String, String> data = {
-                            'email': email,
-                            'password': password,
-                          };
-
-                          // Send the POST request to the backend API
-                          final Uri loginUri =
-                              Uri.parse('http://192.168.198.1:3000/login');
-                          print(loginUri);
-                          final response = await http.post(
-                            loginUri,
-                            headers: {'Content-Type': 'application/json'},
-                            body: jsonEncode(data),
-                          );
-
-                          // Check the API response
-                          if (response.statusCode == 200) {
-                            // Successful login
-                            Map<String, dynamic> responseData =
-                                jsonDecode(response.body);
-
-                            // Handle the API response here, e.g., save the user data or token.
-                            print(
-                                'Login Successful: ${responseData['message']}');
-                            print('User Data: ${responseData['user']}');
-                            print('Token: ${responseData['token']}');
-
-                            // Navigate to the home page after successful login and replace the current route.
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BottomNav()),
-                            );
-                          } else if (response.statusCode == 401) {
-                            // Invalid email or password
-                            print('Invalid email or password');
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text(
-                                    'Login failed. Invalid email or password.'),
-                              ),
-                            );
-                          } else {
-                            // Other error
-                            print('Error occurred while logging in');
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content:
-                                    Text('Error occurred while logging in.'),
-                              ),
-                            );
-                          }
-                          ;
-                        },
+                        onPressed: loginUser,
                         child: const Padding(
                           padding: EdgeInsets.all(15.0),
                           child: Text(
@@ -389,7 +407,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // Add your onPressed code here!
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterAlt()));
                     },
                     child: const Text(
                       "Register",
