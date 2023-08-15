@@ -48,6 +48,8 @@ dependencies:
   sleek_circular_slider: ^2.0.1
   dropdown_textfield: ^1.0.8
   booking_calendar: ^1.1.9
+  multi_validator: ^1.0.1
+  form_field_validator: ^1.0.1
 
 dev_dependencies:
   flutter_test:
