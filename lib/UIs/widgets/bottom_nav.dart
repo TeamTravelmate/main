@@ -21,25 +21,17 @@ class BottomNav extends StatefulWidget {
 }
 
 class _BottomNavState extends State<BottomNav> {
-  late List<Widget> pages;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    pages = [
-      home(token: widget.token),
-      const SearchPlace(),
-      trip(),
-      const HomePage(),
-      const FriendsList(),
-      Add(),
-      Address(),
-      LeaderBoard(),
-      Deliver()
-    ];
-  }
+  List pages = [
+    const home(),
+    const SearchPlace(),
+    trip(),
+    HomePage(),
+    const FriendsList(),
+    Add(),
+    Address(),
+    LeaderBoard(),
+    Deliver()
+  ];
 
   int currIndex = 0;
 

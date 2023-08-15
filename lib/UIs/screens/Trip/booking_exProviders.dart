@@ -106,18 +106,13 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               //disabledDates: [DateTime(2023, 1, 20)],
               //disabledDays: [6, 7],
             ),
-            SizedBox(
+            const SizedBox(
               height: 300,
             ),
             buttonWidget(
                 width: size.width * 0.8,
                 labelText: 'Reserve Slot',
-                path: CustomizeActivities())
-            // ElevatedButton(
-            //     onPressed: () {
-            //       Navigator.pop(context);
-            //     },
-            //     child: const Text('Reserve Slot'))
+                path: CustomizeActivities())  
           ],
         ),
       ),
