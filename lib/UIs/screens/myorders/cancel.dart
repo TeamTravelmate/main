@@ -5,8 +5,7 @@ class Cancel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
+        return Scaffold(
           body: Column(
             children: [
               Card(
@@ -159,7 +158,6 @@ class Cancel extends StatelessWidget {
               ),
             ],
           ),
-        )
-    );
+        );
   }
 }
