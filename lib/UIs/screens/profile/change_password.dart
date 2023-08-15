@@ -27,7 +27,7 @@ class ChangePassword extends StatelessWidget {
                       radius: 70.0,
                       backgroundImage:
                       // _imageFile == null?
-                      AssetImage('images/2.jpeg')
+                      AssetImage('assets/profile_pic.jpeg')
                     // : FileImage(File(_imageFile.path)),
 
                   ),

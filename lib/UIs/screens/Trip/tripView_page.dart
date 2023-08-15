@@ -5,6 +5,7 @@ import 'package:main/Domain/models/trip.dart';
 import 'package:main/UIs/screens/Trip/tripPlanning2_page.dart';
 import '../../themes/colors.dart';
 import '../../widgets/tripCard_widget.dart';
+import 'upload_pic.dart';
 import 'package:http/http.dart' as http;
 import 'add_iterinary_form.dart';
 import 'invitematesForm.dart';
@@ -105,7 +106,11 @@ class _joinedTripViewState extends State<joinedTripView> {
                               ),
                               FloatingActionButton.small(
                                 backgroundColor: ColorsTravelMate.tertiary,
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                                    return Uploadpic();
+                                  }));
+                                },
                                 child: const CircleAvatar(
                                   backgroundColor: ColorsTravelMate.tertiary,
                                   child: Icon(
