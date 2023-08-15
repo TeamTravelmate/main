@@ -1,24 +1,60 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:main/Domain/models/trip.dart';
 import 'package:main/UIs/screens/Trip/tripPlanning2_page.dart';
 import '../../themes/colors.dart';
 import '../../widgets/tripCard_widget.dart';
+import 'package:http/http.dart' as http;
 import 'add_iterinary_form.dart';
 import 'invitematesForm.dart';
 import 'publicTrip/joinPublicTripForm.dart';
 
 class joinedTripView extends StatefulWidget {
-  final tripId;
+  final int tripId;
 
-  const joinedTripView({@required this.tripId , super.key});
+  const joinedTripView({required this.tripId, super.key});
 
   @override
   _joinedTripViewState createState() => _joinedTripViewState();
 }
 
 class _joinedTripViewState extends State<joinedTripView> {
+  late Future<Trip> tripDetails;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    tripDetails = fetchTripDetails(widget.tripId);
+  }
+
+  Future<Trip> fetchTripDetails(int tripId) async {
+    final response = await http.get(
+      Uri.parse(
+          'http://192.168.198.1:3000/get-trip/$tripId'), // Update the URL accordingly
+    );
+
+    if (response.statusCode == 200) {
+      var rawResponseData = json.decode(response.body) as Map<String, dynamic>;
+      var responseData = (rawResponseData["trips"] as List<dynamic>)[0] as Map<String, dynamic>;
+    // Assuming the API response contains a "trip" object
+      Trip trip = Trip(
+        userId: responseData['userId'],
+        destination: responseData['destination'],
+        startDate: responseData['startDate'],
+        numberOfDays: responseData['numberOfDays'],
+        // Add other properties based on your Trip class
+      );
+      return trip;
+    } else {
+      throw Exception('Failed to fetch trip details');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    var trip;
     return DefaultTabController(
         length: 5,
         initialIndex: 0,
@@ -26,9 +62,9 @@ class _joinedTripViewState extends State<joinedTripView> {
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Plan()),
-            );
+                context,
+                MaterialPageRoute(builder: (context) => Plan()),
+              );
             },
             backgroundColor: ColorsTravelMate.primary,
             child: const Icon(Icons.add),
@@ -83,13 +119,29 @@ class _joinedTripViewState extends State<joinedTripView> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 250.0),
-                        child: tripCard(
-                          tripLocationTitle: 'Galle - Kandy\n',
-                          location: '  Galle Fort, Unawatuna Beach',
-                          tripDuration:
-                              '  July 3, 2023 - July 6, 2023 (3 days)',
-                          tripmates: '  Kumar',
+                        padding: const EdgeInsets.only(top: 250.0),
+                        child: FutureBuilder<Trip>(
+                          future: tripDetails,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else if (snapshot.hasData) {
+                              Trip trip = snapshot.data as Trip;
+                              return tripCard(
+                                tripLocationTitle:
+                                    'Trip to ${trip.destination}',
+                                location: ' ${trip.destination}',
+                                tripDuration:
+                                    '  ${trip.startDate} - ${trip.numberOfDays} days',
+                                tripmates: '  Kumar & 5 others',
+                              );
+                            } else {
+                              return const Text('No data available');
+                            }
+                          },
                         ),
                       ),
                     ],
@@ -223,7 +275,154 @@ class _BudgetState extends State<Budget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
-      // child:
+      child: Column(
+        children: [
+          SingleChildScrollView(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text(
+                'Total Budget Per Person: Rs.3500',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              const Text(
+                'Total Budget: Rs.70000',
+                style: TextStyle(
+                  fontSize: 15,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              SingleChildScrollView(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  child: const Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Food',
+                            style: TextStyle(
+                                color: ColorsTravelMate.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          Text(
+                            'Rs.1000',
+                            style: TextStyle(
+                                color: ColorsTravelMate.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Breaksfast - ',
+                            style: TextStyle(color: Colors.black, fontSize: 12),
+                          ),
+                          Text(
+                            'Rs. 300 ',
+                            style: TextStyle(color: Colors.black, fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Lunch - ',
+                            style: TextStyle(color: Colors.black, fontSize: 12),
+                          ),
+                          Text(
+                            'Rs. 400 ',
+                            style: TextStyle(color: Colors.black, fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Dinner - ',
+                            style: TextStyle(color: Colors.black, fontSize: 12),
+                          ),
+                          Text(
+                            'Rs. 300 ',
+                            style: TextStyle(color: Colors.black, fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Accomodation',
+                            style: TextStyle(
+                                color: ColorsTravelMate.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          Text(
+                            'Rs.800',
+                            style: TextStyle(
+                                color: ColorsTravelMate.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Transport',
+                            style: TextStyle(
+                                color: ColorsTravelMate.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          Text(
+                            'Rs.700',
+                            style: TextStyle(
+                                color: ColorsTravelMate.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Tour Guide Fee',
+                            style: TextStyle(
+                                color: ColorsTravelMate.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          Text(
+                            'Rs.1000',
+                            style: TextStyle(
+                                color: ColorsTravelMate.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ]),
+          )
+        ],
+      ),
     );
   }
 }

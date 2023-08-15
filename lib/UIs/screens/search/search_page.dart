@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:main/UIs/themes/colors.dart';
+import 'package:main/UIs/widgets/side_drawer.dart';
 import 'package:main/UIs/widgets/text_custom.dart';
 
 class SearchPlace extends StatelessWidget {
@@ -8,15 +9,12 @@ class SearchPlace extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const SideDrawer(),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60.0),
         child: AppBar(
           foregroundColor: ColorsTravelMate.primary,
           backgroundColor: ColorsTravelMate.tertiary,
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {},
-          ),
           title: SizedBox(
             height: 50,
             width: 300,
