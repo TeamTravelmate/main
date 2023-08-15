@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/Trip/tripPlanning2_page.dart';
 import '../../themes/colors.dart';
 import '../../widgets/tripCard_widget.dart';
+import 'add_iterinary_form.dart';
+import 'invitematesForm.dart';
+import 'publicTrip/joinPublicTripForm.dart';
 
 class joinedTripView extends StatefulWidget {
   final tripId;
@@ -79,14 +82,14 @@ class _joinedTripViewState extends State<joinedTripView> {
                           ),
                         ),
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(top: 250.0),
                         child: tripCard(
                           tripLocationTitle: 'Galle - Kandy\n',
                           location: '  Galle Fort, Unawatuna Beach',
                           tripDuration:
                               '  July 3, 2023 - July 6, 2023 (3 days)',
-                          tripmates: '  Kumar & 5 others',
+                          tripmates: '  Kumar',
                         ),
                       ),
                     ],
@@ -143,41 +146,7 @@ class _OverviewState extends State<Overview> {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AlertDialog(
-            backgroundColor: Colors.grey[300],
-            title: const Row(
-              children: [
-                Icon(
-                  Icons.warning_amber_rounded,
-                  color: Colors.red,
-                  size: 30,
-                ),
-                SizedBox(
-                  width: 6,
-                ),
-                Text(
-                  "We need more water bottles.\nMake sure to bring at least 1L\nwith you.",
-                  style: TextStyle(fontSize: 12),
-                ),
-              ],
-            ),
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset(
-                  'assets/profile.png',
-                  width: 20,
-                  height: 20,
-                ),
-                const Text('Kumara Gamage', style: TextStyle(fontSize: 11)),
-                const Text('2:30 PM', style: TextStyle(fontSize: 11)),
-                const Text('today', style: TextStyle(fontSize: 11)),
-              ],
-            ),
-          )
-        ],
+        children: [],
       ),
     );
   }
@@ -193,11 +162,14 @@ class Iterinary extends StatefulWidget {
 class _IterinaryState extends State<Iterinary> {
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(15.0),
-      child: Column(
-        children: [
-          Row(
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start, children: [
+                SizedBox(height: 20,),
+              Row(
             children: [
               Text(
                 "Day 1",
@@ -210,65 +182,32 @@ class _IterinaryState extends State<Iterinary> {
                 ),
               ),
               Spacer(),
-              Icon(
-                Icons.beach_access,
-                color: ColorsTravelMate.secundary,
-                size: 20,
-              ),
-              Text(' Unawatuna Beach', style: TextStyle(fontSize: 14)),
+              Text('Add destination...'),  
             ],
           ),
           SizedBox(
             height: 10,
           ),
-          Row(
-            children: [
-              Text(
-                "Day 2",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              Center(
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AddIterinaryForm()));
+                    },
+                    child: const Text('Add Iterinary'),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorsTravelMate.secundary,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        textStyle: const TextStyle(
+                            fontSize: 14,
+                            color: ColorsTravelMate.tertiary))),
               ),
-              Text(
-                " (July 4, 2023)",
-                style: TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-              Spacer(),
-              Icon(
-                Icons.hiking,
-                color: ColorsTravelMate.secundary,
-                size: 20,
-              ),
-              Text(' Hanthana Mountain', style: TextStyle(fontSize: 14)),
-            ],
+            ]),
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                "Day 3",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                " (July 5, 2023)",
-                style: TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-              Spacer(),
-              Icon(
-                Icons.directions_boat,
-                color: ColorsTravelMate.secundary,
-                size: 20,
-              ),
-              Text(' Kandy Lake', style: TextStyle(fontSize: 14)),
-            ],
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }
 
@@ -284,183 +223,7 @@ class _BudgetState extends State<Budget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
-      child: Column(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Total Budget Per Person: Rs.3500',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                  Text(
-                    'Total Budget: Rs.70000',
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                  SizedBox(height: 15,),
-                  SingleChildScrollView(
-                    child: Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 20
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Food',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              ),
-                              Text(
-                                'Rs.1000',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Breaksfast - ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12
-                                ),
-                              ),
-                              Text(
-                                'Rs. 300 ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Lunch - ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12
-                                ),
-                              ),
-                              Text(
-                                'Rs. 400 ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Dinner - ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12
-                                ),
-                              ),
-                              Text(
-                                'Rs. 300 ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Accomodation',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              ),
-                              Text(
-                                'Rs.800',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Transport',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              ),
-                              Text(
-                                'Rs.700',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Tour Guide Fee',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              ),
-                              Text(
-                                'Rs.1000',
-                                style: TextStyle(
-                                    color: ColorsTravelMate.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                ]
-            ),
-          )
-        ],
-      ),
+      // child:
     );
   }
 }
@@ -476,116 +239,7 @@ class _ExploreState extends State<Explore> {
   @override
   Widget build(BuildContext context) {
     return const Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Card(
-            child: Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.hotel,
-                        color: ColorsTravelMate.secundary,
-                        size: 30,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Hotels',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: ColorsTravelMate.secundary,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: ColorsTravelMate.secundary,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Card(
-            child: Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.restaurant,
-                        color: ColorsTravelMate.secundary,
-                        size: 30,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Resturants',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: ColorsTravelMate.secundary,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: ColorsTravelMate.secundary,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Card(
-            child: Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.local_activity,
-                        color: ColorsTravelMate.secundary,
-                        size: 30,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Activities',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: ColorsTravelMate.secundary,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: ColorsTravelMate.secundary,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
+      children: [],
     );
   }
 }
@@ -601,195 +255,34 @@ class _PeopleState extends State<People> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: SingleChildScrollView(
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/woman.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'A. M. Perera',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/man.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'A. Pathum Perera',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/girl1.jpeg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Sithumi Perera',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/woman2.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Ranjani Silva',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/man.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Hasantha Kariyawasam',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/man.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Luqman Fazhal',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/woman.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Usha Perera',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/woman2.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Gagana Samarasekara',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/girl.webp'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Buddhi Prabodha',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/man.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Sachin Perera',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10,),
-              ]
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text('No tripmates yet!',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: ColorsTravelMate.primary)),
+              SizedBox(height: 10),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => inviteMateForm()));
+                  },
+                  child: const Text('Invite Tripmates'),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorsTravelMate.secundary,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      textStyle: const TextStyle(
+                          fontSize: 14,
+                          color: ColorsTravelMate.tertiary))),
+            ]),
           ),
-        )
-    );
+        ));
   }
 }

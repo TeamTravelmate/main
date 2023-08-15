@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:main/UIs/screens/vendor/home_page.dart';
 import 'package:main/UIs/themes/colors.dart';
 import '../screens/Trip/booking_exProviders.dart';
+import '../screens/Trip/publicTrip/publicTripViewPage.dart';
+import '../screens/service providers/ex_providers.dart';
 import 'inputField_widget.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 
@@ -98,6 +99,13 @@ class _ActivityCardState extends State<ActivityCard> {
                                 const SizedBox(
                                   height: 20,
                                 ),
+                                CircleAvatar(
+                                  backgroundImage: AssetImage(widget.imagepath),
+                                  radius: 50,
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -151,77 +159,52 @@ class _ActivityCardState extends State<ActivityCard> {
                                         ),
                                       ],
                                     ),
-                                    const Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                            'Contact Details : \nKumara R\n077-xxxxxxx\nGalle, Sri Lanka'),
-                                      ],
-                                    ),
                                   ],
                                 ),
                                 const SizedBox(
-                                  height: 20,
+                                  height: 10,
                                 ),
-                                TextFieldWidget(
-                                  labelText: 'Check Availability',
-                                  hintText: 'mm/dd/yyyy',
-                                  prefixIcon: Icon(Icons.calendar_month),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'required field';
-                                    }
-                                    return null;
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ExperienceProviders()));
                                   },
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const HomePage()));
-                                      },
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                          ColorsTravelMate.secundary
-                                              .withOpacity(0.4),
-                                        ),
-                                        foregroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                ColorsTravelMate.secundary),
-                                      ),
-                                      child: const Text('Rent Essentials'),
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                      ColorsTravelMate.tertiary,
                                     ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const BookingCalendarDemoApp()));
-                                      },
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                          ColorsTravelMate.secundary
-                                              .withOpacity(0.4),
-                                        ),
-                                        foregroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                ColorsTravelMate.secundary),
-                                      ),
-                                      child: const Text('Reserve Slot'),
+                                    foregroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            ColorsTravelMate.secundary),
+                                  ),
+                                  child:
+                                      const Text('Select Experience Providers'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const BookingCalendarDemoApp()));
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                      ColorsTravelMate.secundary
+                                          .withOpacity(0.3),
                                     ),
-                                  ],
+                                    foregroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            ColorsTravelMate.secundary),
+                                    fixedSize: MaterialStateProperty.all<Size>(
+                                        const Size(160, 50)),
+                                  ),
+                                  child: const Text('Check Availability'),
                                 ),
                               ],
                             ),
@@ -258,8 +241,8 @@ class _ActivityCardState extends State<ActivityCard> {
                 ],
               ),
               DropDownTextField(
-                // initialValue: "Category",
-                controller: _cnt,
+                initialValue: "Unawatuna Beach",
+                // controller: _cnt,
                 clearOption: true,
                 validator: (value) {
                   if (value == null) {
@@ -288,38 +271,6 @@ class _ActivityCardState extends State<ActivityCard> {
               ),
               const SizedBox(
                 height: 10,
-              ),
-              DropDownTextField(
-                // initialValue: "Experience Provider",
-                controller: _cnt,
-                clearOption: true,
-                validator: (value) {
-                  if (value == null) {
-                    return "Required field";
-                  } else {
-                    return null;
-                  }
-                },
-                dropDownItemCount: 3,
-
-                dropDownList: const [
-                  DropDownValueModel(
-                      name: 'Experience Provider',
-                      value: "Experience Provider"),
-                  DropDownValueModel(
-                      name: 'Experience Provider',
-                      value: "Experience Provider"),
-                  DropDownValueModel(
-                      name: 'Experience Provider',
-                      value: "Experience Provider"),
-                  DropDownValueModel(
-                      name: 'Experience Provider',
-                      value: "Experience Provider"),
-                  DropDownValueModel(
-                      name: 'Experience Provider',
-                      value: "Experience Provider"),
-                ],
-                onChanged: (val) {},
               ),
             ],
           ),
