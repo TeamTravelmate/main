@@ -1,49 +1,60 @@
 import 'package:main/UIs/themes/colors.dart';
-import 'package:main/UIs/widgets/text_custom.dart';
+import 'package:main/UIs/widgets/map_widget.dart';
 import 'package:main/UIs/widgets/todo_day_tile.dart';
-import 'package:main/UIs/widgets/top_back_btn.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
+
+import '../../../Domain/models/tripLuq.dart';
+import '../../../Domain/models/user.dart';
 import 'package:timelines/timelines.dart';
 import '../../widgets/tripCard_widget.dart';
 
-class MapToDoScreen extends StatelessWidget {
-  const MapToDoScreen({super.key});
+class MapToDoScreen extends StatefulWidget {
+  final int tripId;
 
+  const MapToDoScreen({super.key, required this.tripId});
+
+  @override
+  State<MapToDoScreen> createState() => _MapToDoScreenState();
+}
+
+class _MapToDoScreenState extends State<MapToDoScreen> {
+  var tripModel = Trip(tripId: 1, name: "Colombo", description: "Capital of Sri Lanka", image: 'assets/images/colombo.jpg');
+  List<TripDay> _tripDays = [];
+  List<User> _friends = [];
+
+  @override
+  void initState() {
+    super.initState();
+    tripModel.getDays().then((value) => {
+      setState(() {
+        _tripDays = tripModel.getDaysList();
+      })
+    });
+    tripModel.getTripMates("").then((value) => {
+      setState(() {
+        _friends = tripModel.getTripMatesList();
+      })
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SlidingUpPanel(
         margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-        body: FlutterMap(
-          options: MapOptions(
-            center: const LatLng(6.9020, 79.8611),
-            zoom: 14.0,
-            minZoom: 10,
-            maxZoom: 18,
-          ),
-          children: [
-            TileLayer(
-              urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-              userAgentPackageName: "flutter_map",
-            ),
-            //floating back button in the top left corner
-            const TopBackBtn(),
-          ],
-        ),
-        panelBuilder: (sc) => MapSlidingPanel(sc: sc, context: context),
+        body: CustomMap(), //replace this with CustomMap() to view map
+        panelBuilder: (sc) => MapSlidingPanel(sc: sc, context: context, tripDays: _tripDays,),
         collapsed: Container(
           decoration: const BoxDecoration(
             color: ColorsTravelMate.tertiary,
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
-          child: const tripCard.map(
-            tripLocationTitle: "Colombo",
-            location: "Colombo, Sri Lanka",
-            tripDuration: "Aug 20, 2023 - Aug 23, 2023",
-            tripmates: "Kumar & 3 others",
+          child: tripCard.map(
+            tripLocationTitle: tripModel.name,
+            location: tripModel.description,
+            tripDuration: _tripDays.length.toString(),
+            tripmates: _friends.length.toString(),
           ),
         ),
         minHeight: MediaQuery.of(context).size.height / 6,
@@ -53,65 +64,38 @@ class MapToDoScreen extends StatelessWidget {
   }
 }
 
-class MapSlidingPanel extends StatelessWidget {
+class MapSlidingPanel extends StatefulWidget {
   const MapSlidingPanel({
     super.key,
     required this.sc,
     required this.context,
+    required this.tripDays,
   });
 
   final ScrollController sc;
   final BuildContext context;
+  final List<TripDay> tripDays;
+
+  @override
+  State<MapSlidingPanel> createState() => _MapSlidingPanelState();
+}
+
+class _MapSlidingPanelState extends State<MapSlidingPanel> {
+  bool _isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.only(top:8.0),
-        child: Timeline.tileBuilder(
-          controller: sc,
-          theme: TimelineThemeData(
-            color: ColorsTravelMate.primary,
-            nodePosition: 0.2,
-            connectorTheme: const ConnectorThemeData(
-              thickness: 2.5,
-            ),
-          ),
-          builder: TimelineTileBuilder.connected(
-            connectionDirection: ConnectionDirection.after,
-            itemCount: 3,
-            indicatorBuilder: (_, index) => const DotIndicator(
-              size: 20,
-              color: ColorsTravelMate.primary,
-            ),
-            connectorBuilder: (_, index, ___) => const SolidLineConnector(
-              color: ColorsTravelMate.secundary,
-            ),
-            oppositeContentsBuilder: (_, index) => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextCustom(
-                text: "Day ${index + 1}",
-                color: ColorsTravelMate.primary,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            contentsBuilder: (_, index) => SizedBox(
-              width: MediaQuery.of(context).size.width / 1.25,
-              child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    child: const TodoDayTile(
-                      locations: "Galle Face Green, Lotus tower, Floating market",
-                      approxBudget: "Rs. 5000",
-                      weather: "Sunny",
-                    ),
-                    onTap: () {
-                      print("Day ${index + 1} tapped");
-                    },
-                  )),
-            ),
-          ),
-        ),
+        child: _isExpanded
+        ?TripDayView(locations: "Galle Face Green, Lotus tower, Floating market", approxBudget: "Rs. 5000", weather: "Rainy", backMethod: _expandDayView,)
+        :TripTimeline(sc: widget.sc, displayDayMethod: _expandDayView, tripDays: widget.tripDays,)
       );
+  }
+
+  void _expandDayView() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+    });
   }
 }

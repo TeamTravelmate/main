@@ -38,6 +38,8 @@ dependencies:
   file_picker: ^4.0.0
 
   flutter_staggered_grid_view: ^0.7.0
+  google_maps_flutter: ^2.4.0
+  google_places_flutter: ^2.0.6
   iconify_flutter: ^0.0.5
   provider: ^6.0.5
   shared_preferences: ^2.2.0
@@ -146,6 +148,8 @@ flutter:
         - assets/tourPlan.jpg
         - assets/gregory lake.png
         - assets/jungle beach.jpg
+        - assets/map_style.txt
+        - assets/icons.png
         - assets/icons/
         - assets/weather/
         - assets/gregory.jpg
