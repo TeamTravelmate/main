@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 class CustomMap extends StatefulWidget {
+  const CustomMap({super.key});
   @override
   State<CustomMap> createState() => _CustomMapState();
 }
@@ -23,7 +24,7 @@ class _CustomMapState extends State<CustomMap> {
   void initState() {
     super.initState();
     //MediaQuery.of(context).size.height / 6
-    // _mapBottomPadding = MediaQuery.of(context).size.height / 6;
+    _mapBottomPadding = 100;
     rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;
     });
@@ -32,6 +33,7 @@ class _CustomMapState extends State<CustomMap> {
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
+      padding: EdgeInsets.only(bottom: (MediaQuery.of(context).size.height / 6)+10),
       onMapCreated: _onMapCreated,
       initialCameraPosition: CameraPosition(
         target: _center,
