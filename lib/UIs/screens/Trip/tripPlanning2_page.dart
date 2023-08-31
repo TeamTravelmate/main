@@ -378,7 +378,7 @@ class CustomFacilities extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => HomePage(),
                     ),
                   );
                 },
@@ -408,7 +408,7 @@ class CustomFacilities extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const HomePage(),
+                                  builder: (context) => HomePage(),
                                 ),
                               );
                             },
@@ -425,10 +425,10 @@ class CustomFacilities extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 140),
-          buttonWidget(
+          const buttonWidget(
               width: double.infinity,
               labelText: 'Create my plan',
-              path: joinedTripView()),
+              path: joinedTripView(tripId: 1,)),
         ],
       ),
     );
