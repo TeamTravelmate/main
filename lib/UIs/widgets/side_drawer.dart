@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:main/UIs/screens/Ad%20Mate/ad_mate_res.dart';
 import 'package:main/UIs/screens/Welcome/welcome.dart';
 import 'package:main/UIs/screens/emergency_support/emergency_support_home.dart';
 import 'package:main/UIs/screens/leaderboard/leaderboard.dart';
@@ -16,7 +17,7 @@ class SideDrawer extends StatefulWidget {
 }
 
 class _SideDrawerState extends State<SideDrawer> {
-   late String _loggedUserFullName = "Guest User";
+   late String _loggedUserFullName = "Susan Perera";
 
 
   @override
@@ -93,6 +94,11 @@ class _SideDrawerState extends State<SideDrawer> {
             leading: const Icon(Icons.emergency_share),
             title: const Text('Emergency Support'),
             onTap: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => const EmergencySupportHome()))},
+          ),
+           ListTile(
+            leading: const Icon(Icons.ads_click),
+            title: const Text('Ad Mate'),
+            onTap: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AdMate2()))},
           ),
           ListTile(
             leading: const Icon(Icons.exit_to_app),

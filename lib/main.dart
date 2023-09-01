@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:main/Domain/provider/register_form_provider.dart';
+import 'package:main/UIs/screens/Trip/customizeBudget_page.dart';
+import 'package:main/UIs/screens/Trip/privateTrips/budget_page.dart';
 import 'package:main/UIs/screens/Welcome/welcome.dart';
 import 'package:main/UIs/screens/login/reg_alt.dart';
 import 'package:main/UIs/widgets/bottom_nav.dart';
@@ -47,8 +49,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blueGrey,
           scaffoldBackgroundColor: Colors.white,
         ),
-        home: (JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne(),
-        // home: const MyTripsList(),
+        // home: (JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne(),
+        home: const joinedTripView(tripId: 1),
       ),
     );
   }

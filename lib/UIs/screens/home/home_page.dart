@@ -148,7 +148,7 @@ class home extends StatelessWidget {
                       subtitle: 'Gampaha, Sri Lanka',
                       post:
                       'What destinations do you recommend for a relaxing weekend by the water, like lakes or beaches?',
-                      imagePath: 'assets/beachpost.jpg',
+                      imagePath: 'assets/post.png',
                       likes: '5',
                       comments: '4',
                     ),
@@ -174,7 +174,7 @@ class home extends StatelessWidget {
                       subtitle: 'Colombo, Sri Lanka',
                       post:
                       'Can you suggest some great weekend getaway destinations that are within a few hours drive?',
-                      imagePath: 'assets/post2.jpeg',
+                      imagePath: 'assets/post.png',
                       likes: '100',
                       comments: '12',
                     ),
