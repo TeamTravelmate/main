@@ -47,7 +47,7 @@ class _RegisterAltState extends State<RegisterAlt> {
       };
 
       // Send the POST request to the backend API
-      final Uri regUri = Uri.parse('http://192.168.198.1:3000/register');
+      final Uri regUri = Uri.parse('http://192.168.1.6:3000/register');
       print(regUri);
       final response = await http.post(
         regUri,

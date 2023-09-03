@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
     };
 
     // Send the POST request to the backend API
-    final Uri loginUri = Uri.parse('http://192.168.198.1:3000/login');
+    final Uri loginUri = Uri.parse('http://192.168.1.6:3000/login');
     print(loginUri);
     final response = await http.post(
       loginUri,
