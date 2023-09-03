@@ -9,6 +9,7 @@ import 'package:main/UIs/screens/login/reg_alt.dart';
 import 'package:main/UIs/widgets/bottom_nav.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Domain/services/notification_services.dart';
 import 'UIs/screens/Trip/publicTrip/publicTripViewPage.dart';
 import 'UIs/screens/Trip/tripView_page.dart';
 import 'UIs/screens/Welcome/welcome_screen_1.dart';
@@ -18,6 +19,7 @@ import 'UIs/screens/profile/myTrips.dart';
 // Main function
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
