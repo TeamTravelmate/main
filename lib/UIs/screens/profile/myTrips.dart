@@ -35,7 +35,7 @@ class _MyTripsListState extends State<MyTripsList> {
 
   Future<List<Trip>> fetchTrips() async {
     final response = await http.get(
-      Uri.parse('http://192.168.198.1:3000/trip/1'),
+      Uri.parse('http://192.168.1.6:3000/trip/1'),
     );
 
     if (response.statusCode == 200) {

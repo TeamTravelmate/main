@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:main/Domain/provider/register_form_provider.dart';
+import 'package:main/UIs/screens/Welcome/welcome.dart';
+import 'package:main/UIs/screens/login/reg_alt.dart';
 import 'package:main/UIs/widgets/bottom_nav.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,15 +26,13 @@ void main() async {
   ));
 
   runApp(
-    MyApp(
-      token: prefs.getString('token'),
-    ),
+    MyApp(token: prefs.getString('token'),),
   );
 }
 
 class MyApp extends StatelessWidget {
-  var token;
-  MyApp({@required this.token, super.key});
+  final token;
+  MyApp({this.token, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +47,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blueGrey,
           scaffoldBackgroundColor: Colors.white,
         ),
-        home: (JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne(),
-        // home: const MyTripsList(),
+        // home: (JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne(),
+        home: (token != null)?(JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne():const WelcomeScreenOne(),
       ),
     );
   }

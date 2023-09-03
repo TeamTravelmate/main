@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:main/UIs/screens/Welcome/welcome.dart';
+import 'package:main/UIs/screens/emergency_support/emergency_support_home.dart';
+import 'package:main/UIs/screens/leaderboard/leaderboard.dart';
 import 'package:main/UIs/screens/profile/myTrips.dart';
+import 'package:main/UIs/screens/vendor/home_page.dart';
 import 'package:main/UIs/themes/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -67,24 +70,29 @@ class _SideDrawerState extends State<SideDrawer> {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.input),
-            title: const Text('Welcome'),
-            onTap: () => {},
+            leading: const Icon(Icons.star_rounded),
+            title: const Text('Leaderboard'),
+            onTap: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LeaderBoard()))},
           ),
           ListTile(
-            leading: const Icon(Icons.verified_user),
+            leading: const Icon(Icons.account_circle_rounded),
             title: const Text('Profile'),
             onTap: () => {Navigator.of(context).pop()},
           ),
           ListTile(
-            leading: const Icon(Icons.settings),
+            leading: const Icon(Icons.travel_explore),
             title: const Text('My Trips'),
             onTap: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MyTripsList()))},
           ),
           ListTile(
-            leading: const Icon(Icons.border_color),
-            title: const Text('Feedback'),
-            onTap: () => {Navigator.of(context).pop()},
+            leading: const Icon(Icons.shopping_bag),
+            title: const Text('My Orders'),
+            onTap: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()))},
+          ),
+          ListTile(
+            leading: const Icon(Icons.emergency_share),
+            title: const Text('Emergency Support'),
+            onTap: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => const EmergencySupportHome()))},
           ),
           ListTile(
             leading: const Icon(Icons.exit_to_app),

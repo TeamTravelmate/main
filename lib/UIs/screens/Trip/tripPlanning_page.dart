@@ -100,7 +100,7 @@ class _CustomizeState extends State<Customize> {
 
       final response = await http.post(
         Uri.parse(
-            'http://192.168.198.1:3000/trip'), // Replace with your API endpoint
+            'http://192.168.1.6:3000/trip'), // Replace with your API endpoint
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(trip.toJson()),
       );

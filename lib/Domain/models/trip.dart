@@ -19,4 +19,13 @@ class Trip {
       'numberOfDays': numberOfDays,
     };
   }
+
+  factory Trip.fromJson(Map<String, dynamic> json) {
+    return Trip(
+      userId: json['userId'],
+      destination: json['destination'],
+      startDate: json['startDate'],
+      numberOfDays: json['numberOfDays'],
+    );
+  } 
 }
