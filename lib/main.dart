@@ -33,8 +33,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final token;
-  MyApp({this.token, super.key});
+  final String? token;
+  const MyApp({this.token, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +48,9 @@ class MyApp extends StatelessWidget {
           fontFamily: GoogleFonts.poppins().fontFamily,
           primarySwatch: Colors.blueGrey,
           scaffoldBackgroundColor: Colors.white,
-        ),
-        // home: (JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne(),
+        ).copyWith(useMaterial3: true),
+        // home: (JwtDecoder.isExpired(token!) == false)?BottomNav(token: token):const WelcomeScreenOne(),
+        // home: const WelcomeScreenOne(),
         home: const joinedTripView(tripId: 1),
       ),
     );

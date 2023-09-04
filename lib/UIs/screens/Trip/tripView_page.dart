@@ -171,13 +171,13 @@ class _joinedTripViewState extends State<joinedTripView> {
                       Tab(text: "People"),
                     ],
                   ),
-                   Expanded(
+                   const Expanded(
                     child: TabBarView(
                       // <-- Your TabBarView
                       children: [
                         Overview(),
                         Iterinary(),
-                        BudgetTabContent(),
+                        BudgetPage(),
                         Explore(),
                         People()
                       ],
@@ -201,8 +201,8 @@ class Overview extends StatefulWidget {
 class _OverviewState extends State<Overview> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
+    return const Padding(
+      padding: EdgeInsets.all(15.0),
       child: Column(
         children: [],
       ),
@@ -226,8 +226,8 @@ class _IterinaryState extends State<Iterinary> {
           child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start, children: [
-                SizedBox(height: 20,),
-              Row(
+                const SizedBox(height: 20,),
+              const Row(
             children: [
               Text(
                 "Day 1",
@@ -243,7 +243,7 @@ class _IterinaryState extends State<Iterinary> {
               Text('Add destination...'),  
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
               Center(
@@ -279,8 +279,8 @@ class Budget extends StatefulWidget {
 class _BudgetState extends State<Budget> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
+    return const Padding(
+      padding: EdgeInsets.all(15.0),
       child: Column(
         children: [
           SingleChildScrollView(
@@ -328,12 +328,12 @@ class _PeopleState extends State<People> {
           child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('No tripmates yet!',
+              const Text('No tripmates yet!',
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       color: ColorsTravelMate.primary)),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ElevatedButton(
                   onPressed: () {
                     Navigator.push(

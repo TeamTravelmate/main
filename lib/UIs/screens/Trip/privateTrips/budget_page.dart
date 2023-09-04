@@ -1,103 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:main/Domain/models/expense_model.dart';
+import 'package:main/UIs/screens/Trip/privateTrips/Budget/expenses_list/expenses_list.dart';
+import 'package:main/UIs/screens/Trip/privateTrips/Budget/new_expense.dart';
 
-class BudgetTabContent extends StatefulWidget {
-  const BudgetTabContent({super.key});
-
-  @override
-  _BudgetTabContentState createState() => _BudgetTabContentState();
-}
-
-class _BudgetTabContentState extends State<BudgetTabContent> {
-  double _totalBudget = 1000.0;
-  double _remainingBudget = 1000.0;
-  TextEditingController _expenseNameController = TextEditingController();
-  TextEditingController _expenseAmountController = TextEditingController();
-  List<Expense> _expenses = [];
-  final _formKey = GlobalKey<FormState>();
-
-  void _addExpense(double amount) {
-    setState(() {
-      _expenses.add(Expense(amount: amount));
-      _remainingBudget -= amount;
-    });
-    Navigator.pop(context); // Close the bottom sheet
-  }
-
-  void _showAddExpenseBottomSheet() {
-  showModalBottomSheet(
-    context: context,
-    builder: (BuildContext context) {
-      return Container(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Add Expense',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                double amount = 100.0; // Replace with your logic
-                _addExpense(amount);
-                Navigator.pop(context); // Close the bottom sheet
-              },
-              child: Text('Add Expense'),
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
-
-   @override
-  void dispose() {
-    _expenseAmountController.dispose();
-    super.dispose();
-  }
+class BudgetPage extends StatefulWidget {
+  const BudgetPage({super.key});
 
   @override
- Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'Total Budget: \$$_totalBudget',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16.0),
-          Text(
-            'Remaining Budget: \$$_remainingBudget',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16.0),
-          ElevatedButton(
-            onPressed: _showAddExpenseBottomSheet,
-            child: const Text('Add Expense'),
-          ),
-          const SizedBox(height: 16.0),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: _expenses.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text('Expense ${index + 1}'),
-                trailing: Text('-\$${_expenses[index].amount.toStringAsFixed(2)}'),
-              );
-            },
-          ),
-        ],
+  State<BudgetPage> createState() => _BudgetPageState();
+}
+
+class _BudgetPageState extends State<BudgetPage> {
+  final List<Expense> _registeredExpenses = [
+    Expense(
+        title: "Breakfast",
+        amount: 580.00,
+        date: DateTime.now(),
+        category: expCategory.food),
+  ];
+
+  void _addNewExpenseModal() {
+    showModalBottomSheet(
+      enableDrag: true,
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) => Padding(
+        padding:EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom) ,
+        child: NewExpense(onAddExpense: _addExpense),
       ),
     );
   }
-}
 
-class Expense {
-  final double amount;
+  void _addExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.add(expense);
+    });
+  }
 
-  Expense({required this.amount});
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: Column(children: [
+        const Text("Budget"),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: _addNewExpenseModal,
+            ),
+          ],
+        ),
+        Expanded(child: ExpensesList(expenses: _registeredExpenses)),
+      ]),
+    );
+  }
 }
