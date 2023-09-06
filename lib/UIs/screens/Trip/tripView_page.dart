@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:main/Data/env/env.dart';
 import 'package:main/Domain/models/trip.dart';
 import 'package:main/UIs/screens/Trip/tripPlanning2_page.dart';
 import '../../themes/colors.dart';
@@ -33,12 +34,13 @@ class _joinedTripViewState extends State<joinedTripView> {
   Future<Trip> fetchTripDetails(int tripId) async {
     final response = await http.get(
       Uri.parse(
-          'http://192.168.198.1:3000/get-trip/$tripId'), // Update the URL accordingly
+          '$backendUrl/get-trip/$tripId'), // Update the URL accordingly
     );
 
     if (response.statusCode == 200) {
       var rawResponseData = json.decode(response.body) as Map<String, dynamic>;
       var responseData = (rawResponseData["trips"] as List<dynamic>)[0] as Map<String, dynamic>;
+      print(responseData);
     // Assuming the API response contains a "trip" object
       Trip trip = Trip(
         userId: responseData['userId'],

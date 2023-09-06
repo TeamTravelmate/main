@@ -20,6 +20,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  late int userId;
   late String firstName;
   late String lastName;
 
@@ -29,9 +30,10 @@ class _ProfileState extends State<Profile> {
     super.initState();
 
     Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+    userId = jwtDecodedToken['userId'];
+    firstName = "Kaleel";
+    lastName = "Sheromi";
 
-    firstName = jwtDecodedToken['firstName'];
-    lastName = jwtDecodedToken['lastName'];
   }
 
   @override
@@ -53,13 +55,10 @@ class _ProfileState extends State<Profile> {
             leading: const BackButton(
               color: Colors.black,
             ),
-            // Remove the Container from the bottom property of AppBar
-            // Add the Container above the TabBar
           ),
           body: Column(
             children: [
               Container(
-                // Place the Container above the TabBar
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 width: double.infinity,
                 child: Column(
@@ -82,7 +81,7 @@ class _ProfileState extends State<Profile> {
                       padding: EdgeInsets.only(top: 3.0),
                       child: Text('@sheromi99', style: TextStyle(fontSize: 15)),
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Column(
@@ -136,7 +135,7 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                               ),
-                            )
+                            ),
                             Padding(
                               padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
                               child: Text('Following',
