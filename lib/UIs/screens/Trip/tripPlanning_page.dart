@@ -158,14 +158,13 @@ class _CustomizeState extends State<Customize> {
                 googleAPIKey: mapApi,
                 countries: ["LK"],
                 // isCrossBtnShown: false,
-                inputDecoration: InputDecoration(
+                inputDecoration: const InputDecoration(
                   hintText: "Where to go?",
-                  prefixIcon: const Icon(Icons.location_on),
+                  prefixIcon: Icon(Icons.location_on),
                 ),
                 boxDecoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
-                  
                 ),
                 itemClick: (Prediction prediction) {
                   _destinationController.text = prediction.description!;
@@ -181,6 +180,30 @@ class _CustomizeState extends State<Customize> {
                   prefixIcon: Icon(Icons.calendar_month),
                 ),
                 controller: _startDateController,
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime(2030),
+                      builder: (BuildContext context, Widget? child) {
+                      return Theme(
+                        data: ThemeData.light().copyWith(
+                          primaryColor: ColorsTravelMate.tertiary, 
+                          hintColor: ColorsTravelMate.secundary, 
+                          colorScheme: const ColorScheme.light(
+                              primary: ColorsTravelMate.secundary),
+                          buttonTheme: const ButtonThemeData(
+                              textTheme: ButtonTextTheme.primary),
+                        ),
+                        child: child!,
+                      );
+                    },
+                      );
+                  if (pickedDate != null) {
+                    _startDateController.text = pickedDate.toString();
+                  }
+                },
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a start date';

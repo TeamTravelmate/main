@@ -87,7 +87,7 @@ class _SideDrawerState extends State<SideDrawer> {
           ListTile(
             leading: const Icon(Icons.shopping_bag),
             title: const Text('My Orders'),
-            onTap: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HomePage()))},
+            onTap: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()))},
           ),
           ListTile(
             leading: const Icon(Icons.emergency_share),
