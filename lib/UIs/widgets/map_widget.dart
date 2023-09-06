@@ -33,7 +33,7 @@ class _CustomMapState extends State<CustomMap> {
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
-      padding: EdgeInsets.only(bottom: (MediaQuery.of(context).size.height / 6)+10),
+      padding: EdgeInsets.only(bottom: (MediaQuery.of(context).size.height / 3)),
       onMapCreated: _onMapCreated,
       initialCameraPosition: CameraPosition(
         target: _center,

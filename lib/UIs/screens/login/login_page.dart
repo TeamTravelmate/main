@@ -9,6 +9,7 @@ import 'package:main/UIs/themes/colors.dart';
 import 'package:main/UIs/widgets/bottom_nav.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:main/Data/env/env.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -47,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
     };
 
     // Send the POST request to the backend API
-    final Uri loginUri = Uri.parse('http://192.168.1.6:3000/login');
+    final Uri loginUri = Uri.parse('$backendUrl/login');
     print(loginUri);
     final response = await http.post(
       loginUri,

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:galleryimage/galleryimage.dart';
+import 'package:main/Data/env/env.dart';
 import 'package:main/Domain/models/trip.dart';
 import 'package:http/http.dart' as http;
 
@@ -35,7 +36,7 @@ class _MyTripsListState extends State<MyTripsList> {
 
   Future<List<Trip>> fetchTrips() async {
     final response = await http.get(
-      Uri.parse('http://192.168.1.6:3000/trip/1'),
+      Uri.parse('$backendUrl/trip/1'),
     );
 
     if (response.statusCode == 200) {

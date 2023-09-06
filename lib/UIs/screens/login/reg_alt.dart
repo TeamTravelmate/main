@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:main/Data/env/env.dart';
 import 'package:main/UIs/screens/login/login_page.dart';
 import 'package:main/UIs/themes/colors.dart';
 import 'package:main/UIs/widgets/bottom_nav.dart';
@@ -47,7 +48,7 @@ class _RegisterAltState extends State<RegisterAlt> {
       };
 
       // Send the POST request to the backend API
-      final Uri regUri = Uri.parse('http://192.168.1.6:3000/register');
+      final Uri regUri = Uri.parse('$backendUrl/register');
       print(regUri);
       final response = await http.post(
         regUri,
