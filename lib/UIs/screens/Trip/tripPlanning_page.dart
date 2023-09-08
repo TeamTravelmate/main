@@ -3,6 +3,7 @@ import 'package:google_places_flutter/model/prediction.dart';
 import 'package:main/Data/env/apiKeys.dart';
 
 import 'package:flutter/material.dart';
+import 'package:main/Data/env/env.dart';
 import 'package:main/Domain/models/trip.dart';
 import 'package:main/UIs/screens/Trip/tripView_page.dart';
 import '../../themes/colors.dart';
@@ -100,7 +101,7 @@ class _CustomizeState extends State<Customize> {
 
       final response = await http.post(
         Uri.parse(
-            'http://192.168.198.1:3000/trip'), // Replace with your API endpoint
+            '$backendUrl/trip'), // Replace with your API endpoint
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(trip.toJson()),
       );
@@ -114,6 +115,7 @@ class _CustomizeState extends State<Customize> {
         );
 
         var responseData = json.decode(response.body);
+        print(responseData);
         var tripId = responseData['trip']['id'];
         Navigator.push(
           context,

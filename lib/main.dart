@@ -49,8 +49,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blueGrey,
           scaffoldBackgroundColor: Colors.white,
         ),
-        home: (JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne(),
-        // home: const MyTripsList(),
+        // home: (JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne(),
+        home: (token != null)?(JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne():const WelcomeScreenOne(),
       ),
     );
   }
