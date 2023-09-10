@@ -100,8 +100,7 @@ class _CustomizeState extends State<Customize> {
       );
 
       final response = await http.post(
-        Uri.parse(
-            '$backendUrl/trip'), // Replace with your API endpoint
+        Uri.parse('$backendUrl/trip'), // Replace with your API endpoint
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(trip.toJson()),
       );
@@ -116,7 +115,9 @@ class _CustomizeState extends State<Customize> {
 
         var responseData = json.decode(response.body);
         print(responseData);
+
         var tripId = responseData['trip']['id'];
+        print (tripId);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -141,20 +142,6 @@ class _CustomizeState extends State<Customize> {
           key: _formKey,
           child: Column(
             children: [
-              // TextFormField(
-              //   decoration: const InputDecoration(
-              //     labelText: 'Where to go?',
-              //     hintText: 'Eg. Galle, Trincomalee',
-              //     prefixIcon: Icon(Icons.location_on),
-              //   ),
-              //   controller: _destinationController,
-              //   validator: (value) {
-              //     if (value!.isEmpty) {
-              //       return 'Please enter a destination';
-              //     }
-              //     return null;
-              //   },
-              // ),
               GooglePlaceAutoCompleteTextField(
                 textEditingController: _destinationController,
                 googleAPIKey: mapApi,
@@ -184,15 +171,15 @@ class _CustomizeState extends State<Customize> {
                 controller: _startDateController,
                 onTap: () async {
                   DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2030),
-                      builder: (BuildContext context, Widget? child) {
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2030),
+                    builder: (BuildContext context, Widget? child) {
                       return Theme(
                         data: ThemeData.light().copyWith(
-                          primaryColor: ColorsTravelMate.tertiary, 
-                          hintColor: ColorsTravelMate.secundary, 
+                          primaryColor: ColorsTravelMate.tertiary,
+                          hintColor: ColorsTravelMate.secundary,
                           colorScheme: const ColorScheme.light(
                               primary: ColorsTravelMate.secundary),
                           buttonTheme: const ButtonThemeData(
@@ -201,7 +188,7 @@ class _CustomizeState extends State<Customize> {
                         child: child!,
                       );
                     },
-                      );
+                  );
                   if (pickedDate != null) {
                     _startDateController.text = pickedDate.toString();
                   }

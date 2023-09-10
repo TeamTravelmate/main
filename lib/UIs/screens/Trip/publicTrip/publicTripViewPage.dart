@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'package:date_count_down/date_count_down.dart';
 import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/Trip/publicTrip/joinPublicTripForm.dart';
 import 'package:main/UIs/screens/Trip/tripView_page.dart';
 import '../../../themes/colors.dart';
 import '../../../widgets/button_widget.dart';
 import '../../../widgets/tripCard_widget.dart';
+import 'package:slide_countdown/slide_countdown.dart';
 
 class publicTripView extends StatefulWidget {
   @override
@@ -62,7 +64,7 @@ class _publicTripViewState extends State<publicTripView> {
                           tripLocationTitle: 'Galle - Kandy\n',
                           location: '  Galle Fort, Unawatuna Beach',
                           tripDuration:
-                          '  July 3, 2023 - July 6, 2023 (3 days)',
+                              '  July 3, 2023 - July 6, 2023 (3 days)',
                           tripmates: '  Kumar & 5 others',
                         ),
                       ),
@@ -74,9 +76,9 @@ class _publicTripViewState extends State<publicTripView> {
                     unselectedLabelColor: ColorsTravelMate.primary,
                     labelPadding: EdgeInsets.all(0),
                     unselectedLabelStyle:
-                    TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                     labelStyle:
-                    TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                     tabs: [
                       Tab(
                         text: "Overview",
@@ -99,8 +101,13 @@ class _publicTripViewState extends State<publicTripView> {
                       ],
                     ),
                   ),
-                  buttonWidget(width: 200, labelText: 'Join Tour', path: publicTripForm()),
-                  SizedBox(height: 10,)
+                  buttonWidget(
+                      width: 200,
+                      labelText: 'Join Tour',
+                      path: publicTripForm()),
+                  const SizedBox(
+                    height: 10,
+                  )
                 ],
               ),
             ),
@@ -120,163 +127,63 @@ class _OverviewState extends State<Overview> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: 20.0,
-      vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Available slots: 10',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   // fontStyle: FontStyle.italic,
-                  fontSize: 16
-              ),
+                  fontSize: 16),
             ),
-            SizedBox(height: 10,),
-            Row(
-              children: [
-                const Text('Start in:   ', style: TextStyle(fontSize: 20)),
-                Container(
-                  height: 65,
-                  width: 65,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: ColorsTravelMate.secundary,
-                  ),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '05',
-                        style: TextStyle(
-                            color: ColorsTravelMate.tertiary,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text('Days',
-                        style: TextStyle(
-                          color: ColorsTravelMate.tertiary,
-                          fontSize: 16,),),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 4),
-                Container(
-                  height: 65,
-                  width: 65,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: ColorsTravelMate.secundary,
-                  ),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '12',
-                        style: TextStyle(
-                            color: ColorsTravelMate.tertiary,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text('Hours',
-                        style: TextStyle(
-                          color: ColorsTravelMate.tertiary,
-                          fontSize: 16,),),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 4),
-                Container(
-                  height: 65,
-                  width: 65,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: ColorsTravelMate.secundary,
-                  ),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '30',
-                        style: TextStyle(
-                            color: ColorsTravelMate.tertiary,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text('Mins',
-                        style: TextStyle(
-                          color: ColorsTravelMate.tertiary,
-                          fontSize: 16,),),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 4),
-                Container(
-                  height: 65,
-                  width: 65,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: ColorsTravelMate.secundary,
-                  ),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '10',
-                        style: TextStyle(
-                            color: ColorsTravelMate.tertiary,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text('Sec',
-                        style: TextStyle(
-                          color: ColorsTravelMate.tertiary,
-                          fontSize: 16,),),
-                    ],
-                  ),
-                ),
-              ],
+            const SizedBox(
+              height: 10,
             ),
-            SizedBox(height: 10,),
+            const Text('Start in:   ', style: TextStyle(fontSize: 20)),
+            const SlideCountdownSeparated(
+              duration: Duration(days: 2),
+              // durationTitle: DurationTitle.en(),
+              separatorType: SeparatorType.symbol,
+              slideDirection: SlideDirection.up,
+              height: 60.0,
+              width: 60.0,
+              textStyle: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+              decoration: BoxDecoration(
+                  color: ColorsTravelMate.secundary,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(Radius.circular(5.0))),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.symmetric(
-                vertical: 10
-              ),
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.blueGrey,
               ),
-              child: Text(
+              child: const Text(
                 'Please bring enough water bottles!',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.white
-                ),
+                style: TextStyle(fontSize: 12, color: Colors.white),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.symmetric(
-                  vertical: 10
-              ),
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.blueGrey,
               ),
-              child: Text(
+              child: const Text(
                 'Make sure to bring caps, hats or umbrellas as it will be sunny there!',
-                style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white
-                ),
+                style: TextStyle(fontSize: 12, color: Colors.white),
               ),
             ),
           ],
@@ -386,30 +293,29 @@ class _BudgetState extends State<Budget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
+        padding: const EdgeInsets.all(15.0),
+        child: SingleChildScrollView(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            const Text(
               'Total Budget Per Person: Rs.3500',
               style: TextStyle(
                 fontSize: 18,
               ),
             ),
-            Text(
+            const Text(
               'Total Budget: Rs.70000',
               style: TextStyle(
                 fontSize: 15,
               ),
             ),
-            SizedBox(height: 15,),
+            const SizedBox(
+              height: 15,
+            ),
             SingleChildScrollView(
               child: Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 20
-                ),
-                child: Column(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: const Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -419,16 +325,14 @@ class _BudgetState extends State<Budget> {
                           style: TextStyle(
                               color: ColorsTravelMate.primary,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16
-                          ),
+                              fontSize: 16),
                         ),
                         Text(
                           'Rs.1000',
                           style: TextStyle(
                               color: ColorsTravelMate.primary,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16
-                          ),
+                              fontSize: 16),
                         )
                       ],
                     ),
@@ -437,17 +341,11 @@ class _BudgetState extends State<Budget> {
                       children: [
                         Text(
                           'Breaksfast - ',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12
-                          ),
+                          style: TextStyle(color: Colors.black, fontSize: 12),
                         ),
                         Text(
                           'Rs. 300 ',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12
-                          ),
+                          style: TextStyle(color: Colors.black, fontSize: 12),
                         ),
                       ],
                     ),
@@ -456,17 +354,11 @@ class _BudgetState extends State<Budget> {
                       children: [
                         Text(
                           'Lunch - ',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12
-                          ),
+                          style: TextStyle(color: Colors.black, fontSize: 12),
                         ),
                         Text(
                           'Rs. 400 ',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12
-                          ),
+                          style: TextStyle(color: Colors.black, fontSize: 12),
                         ),
                       ],
                     ),
@@ -475,17 +367,11 @@ class _BudgetState extends State<Budget> {
                       children: [
                         Text(
                           'Dinner - ',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12
-                          ),
+                          style: TextStyle(color: Colors.black, fontSize: 12),
                         ),
                         Text(
                           'Rs. 300 ',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12
-                          ),
+                          style: TextStyle(color: Colors.black, fontSize: 12),
                         ),
                       ],
                     ),
@@ -497,16 +383,14 @@ class _BudgetState extends State<Budget> {
                           style: TextStyle(
                               color: ColorsTravelMate.primary,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16
-                          ),
+                              fontSize: 16),
                         ),
                         Text(
                           'Rs.800',
                           style: TextStyle(
                               color: ColorsTravelMate.primary,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16
-                          ),
+                              fontSize: 16),
                         )
                       ],
                     ),
@@ -518,16 +402,14 @@ class _BudgetState extends State<Budget> {
                           style: TextStyle(
                               color: ColorsTravelMate.primary,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16
-                          ),
+                              fontSize: 16),
                         ),
                         Text(
                           'Rs.700',
                           style: TextStyle(
                               color: ColorsTravelMate.primary,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16
-                          ),
+                              fontSize: 16),
                         )
                       ],
                     ),
@@ -539,16 +421,14 @@ class _BudgetState extends State<Budget> {
                           style: TextStyle(
                               color: ColorsTravelMate.primary,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16
-                          ),
+                              fontSize: 16),
                         ),
                         Text(
                           'Rs.1000',
                           style: TextStyle(
                               color: ColorsTravelMate.primary,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16
-                          ),
+                              fontSize: 16),
                         )
                       ],
                     ),
@@ -556,11 +436,8 @@ class _BudgetState extends State<Budget> {
                 ),
               ),
             ),
-
-        ]
-        ),
-      )
-    );
+          ]),
+        ));
   }
 }
 
@@ -699,196 +576,202 @@ class People extends StatefulWidget {
 class _PeopleState extends State<People> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: 20.0),
+    return const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
         child: SingleChildScrollView(
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/woman.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'A. M. Perera',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.black
-                      ),
-                    ),
-                  ],
+                CircleAvatar(
+                  radius: 15,
+                  backgroundImage: AssetImage('assets/img/woman.jpg'),
                 ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/man.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'A. Pathum Perera',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
+                SizedBox(
+                  width: 15,
                 ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/girl1.jpeg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Sithumi Perera',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
+                Text(
+                  'A. M. Perera',
+                  style: TextStyle(fontSize: 12, color: Colors.black),
                 ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/woman2.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Ranjani Silva',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: 15,
+                  backgroundImage: AssetImage('assets/img/man.jpg'),
                 ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/man.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Hasantha Kariyawasam',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
+                SizedBox(
+                  width: 15,
                 ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/man.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Luqman Fazhal',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
+                Text(
+                  'A. Pathum Perera',
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: 15,
+                  backgroundImage: AssetImage('assets/img/girl1.jpeg'),
                 ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/woman.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Usha Perera',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
+                SizedBox(
+                  width: 15,
                 ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/woman2.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Gagana Samarasekara',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
+                Text(
+                  'Sithumi Perera',
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: 15,
+                  backgroundImage: AssetImage('assets/img/woman2.jpg'),
                 ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/girl.webp'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Buddhi Prabodha',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
+                SizedBox(
+                  width: 15,
                 ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: AssetImage('assets/img/man.jpg'),
-                    ),
-                    SizedBox(width: 15,),
-                    Text(
-                      'Sachin Perera',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black
-                      ),
-                    )
-                  ],
+                Text(
+                  'Ranjani Silva',
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: 15,
+                  backgroundImage: AssetImage('assets/img/man.jpg'),
                 ),
-                SizedBox(height: 10,),
-              ]
-          ),
-        )
-    );
+                SizedBox(
+                  width: 15,
+                ),
+                Text(
+                  'Hasantha Kariyawasam',
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: 15,
+                  backgroundImage: AssetImage('assets/img/man.jpg'),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Text(
+                  'Luqman Fazhal',
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: 15,
+                  backgroundImage: AssetImage('assets/img/woman.jpg'),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Text(
+                  'Usha Perera',
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: 15,
+                  backgroundImage: AssetImage('assets/img/woman2.jpg'),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Text(
+                  'Gagana Samarasekara',
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: 15,
+                  backgroundImage: AssetImage('assets/img/girl.webp'),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Text(
+                  'Buddhi Prabodha',
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: 15,
+                  backgroundImage: AssetImage('assets/img/man.jpg'),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Text(
+                  'Sachin Perera',
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+          ]),
+        ));
   }
 }

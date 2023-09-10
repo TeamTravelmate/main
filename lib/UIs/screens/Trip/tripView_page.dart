@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:main/Data/env/env.dart';
 import 'package:main/Domain/models/trip.dart';
 import 'package:main/UIs/screens/Trip/tripPlanning2_page.dart';
+import 'package:slide_countdown/slide_countdown.dart';
 import '../../themes/colors.dart';
 import '../../widgets/tripCard_widget.dart';
 import 'upload_pic.dart';
@@ -209,7 +210,25 @@ class _OverviewState extends State<Overview> {
     return const Padding(
       padding: EdgeInsets.all(15.0),
       child: Column(
-        children: [],
+        children: [
+          Text('Start in:   ', style: TextStyle(fontSize: 20)),
+            SlideCountdownSeparated(
+              duration: Duration(days: 2),
+              // durationTitle: DurationTitle.en(),
+              separatorType: SeparatorType.symbol,
+              slideDirection: SlideDirection.up,
+              height: 60.0,
+              width: 60.0,
+              textStyle: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+              decoration: BoxDecoration(
+                  color: ColorsTravelMate.secundary,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(Radius.circular(5.0))),
+            ),
+        ],
       ),
     );
   }
