@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:main/Data/env/env.dart';
 import 'package:main/UIs/screens/login/forgotPassword_page.dart';
 import 'package:main/UIs/screens/login/reg_alt.dart';
 import 'package:main/UIs/screens/profile/profile.dart';
@@ -47,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
     };
 
     // Send the POST request to the backend API
-    final Uri loginUri = Uri.parse('http://192.168.198.1:3000/login');
+     final Uri loginUri = Uri.parse('$backendUrl/login');
     print(loginUri);
     final response = await http.post(
       loginUri,
