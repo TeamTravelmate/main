@@ -1,80 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:main/UIs/themes/colors.dart';
-import 'package:main/UIs/widgets/field_widget.dart';
-import 'package:main/UIs/widgets/button_widget.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:main/Domain/provider/register_form_provider.dart';
+import 'package:main/UIs/screens/Welcome/welcome.dart';
+import 'package:main/UIs/screens/login/reg_alt.dart';
+import 'package:main/UIs/widgets/bottom_nav.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'Domain/services/notification_services.dart';
+import 'UIs/screens/Trip/publicTrip/publicTripViewPage.dart';
+import 'UIs/screens/Trip/tripView_page.dart';
+import 'UIs/screens/Welcome/welcome_screen_1.dart';
+import 'UIs/screens/home/home_page.dart';
+import 'UIs/screens/profile/myTrips.dart';
 
+// Main function
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.dark,
+  ));
 
-void main() {
-
-  runApp(MyApp());
+  runApp(
+    MyApp(token: prefs.getString('token'),),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  //text editing controller
-  TextEditingController controller = TextEditingController();
-  
+  final token;
+  MyApp({this.token, super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      //remove debug banner
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      //theme colours
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(
-          accentColor: ColorsTravelMate.secundary,
-          cardColor: ColorsTravelMate.tertiary,
-          brightness: Brightness.light,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => RegistrationFormProvider())
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: GoogleFonts.poppins().fontFamily,
+          primarySwatch: Colors.blueGrey,
+          scaffoldBackgroundColor: Colors.white,
         ),
+        // home: (JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne(),
+        home: (token != null)?(JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne():const WelcomeScreenOne(),
       ),
-      home: 
-      Scaffold(
-        appBar: AppBar(
-          title: const Text('Travel Mate'),
-        ),
-        body: Flex(
-          direction: Axis.vertical,
-          children: [
-            Expanded(
-              flex: 2,
-              child: Container(
-                color: ColorsTravelMate.tertiary,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomTextField(
-                      controller: controller,
-                      hintText: 'Email',
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    const SizedBox(height: 20),
-                    CustomTextField(
-                      controller: controller,
-                      hintText: 'Password',
-                      isPassword: true,
-                    ),
-                    const SizedBox(height: 20),
-                    const buttonWidget(
-                      width: 200,
-                      height: 50,
-                      labelText: 'Login',
-                      path: null,
-                    ),
-                    const SizedBox(height: 20),
-                    const buttonWidget(
-                      width: 200,
-                      height: 50,
-                      labelText: 'Register',
-                      path: null,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      )
-
     );
   }
 }
+
