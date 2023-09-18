@@ -5,6 +5,7 @@ import 'package:main/Data/env/env.dart';
 import 'package:main/Domain/models/trip.dart';
 import 'package:main/UIs/screens/Trip/tripPlanning2_page.dart';
 import 'package:slide_countdown/slide_countdown.dart';
+import '../../../Data/env/apiKeys.dart';
 import '../../themes/colors.dart';
 import '../../widgets/tripCard_widget.dart';
 import 'upload_pic.dart';
@@ -13,6 +14,8 @@ import 'invitematesForm.dart';
 import 'publicTrip/joinPublicTripForm.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
+import 'package:google_places_flutter/google_places_flutter.dart';
+import 'package:google_places_flutter/model/prediction.dart';
 
 class joinedTripView extends StatefulWidget {
   final int tripId;
@@ -301,15 +304,15 @@ class _ItineraryTimelineState extends State<ItineraryTimeline> {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text('Delete Itinerary'),
+                  title: const Text('Delete Itinerary'),
                   content:
-                      Text('Are you sure you want to delete this itinerary?'),
+                      const Text('Are you sure you want to delete this itinerary?'),
                   actions: [
                     TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Cancel'),
+                      child: const Text('Cancel'),
                     ),
                     TextButton(
                       onPressed: () {
@@ -318,14 +321,14 @@ class _ItineraryTimelineState extends State<ItineraryTimeline> {
                         });
                         Navigator.pop(context);
                       },
-                      child: Text('Delete'),
+                      child: const Text('Delete'),
                     ),
                   ],
                 ),
               );
             },
           ),
-          iconBackground: Color.fromARGB(255, 255, 196, 68),
+          iconBackground: const Color.fromARGB(255, 255, 196, 68),
           icon: Icon(TimelineIcon(activity.activity), color: Colors.white),
         );
       }).toList(),
@@ -349,7 +352,7 @@ class _IterinarytabState extends State<Iterinarytab> {
       context: context,
       builder: (context) {
         final formKey = GlobalKey<FormState>();
-        int dayCounter = 1;
+        int dayCounter = 0;
         String destination = '';
         String activity = '';
         TextEditingController destinationController = TextEditingController();
@@ -367,56 +370,73 @@ class _IterinarytabState extends State<Iterinarytab> {
         return Form(
           key: formKey,
           child: AlertDialog(
-            title: Text('Add Itinerary'),
+            title: const Text('Add Itinerary'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Day ${dayCounter + 1}'),
-                TextField(
-                  onChanged: (value) {
-                    destination = value;
+                GooglePlaceAutoCompleteTextField(
+                  textEditingController: destinationController,
+                  googleAPIKey: mapApi,
+                  countries: ["LK"],
+                  inputDecoration: const InputDecoration(
+                    hintText: "Destination",
+                    prefixIcon: Icon(Icons.location_on),
+                  ),
+                  boxDecoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  itemClick: (Prediction prediction) {
+                    destinationController.text = prediction.description!;
                   },
-                  controller: destinationController,
-                  decoration: InputDecoration(labelText: 'Destination'),
+                  isLatLngRequired: false,
                 ),
+                // TextField(
+                //   onChanged: (value) {
+                //     destination = value.toLowerCase().trim();
+                //   },
+                //   controller: destinationController,
+                //   decoration: const InputDecoration(labelText: 'Destination'),
+                // ),
                 TextField(
                   onChanged: (value) {
-                    activity = value;
+                    activity = value.toLowerCase().trim();
                   },
                   controller: activityController,
-                  decoration: InputDecoration(labelText: 'Activity'),
+                  decoration: const InputDecoration(labelText: 'Activity'),
+                  autocorrect: true,
+                  enableSuggestions: true,
                 ),
               ],
             ),
             actions: [
               ElevatedButton(
                 onPressed: () {
-                  if (destination.isEmpty || activity.isEmpty) {
-                    // Set the error message if any field is empty
-                    setState(() {
-                      errorMessage = 'All fields are required.';
-                    });
-                  } else {
-                    setState(() {
-                      userItinerary.add(Itinerary(destination, activity));
-                      Navigator.pop(context);
-                    });
-                  }
+                  setState(() {
+                          userItinerary.add(Itinerary(destinationController.text, activity));
+                          Navigator.pop(context);
+                        });
                 },
-                child: Text('Add'),
+                style: const ButtonStyle(
+                  backgroundColor:
+                      MaterialStatePropertyAll(ColorsTravelMate.secundary),
+                  foregroundColor: MaterialStatePropertyAll(
+                      ColorsTravelMate.tertiary),
+                ),
+                child: const Text('Add'),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('Cancel'),
-                style: ButtonStyle(
+                style: const ButtonStyle(
                   backgroundColor:
                       MaterialStatePropertyAll(ColorsTravelMate.tertiary),
-                  foregroundColor: const MaterialStatePropertyAll(
+                  foregroundColor: MaterialStatePropertyAll(
                       ColorsTravelMate.secundary),
                 ),
+                child: const Text('Cancel'),
               ),
             ],
           ),
@@ -437,8 +457,8 @@ class _IterinarytabState extends State<Iterinarytab> {
             padding: const EdgeInsets.only(left: 300.0),
             child: FloatingActionButton(
               onPressed: () => _addItinerary(context),
-              child: const Icon(Icons.add),
               backgroundColor: ColorsTravelMate.secundary,
+              child: const Icon(Icons.add),
             ),
           ),
         ],
@@ -697,13 +717,13 @@ class _PeopleState extends State<People> {
                         MaterialPageRoute(
                             builder: (context) => inviteMateForm()));
                   },
-                  child: const Text('Invite Tripmates'),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: ColorsTravelMate.secundary,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
                       textStyle: const TextStyle(
-                          fontSize: 14, color: ColorsTravelMate.tertiary))),
+                          fontSize: 14, color: ColorsTravelMate.tertiary)),
+                  child: const Text('Invite Tripmates')),
             ]),
           ),
         ));

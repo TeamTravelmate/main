@@ -80,9 +80,7 @@ class _publicTripViewState extends State<publicTripView> {
                     labelStyle:
                         TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                     tabs: [
-                      Tab(
-                        text: "Overview",
-                      ),
+                      Tab(text: "Overview"),
                       Tab(text: "Iterinary"),
                       Tab(text: "Budget"),
                       Tab(text: "Explore"),
@@ -91,7 +89,6 @@ class _publicTripViewState extends State<publicTripView> {
                   ),
                   const Expanded(
                     child: TabBarView(
-                      // <-- Your TabBarView
                       children: [
                         Overview(),
                         Iterinary(),
@@ -136,7 +133,6 @@ class _OverviewState extends State<Overview> {
               'Available slots: 10',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  // fontStyle: FontStyle.italic,
                   fontSize: 16),
             ),
             const SizedBox(
