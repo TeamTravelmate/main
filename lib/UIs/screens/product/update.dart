@@ -91,13 +91,7 @@ class UpdateState extends State<Update> {
                                 ),
                               ),
                               SizedBox(height: 20.0,),
-                              Text(
-                                'View Reviews',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline
-                                ),
-                              )
+
                             ],
                           ),
                         ),
@@ -166,18 +160,6 @@ class UpdateState extends State<Update> {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15.0
                                         ),
-                                      ),
-                                      Switch(
-                                        onChanged: (bool? newValue) {
-                                          setState(() {
-                                            isSwitched  = newValue ?? false;
-                                          });
-                                        },
-                                        value: isSwitched,
-                                        activeColor: Colors.green,
-                                        activeTrackColor: Colors.grey,
-                                        inactiveThumbColor: Colors.redAccent,
-                                        inactiveTrackColor: Colors.grey,
                                       ),
                                     ],
                                   ),
