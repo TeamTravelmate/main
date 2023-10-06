@@ -53,7 +53,7 @@ class ProductState extends State<Product>{
                   Text(
                     'Tent',
                     style: TextStyle(
-                        fontSize: 25.0,
+                        fontSize: 20.0,
                         color: Colors.black
                     ),
                     textAlign: TextAlign.left,
@@ -61,7 +61,7 @@ class ProductState extends State<Product>{
                   Text(
                     'Rs. 300',
                     style: TextStyle(
-                        fontSize: 25.0,
+                        fontSize: 20.0,
                         color: Color(0xff2FACBB)
                     ),
                     textAlign: TextAlign.end,
@@ -201,9 +201,52 @@ class ProductState extends State<Product>{
                 ],
               ),
             ),
+            Container(
+              margin: EdgeInsets.only(
+                  left: 20.0,
+                  right: 20.0,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Description : ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
+                  ),
+                  Text(
+                    'This tent is durable. Have all colours in Blue and Black with sizes L, XL.',
+                    style: TextStyle(
+                        fontSize: 12
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Contact me: 0748596872',
+                        style: TextStyle(
+                            fontSize: 12
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
 
             Container(
-              margin: EdgeInsets.all(20.0),
+              margin: EdgeInsets.only(
+                  left: 20.0,
+                right: 20,
+              ),
               child: Column(
                 children: [
                   Divider(

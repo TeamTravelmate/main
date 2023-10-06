@@ -44,10 +44,20 @@ class Shipping_address extends StatelessWidget{
                         )
                     );
                   },
-                  child: Text(
-                    'Add',
-                    style: TextStyle(
-                        color: Colors.green
+                  child: Container(
+                    padding: EdgeInsets.only(
+                        left: 10,
+                    top: 10),
+                    margin: EdgeInsets.only(
+                      right: 20
+                    ),
+                    child: Text(
+                      'Add',
+                      style: TextStyle(
+                        fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green
+                      ),
                     ),
                   )
                 )
@@ -65,6 +75,17 @@ class Shipping_address extends StatelessWidget{
                   child: Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Delete',
+                            style: TextStyle(
+                                color: Colors.red
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
@@ -80,12 +101,6 @@ class Shipping_address extends StatelessWidget{
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
-                                  Text(
-                                    'Delete',
-                                    style: TextStyle(
-                                        color: Colors.red
-                                    ),
-                                  )
                                 ],
                               ),
                               Text(
@@ -116,6 +131,17 @@ class Shipping_address extends StatelessWidget{
                   child: Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Delete',
+                            style: TextStyle(
+                                color: Colors.red
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
@@ -131,12 +157,6 @@ class Shipping_address extends StatelessWidget{
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
-                                  Text(
-                                    'Delete',
-                                    style: TextStyle(
-                                        color: Colors.red
-                                    ),
-                                  )
                                 ],
                               ),
                               Text(
@@ -167,6 +187,17 @@ class Shipping_address extends StatelessWidget{
                   child: Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Delete',
+                            style: TextStyle(
+                                color: Colors.red
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
@@ -182,12 +213,6 @@ class Shipping_address extends StatelessWidget{
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
-                                  Text(
-                                    'Delete',
-                                    style: TextStyle(
-                                        color: Colors.red
-                                    ),
-                                  )
                                 ],
                               ),
                               Text(
@@ -218,6 +243,17 @@ class Shipping_address extends StatelessWidget{
                   child: Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Delete',
+                            style: TextStyle(
+                                color: Colors.red
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
@@ -233,12 +269,6 @@ class Shipping_address extends StatelessWidget{
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
-                                  Text(
-                                    'Delete',
-                                    style: TextStyle(
-                                        color: Colors.red
-                                    ),
-                                  )
                                 ],
                               ),
                               Text(
@@ -261,6 +291,6 @@ class Shipping_address extends StatelessWidget{
           ],
         ),
       ),
-    )
+    );
   }
 }

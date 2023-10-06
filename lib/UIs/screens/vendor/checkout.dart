@@ -198,7 +198,7 @@ class Checkout extends StatelessWidget{
               margin: EdgeInsets.only(
                   left: 20.0,
                   right: 200.0,
-                  bottom: 5.0
+                  bottom: 10.0
               ),
               child: Text(
                 'Delivery Method',

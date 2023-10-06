@@ -107,7 +107,8 @@ class CartState extends State<Cart>{
                             Container(
                               margin: EdgeInsets.only(
                                   right: 115.0,
-                                  left: 5.0
+                                  left: 5.0,
+                                bottom: 5.0
                               ),
                               child: Text(
                                 'Tent',
@@ -121,7 +122,7 @@ class CartState extends State<Cart>{
                                     left: 20.0,
                                     right: 10.0
                                 ),
-                                child: Icon(Icons.more_vert),
+                                child: Icon(Icons.delete_outline),
                             )
 
                           ],
@@ -131,14 +132,26 @@ class CartState extends State<Cart>{
                           children: [
                             SizedBox(width: 5,),
                             Text(
-                              'Colour: Black',
+                              'Colour: ',
+                              style: TextStyle(
+                                  fontSize: 12.0
+                              ),
+                            ),
+                            Text(
+                              ' Black',
                               style: TextStyle(
                                   fontSize: 12.0
                               ),
                             ),
                             SizedBox(width: 20,),
                             Text(
-                              'Size: L',
+                              'Size: ',
+                              style: TextStyle(
+                                  fontSize: 12.0
+                              ),
+                            ),
+                            Text(
+                              ' L',
                               style: TextStyle(
                                   fontSize: 12.0
                               ),
@@ -162,6 +175,10 @@ class CartState extends State<Cart>{
                                       Container(
                                         width: 30,
                                         height: 30,
+                                        margin: EdgeInsets.only(
+                                          top: 3.0,
+                                          left: 3.0
+                                        ),
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(50),
                                           color: Colors.white,
@@ -179,6 +196,7 @@ class CartState extends State<Cart>{
                                             Icons.remove,
                                             color: Colors.grey,
                                           ),
+                                          alignment: Alignment.center,
                                           onPressed: _decrementCounter1,
                                         ),
                                       ),
@@ -220,11 +238,21 @@ class CartState extends State<Cart>{
                                 margin: EdgeInsets.only(
                                     left: 40.0
                                 ),
-                                child: Text(
-                                  'Rs. 300',
-                                  style: TextStyle(
-                                      fontSize: 20.0
-                                  ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Rs. ',
+                                      style: TextStyle(
+                                          fontSize: 18.0
+                                      ),
+                                    ),
+                                    Text(
+                                      '300',
+                                      style: TextStyle(
+                                          fontSize: 18.0
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               )
                             ],
@@ -273,8 +301,9 @@ class CartState extends State<Cart>{
                           children: [
                             Container(
                               margin: EdgeInsets.only(
-                                  right: 95.0,
-                                  left: 5.0
+                                  right: 100.0,
+                                  left: 5.0,
+                                  bottom: 5.0
                               ),
                               child: Text(
                                 'Pillow',
@@ -284,11 +313,10 @@ class CartState extends State<Cart>{
                               ),
                             ),
                             Container(
-                                margin: EdgeInsets.only(
-                                    left: 20.0,
-                                    right: 10.0
-                                ),
-                                child: Icon(Icons.more_vert),
+                              margin: EdgeInsets.only(
+                                  left: 20.0,
+                              ),
+                              child: Icon(Icons.delete_outline),
                             )
 
                           ],
@@ -298,14 +326,26 @@ class CartState extends State<Cart>{
                           children: [
                             SizedBox(width: 5,),
                             Text(
-                              'Colour: Blue',
+                              'Colour: ',
+                              style: TextStyle(
+                                  fontSize: 12.0
+                              ),
+                            ),
+                            Text(
+                              ' Blue',
                               style: TextStyle(
                                   fontSize: 12.0
                               ),
                             ),
                             SizedBox(width: 20,),
                             Text(
-                              'Size: L',
+                              'Size: ',
+                              style: TextStyle(
+                                  fontSize: 12.0
+                              ),
+                            ),
+                            Text(
+                              ' L',
                               style: TextStyle(
                                   fontSize: 12.0
                               ),
@@ -314,8 +354,8 @@ class CartState extends State<Cart>{
                         ),
                         Container(
                           margin: EdgeInsets.only(
-                            top: 10,
-                            left: 5,
+                              top: 10,
+                              left: 5
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -329,6 +369,10 @@ class CartState extends State<Cart>{
                                       Container(
                                         width: 30,
                                         height: 30,
+                                        margin: EdgeInsets.only(
+                                            top: 3.0,
+                                            left: 3.0
+                                        ),
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(50),
                                           color: Colors.white,
@@ -346,12 +390,13 @@ class CartState extends State<Cart>{
                                             Icons.remove,
                                             color: Colors.grey,
                                           ),
-                                          onPressed: _decrementCounter2,
+                                          alignment: Alignment.center,
+                                          onPressed: _decrementCounter1,
                                         ),
                                       ),
                                       SizedBox(width: 8,),
                                       Text(
-                                        '$_counter2',
+                                        '$_counter1',
                                         style: TextStyle(fontSize: 18.0),
                                         textAlign: TextAlign.center,
                                       ),
@@ -377,7 +422,7 @@ class CartState extends State<Cart>{
                                             color: Colors.grey,
                                           ),
                                           alignment: Alignment.center,
-                                          onPressed: _incrementCounter2,
+                                          onPressed: _incrementCounter1,
                                         ),
                                       ),
                                     ],
@@ -387,11 +432,21 @@ class CartState extends State<Cart>{
                                 margin: EdgeInsets.only(
                                     left: 40.0
                                 ),
-                                child: Text(
-                                  'Rs. 100',
-                                  style: TextStyle(
-                                      fontSize: 20.0
-                                  ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Rs. ',
+                                      style: TextStyle(
+                                          fontSize: 18.0
+                                      ),
+                                    ),
+                                    Text(
+                                      '100',
+                                      style: TextStyle(
+                                          fontSize: 18.0
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               )
                             ],
