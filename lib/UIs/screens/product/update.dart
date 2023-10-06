@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/product/add.dart';
 
 class Update extends StatefulWidget {
   @override
@@ -42,24 +43,161 @@ class UpdateState extends State<Update> {
                     ),
                   ),
                 ),
-                // Container(
-                //   margin: EdgeInsets.only(
-                //       left: 20.0,
-                //       right: 20.0,
-                //       top: 10.0,
-                //       bottom: 10.0
-                //   ),
-                //   child: Row(
-                //     children: [
-                //       Text(
-                //         'My Products',
-                //         style: TextStyle(
-                //           fontSize: 18.0,
-                //         ),
-                //       )
-                //     ],
-                //   ),
-                // ),
+                Container(
+                  margin: EdgeInsets.only(
+                      top: 10.0,
+                      right: 160.0,
+                      bottom: 10.0
+                  ),
+                  child: Text(
+                    'Add Delivery Method',
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        // fontWeight: FontWeight.bold,
+                        color: Colors.black
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  // height: 60.0,
+
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Card(
+                        // margin: EdgeInsets.only(
+                        //   left: 15.0,
+                        // ),
+                        elevation: 5,
+                        shadowColor: Colors.black,
+                        color: Colors.white,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 8.0,
+                                  left: 8.0,
+                                  top: 15.0,
+                                  bottom: 4.0
+                              ),
+                              child: Image.asset(
+                                'assets/img/fedex.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 8.0,
+                                  right: 8.0,
+                                  top: 1.0,
+                                  bottom: 10.0),
+                              child: Text(
+                                '2-3 days.', // Replace with your actual text
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Card(
+                        margin: EdgeInsets.only(
+                            left: 10.0,
+                            right: 20.0
+                        ),
+                        elevation: 5,
+                        shadowColor: Colors.black,
+                        color: Colors.white,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 8.0,
+                                  left: 8.0,
+                                  top: 15.0,
+                                  bottom: 2.0
+                              ),
+                              child: Image.asset(
+                                'assets/img/dhl.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 8.0,
+                                  right: 8.0,
+                                  top: 1.0,
+                                  bottom: 10.0),
+                              child: Text(
+                                '2-3 days.', // Replace with your actual text
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        margin: EdgeInsets.only(
+                          right: 5
+                        ),
+                        child: Text(
+                          'Add',
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 15
+                          ),
+                          textAlign: TextAlign.end,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                      left: 20.0,
+                      right: 20.0,
+                      top: 10.0,
+                      bottom: 10.0
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'My Products',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Add()
+                              )
+                          );
+                        },
+                        child: Text(
+                          'Add',
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            color: Colors.green
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Card(
                   elevation: 5.0,
                   shadowColor: Colors.black,

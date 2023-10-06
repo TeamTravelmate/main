@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/product/update.dart';
+import 'package:main/UIs/screens/vendor/cart.dart';
 // import 'package:main/UIs/screens/Trip/publicTrip/joinPublicTripForm.dart';
 import '../../themes/colors.dart';
 import '../../widgets/button_widget.dart';
@@ -68,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Add()
+                                        builder: (context) => Update()
                                     )
                                 );
                               },
@@ -90,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => TrackOrder()
+                                          builder: (context) => Cart()
                                       )
                                   );
                                 },
