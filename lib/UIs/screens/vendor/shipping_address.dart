@@ -261,6 +261,6 @@ class Shipping_address extends StatelessWidget{
           ],
         ),
       ),
-    )
+    );
   }
 }

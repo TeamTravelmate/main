@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:main/Domain/provider/register_form_provider.dart';
 import 'package:main/UIs/screens/Welcome/welcome.dart';
+import 'package:main/UIs/screens/login/login_page.dart';
 import 'package:main/UIs/screens/login/reg_alt.dart';
 import 'package:main/UIs/widgets/bottom_nav.dart';
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart' as provider;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Domain/services/notification_services.dart';
 import 'UIs/screens/Trip/publicTrip/publicTripViewPage.dart';
@@ -28,7 +30,9 @@ void main() async {
   ));
 
   runApp(
-    MyApp(token: prefs.getString('token'),),
+    ProviderScope(
+      child: MyApp(token: prefs.getString('token'),),
+    )
   );
 }
 
@@ -38,9 +42,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return provider.MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => RegistrationFormProvider())
+        provider.ChangeNotifierProvider(create: (context) => RegistrationFormProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -50,9 +54,21 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         // home: (JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne(),
-        home: (token != null)?(JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne():const WelcomeScreenOne(),
+        // home: (token != null)?(JwtDecoder.isExpired(token) == false)?BottomNav(token: token):const WelcomeScreenOne():const WelcomeScreenOne(),
+        home: redirect(token),
       ),
     );
   }
+}
+
+Widget redirect(token) {
+  if (token != null) {
+    if (JwtDecoder.isExpired(token) == false) {
+      return BottomNav(token: token);
+    } else{
+      return LoginScreen();
+    }
+  }
+  return const WelcomeScreenOne();
 }
 
