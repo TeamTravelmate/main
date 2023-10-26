@@ -29,11 +29,11 @@ void main() async {
     statusBarBrightness: Brightness.dark,
   ));
 
-  runApp(
-    ProviderScope(
-      child: MyApp(token: prefs.getString('token'),),
-    )
-  );
+  runApp(ProviderScope(
+    child: MyApp(
+      token: prefs.getString('token'),
+    ),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -44,7 +44,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return provider.MultiProvider(
       providers: [
-        provider.ChangeNotifierProvider(create: (context) => RegistrationFormProvider())
+        provider.ChangeNotifierProvider(
+            create: (context) => RegistrationFormProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -63,12 +64,14 @@ class MyApp extends StatelessWidget {
 
 Widget redirect(token) {
   if (token != null) {
+    if (token.isEmpty) {
+      return const LoginScreen();
+    }
     if (JwtDecoder.isExpired(token) == false) {
       return BottomNav(token: token);
-    } else{
+    } else {
       return LoginScreen();
     }
   }
   return const WelcomeScreenOne();
 }
-

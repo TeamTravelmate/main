@@ -51,19 +51,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         ),
       );
     });
-    _loginFuture?.then((token) {
-      print('Login Successful: ${read.state}');
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => BottomNav(token: read.state)),
-      );
-    });
+    // _loginFuture?.then((token) {
+    //   print('Login Successful: ${read.state}');
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => BottomNav(token: read.state)),
+    //   );
+    // })
     return FutureBuilder(
         future: _loginFuture,
         builder: (context, snapshot) {
           final isErrored = snapshot.hasError &&
               snapshot.connectionState != ConnectionState.waiting;
           final isLoading = snapshot.connectionState == ConnectionState.waiting;
+          if (snapshot.connectionState == ConnectionState.done && !isErrored) {
+            return  BottomNav(token: read.state);
+          }
+
           return Scaffold(
             key: _scaffoldKey,
             extendBodyBehindAppBar: true,
@@ -257,6 +261,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               color: ColorsTravelMate.primary,
                               //onpressed only when loginfuture is null
                               onPressed: () {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return;
+                                }
                                 setState(() {
                                   final email = emailController.text.trim();
                                   final password =
