@@ -6,6 +6,7 @@ import '../../../themes/colors.dart';
 import '../../../widgets/popular_widget.dart';
 import '../publicTripViewPage.dart';
 import 'publicTrip_page.dart';
+// import 'publicTrip_page.dart';
 
 // ignore: camel_case_types
 class publicTripsAll extends StatelessWidget {
