@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -29,10 +27,6 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
   }
 
   void _logout() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // Remove the token from shared preferences to simulate logging out
-    prefs.clear();
-
     // Navigate to the "Welcome" screen
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const Welcome()));
@@ -101,7 +95,10 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
           ListTile(
               leading: const Icon(Icons.exit_to_app),
               title: const Text('Logout'),
-              onTap: _logout),
+              onTap: (){
+                final logoutFuture = ref.read(userAuthNotifierProvider.notifier).logout();
+                logoutFuture.then((value) => _logout());
+              }),
         ],
       ),
     );

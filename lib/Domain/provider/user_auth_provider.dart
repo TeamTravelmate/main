@@ -10,10 +10,10 @@ part 'user_auth_provider.g.dart';
 @Riverpod(keepAlive: true)
 class UserAuthNotifier extends _$UserAuthNotifier {
   @override
-   Future<String> build() async {
+  build() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    if (token != null) {
+    if (token != null && token.isNotEmpty) {
       if (JwtDecoder.isExpired(token) == false) {
         return token;
       }
@@ -38,9 +38,10 @@ class UserAuthNotifier extends _$UserAuthNotifier {
     } on Exception catch (e) {
       throw Exception('Network Error');
     }
+
     if (response.statusCode == 200) {
       final responseBody = json.decode(response.body);
-      state = responseBody['token'];
+      state = AsyncValue.data(responseBody['token']);
 
       //set the shared preference token value to the token
       prefs.setString('token', responseBody['token']);
@@ -48,8 +49,14 @@ class UserAuthNotifier extends _$UserAuthNotifier {
     if (response.statusCode == 401) {
       throw Exception('Invalid Email or Password');
     }
-    if (response.statusCode == 500) {
-      throw Exception("Server Error. It's not you, it's us");
+    if (response.statusCode == 500 || response.statusCode == 404) {
+      throw Exception("Server error. It's not you, it's us");
     }
+  }
+
+//logout function
+  Future<void> logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('token', '');
   }
 }
