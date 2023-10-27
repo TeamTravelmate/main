@@ -36,7 +36,7 @@ dependencies:
   image_picker: ^1.0.1
   galleryimage: ^2.0.1
   file_picker: ^5.0.0
-
+  date_count_down: ^3.0.0
   flutter_staggered_grid_view: ^0.7.0
   google_maps_flutter: ^2.4.0
   google_places_flutter: ^2.0.6
@@ -56,6 +56,8 @@ dependencies:
   form_field_validator: ^1.0.1
   flutter_riverpod: ^2.4.3
   riverpod_annotation: ^2.2.0
+  timeline_list: ^0.0.3
+  slide_countdown: ^0.6.0
 
 dev_dependencies:
   flutter_test:

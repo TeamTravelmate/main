@@ -1325,6 +1325,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  slide_countdown:
+    dependency: "direct main"
+    description:
+      name: slide_countdown
+      sha256: "8f45cff7c07b3f11825f52edae71e984888ccba918cef74eb479abeaa4665106"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.0"
   sliding_up_panel:
     dependency: "direct main"
     description:
@@ -1389,6 +1397,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  stream_duration:
+    dependency: transitive
+    description:
+      name: stream_duration
+      sha256: a29e071bf3e5d284e1e7dce98dbbaf547e16543c4802ec4f1a5c74e516c71af5
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.1"
   stream_transform:
     dependency: transitive
     description:
@@ -1437,6 +1453,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
+  timeline_list:
+    dependency: "direct main"
+    description:
+      name: timeline_list
+      sha256: ef1dff1f1d0b9daf8350635594f2b33c52b12410771bf12a8d5976c1aac156c4
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
   timelines:
     dependency: "direct main"
     description:

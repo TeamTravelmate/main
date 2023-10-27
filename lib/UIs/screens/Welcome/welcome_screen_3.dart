@@ -10,8 +10,11 @@ class WelcomeScreenThree extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
+        height: size.height,
+        width: size.width,
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/img/ls_3.png'),
