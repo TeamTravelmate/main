@@ -44,7 +44,7 @@ class _MyTripsListState extends State<MyTripsList> {
       var responseData = rawResponseData["trips"] as List<dynamic>;
       List<Trip> trips = responseData
           .map((data) => Trip(
-                userId: data['userId'],
+                tripId: data['userId'],
                 destination: data['destination'],
                 startDate: data['startDate'],
                 numberOfDays: data['numberOfDays'],

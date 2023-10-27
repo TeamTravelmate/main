@@ -43,7 +43,7 @@ class _joinedTripViewState extends State<joinedTripView> {
       print(responseData);
     // Assuming the API response contains a "trip" object
       Trip trip = Trip(
-        userId: responseData['userId'],
+        tripId: responseData['userId'],
         destination: responseData['destination'],
         startDate: responseData['startDate'],
         numberOfDays: responseData['numberOfDays'],

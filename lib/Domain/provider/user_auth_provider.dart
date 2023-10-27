@@ -10,7 +10,7 @@ part 'user_auth_provider.g.dart';
 @Riverpod(keepAlive: true)
 class UserAuthNotifier extends _$UserAuthNotifier {
   @override
-  build() async {
+  Future<String> build() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     if (token != null && token.isNotEmpty) {
