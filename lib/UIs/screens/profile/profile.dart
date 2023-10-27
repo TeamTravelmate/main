@@ -13,7 +13,7 @@ import '../friendList/following_list.dart';
 
 class Profile extends StatefulWidget {
   final token;
-  const Profile({required this.token, super.key});
+  const Profile({super.key, this.token});
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -69,11 +69,11 @@ class _ProfileState extends State<Profile> {
                       backgroundImage: AssetImage('assets/profile_pic.jpeg'),
                       radius: 50,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 8.0),
                       child: Text(
-                        '$firstName $lastName',
-                        style: const TextStyle(
+                        'Susan Perera',
+                        style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -128,12 +128,7 @@ class _ProfileState extends State<Profile> {
                               },
                               child: const Padding(
                                 padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
-                                child: Text(
-                                  'Followers',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                ),
+                                
                               ),
                             ),
                             Padding(

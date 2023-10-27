@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:main/Domain/provider/user_auth_provider.dart';
+import 'package:main/UIs/screens/Ad%20Mate/ad_mate_res.dart';
 import 'package:main/UIs/screens/Welcome/welcome.dart';
 import 'package:main/UIs/screens/emergency_support/emergency_support_home.dart';
 import 'package:main/UIs/screens/leaderboard/leaderboard.dart';
@@ -91,6 +92,11 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const EmergencySupportHome()))
             },
+          ),
+           ListTile(
+            leading: const Icon(Icons.ads_click),
+            title: const Text('Ad Mate'),
+            onTap: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AdMate2()))},
           ),
           ListTile(
               leading: const Icon(Icons.exit_to_app),
