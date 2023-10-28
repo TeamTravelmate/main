@@ -10,7 +10,7 @@ String generateRandomString(int length) {
 }
 
 void sharePost(String postId) async {
-  final String postUrl = 'https://mytripapp.com/post/$postId';
+  final String postUrl = 'https://mytripapp.com/post/$postId'; // Replace with post url
   final String randomString = generateRandomString(32);
   final String shareableLink = 'http://localhost:3000/post/share/$randomString';
 
