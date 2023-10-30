@@ -40,6 +40,7 @@ class _joinedTripViewState extends ConsumerState<joinedTripView> {
 
   @override
   Widget build(BuildContext context) {
+    _trip = tripProvider.value;
     return DefaultTabController(
         length: 5,
         initialIndex: 0,
@@ -57,116 +58,103 @@ class _joinedTripViewState extends ConsumerState<joinedTripView> {
           backgroundColor: Colors.white,
           body: Padding(
             padding: const EdgeInsets.only(top: 30.0, left: 10, right: 10),
-            child: Expanded(
-              child: Column(
-                children: [
-                  Stack(
-                    children: <Widget>[
-                      Container(
-                          alignment: Alignment.center,
-                          child: Image.asset(
-                            'assets/galle public.png',
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          )),
-                      Container(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              FloatingActionButton.small(
+            child: Column(
+              children: [
+                Stack(
+                  children: <Widget>[
+                    Container(
+                        alignment: Alignment.center,
+                        child: Image.asset(
+                          'assets/galle public.png',
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        )),
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            FloatingActionButton.small(
+                              backgroundColor: ColorsTravelMate.tertiary,
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (_) {
+                                  return Uploadpic();
+                                }));
+                              },
+                              child: const CircleAvatar(
                                 backgroundColor: ColorsTravelMate.tertiary,
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const CircleAvatar(
-                                  backgroundColor: ColorsTravelMate.tertiary,
-                                  child: Icon(
-                                    Icons.arrow_back_ios_new_rounded,
-                                    color: ColorsTravelMate.primary,
-                                  ),
+                                child: Icon(
+                                  Icons.camera_alt_outlined,
+                                  color: ColorsTravelMate.primary,
                                 ),
-                              ),
-                              FloatingActionButton.small(
-                                backgroundColor: ColorsTravelMate.tertiary,
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .push(MaterialPageRoute(builder: (_) {
-                                    return Uploadpic();
-                                  }));
-                                },
-                                child: const CircleAvatar(
-                                  backgroundColor: ColorsTravelMate.tertiary,
-                                  child: Icon(
-                                    Icons.camera_alt_outlined,
-                                    color: ColorsTravelMate.primary,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 100.0),
-                        child: //use the provider to display the tripcard. Its an async provider
-                        switch(tripProvider){
-                          AsyncData(:final value) => tripCard(
-                            tripLocationTitle: "Trip to ${value.destination}",
-                            tripDuration: value.numberOfDays.toString(),
-                            tripmates: value.adultCount.toString(),
-                            location: value.destination,
-                          ),
-                          AsyncError(:final error) => Center(
-                            child: Text(
-                              error.toString(),
-                              style: const TextStyle(
-                                color: ColorsTravelMate.primary,
-                                fontSize: 20,
                               ),
                             ),
-                          ),
-                          _ => const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        }
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                  const TabBar(
-                    labelColor: ColorsTravelMate.secundary,
-                    indicatorColor: ColorsTravelMate.secundary,
-                    unselectedLabelColor: ColorsTravelMate.primary,
-                    labelPadding: EdgeInsets.all(0),
-                    unselectedLabelStyle:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                    labelStyle:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                    tabs: [
-                      Tab(
-                        text: "Overview",
-                      ),
-                      Tab(text: "Iterinary"),
-                      Tab(text: "Budget"),
-                      Tab(text: "Explore"),
-                      Tab(text: "People"),
-                    ],
-                  ),
-                  const Expanded(
-                    child: TabBarView(
-                      // <-- Your TabBarView
-                      children: [
-                        Overview(),
-                        Iterinarytab(),
-                        Budget(),
-                        Explore(),
-                        People()
-                      ],
                     ),
+                    Padding(
+                        padding: const EdgeInsets.only(top: 100.0),
+                        child: //use the provider to display the tripcard. Its an async provider
+                            switch (tripProvider) {
+                          AsyncData(:final value) => tripCard(
+                              tripLocationTitle:
+                                  "Trip to ${value.destination.split(',')[0]}",
+                              tripDuration: value.startDate,
+                              tripmates: value.adultCount != null
+                                  ? value.adultCount.toString()
+                                  : "",
+                              location: value.destination ?? "Undefined",
+                            ),
+                          AsyncError(:final error) => Center(
+                              child: Text(
+                                error.toString(),
+                                style: const TextStyle(
+                                  color: ColorsTravelMate.primary,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          _ => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                        }),
+                  ],
+                ),
+                const TabBar(
+                  labelColor: ColorsTravelMate.secundary,
+                  indicatorColor: ColorsTravelMate.secundary,
+                  unselectedLabelColor: ColorsTravelMate.primary,
+                  labelPadding: EdgeInsets.all(0),
+                  unselectedLabelStyle:
+                      TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                  labelStyle:
+                      TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                  tabs: [
+                    Tab(
+                      text: "Overview",
+                    ),
+                    Tab(text: "Iterinary"),
+                    Tab(text: "Budget"),
+                    Tab(text: "Explore"),
+                    Tab(text: "People"),
+                  ],
+                ),
+                const Expanded(
+                  child: TabBarView(
+                    // <-- Your TabBarView
+                    children: [
+                      Overview(),
+                      Iterinarytab(),
+                      Budget(),
+                      Explore(),
+                      People()
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ));
@@ -190,7 +178,7 @@ class _OverviewState extends State<Overview> {
         children: [
           Text('Start in:   ', style: TextStyle(fontSize: 20)),
           SlideCountdownSeparated(
-            duration: Duration(days: 2),
+            duration: Duration(days: 1),
             // durationTitle: DurationTitle.en(),
             separatorType: SeparatorType.symbol,
             slideDirection: SlideDirection.up,
