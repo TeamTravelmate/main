@@ -19,7 +19,11 @@ class MapToDoScreen extends StatefulWidget {
 }
 
 class _MapToDoScreenState extends State<MapToDoScreen> {
-  var tripModel = Trip(tripId: 1, name: "Colombo", description: "Capital of Sri Lanka", image: 'assets/images/colombo.jpg');
+  var tripModel = Trip(
+      tripId: 1,
+      name: "Colombo",
+      description: "Capital of Sri Lanka",
+      image: 'assets/images/colombo.jpg');
   List<TripDay> _tripDays = [];
   List<User> _friends = [];
 
@@ -27,37 +31,57 @@ class _MapToDoScreenState extends State<MapToDoScreen> {
   void initState() {
     super.initState();
     tripModel.getDays().then((value) => {
-      setState(() {
-        _tripDays = tripModel.getDaysList();
-      })
-    });
+          setState(() {
+            _tripDays = tripModel.getDaysList();
+          })
+        });
     tripModel.getTripMates("").then((value) => {
-      setState(() {
-        _friends = tripModel.getTripMatesList();
-      })
-    });
+          setState(() {
+            _friends = tripModel.getTripMatesList();
+          })
+        });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SlidingUpPanel(
         margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
         body: CustomMap(), //replace this with CustomMap() to view map
-        panelBuilder: (sc) => MapSlidingPanel(sc: sc, context: context, tripDays: _tripDays,),
-        collapsed: Container(
-          decoration: const BoxDecoration(
-            color: ColorsTravelMate.tertiary,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: tripCard.map(
-            tripLocationTitle: tripModel.name,
-            location: tripModel.description,
-            tripDuration: _tripDays.length.toString(),
-            tripmates: _friends.length.toString(),
-          ),
+        panelBuilder: (sc) => MapSlidingPanel(
+          sc: sc,
+          context: context,
+          tripDays: _tripDays,
         ),
-        minHeight: MediaQuery.of(context).size.height / 6,
+        collapsed: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: ColorsTravelMate.primary,
+                ),
+                width: MediaQuery.of(context).size.width / 10,
+                height: 4,
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                color: ColorsTravelMate.tertiary,
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              child: tripCard.map(
+                tripLocationTitle: tripModel.name,
+                location: tripModel.description,
+                tripDuration: _tripDays.length.toString(),
+                tripmates: _friends.length.toString(),
+              ),
+            ),
+          ],
+        ),
+        minHeight: MediaQuery.of(context).size.height / 4,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
     );
@@ -86,11 +110,19 @@ class _MapSlidingPanelState extends State<MapSlidingPanel> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(top:8.0),
+        padding: const EdgeInsets.only(top: 8.0),
         child: _isExpanded
-        ?TripDayView(locations: "Galle Face Green, Lotus tower, Floating market", approxBudget: "Rs. 5000", weather: "Rainy", backMethod: _expandDayView,)
-        :TripTimeline(sc: widget.sc, displayDayMethod: _expandDayView, tripDays: widget.tripDays,)
-      );
+            ? TripDayView(
+                locations: "Galle Face Green, Lotus tower, Floating market",
+                approxBudget: "Rs. 5000",
+                weather: "Rainy",
+                backMethod: _expandDayView,
+              )
+            : TripTimeline(
+                sc: widget.sc,
+                displayDayMethod: _expandDayView,
+                tripDays: widget.tripDays,
+              ));
   }
 
   void _expandDayView() {

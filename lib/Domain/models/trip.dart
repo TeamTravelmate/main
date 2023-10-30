@@ -1,31 +1,37 @@
 class Trip {
-  final int userId;
-  final String destination;
-  final String startDate;
-  final int numberOfDays;
+  int? tripId;
+  String? destination;
+  String? startDate;
+  int? numberOfDays;
+  int? childrenCount;
+  int? adultCount;
 
   Trip({
-    required this.userId,
-    required this.destination,
-    required this.startDate,
-    required this.numberOfDays,
+    this.tripId,
+    this.destination,
+    this.startDate,
+    this.numberOfDays,
+    this.childrenCount,
+    this.adultCount,
   });
 
   Map<String, dynamic> toJson() {
     return {
-      'userId': userId,
+      'userId': tripId,
       'destination': destination,
       'startDate': startDate,
       'numberOfDays': numberOfDays,
+      'childrenCount': childrenCount,
+      'adultCount': adultCount,
     };
   }
 
   factory Trip.fromJson(Map<String, dynamic> json) {
     return Trip(
-      userId: json['userId'],
-      destination: json['destination'],
-      startDate: json['startDate'],
+      tripId: json['id'],
+      destination: json['startingPlace'],
+      startDate: json['starting_date'],
       numberOfDays: json['numberOfDays'],
     );
-  } 
+  }
 }

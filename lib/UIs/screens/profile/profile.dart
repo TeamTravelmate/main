@@ -20,13 +20,19 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  late String firstName = "Susan";
-  late String lastName = "Perera";
+  late int userId;
+  late String firstName;
+  late String lastName;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+    userId = jwtDecodedToken['userId'];
+    firstName = "Kaleel";
+    lastName = "Sheromi";
 
   }
 
@@ -49,13 +55,10 @@ class _ProfileState extends State<Profile> {
             leading: const BackButton(
               color: Colors.black,
             ),
-            // Remove the Container from the bottom property of AppBar
-            // Add the Container above the TabBar
           ),
           body: Column(
             children: [
               Container(
-                // Place the Container above the TabBar
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 width: double.infinity,
                 child: Column(
@@ -128,7 +131,7 @@ class _ProfileState extends State<Profile> {
                                 
                               ),
                             ),
-                           const Padding(
+                            Padding(
                               padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
                               child: Text('Following',
                                   style: TextStyle(fontSize: 15)),
@@ -158,8 +161,6 @@ class _ProfileState extends State<Profile> {
                               style: TextStyle(fontSize: 15.0)),
                         ),
                         FilledButton(
-                          child: const Text('Upgrade Profile',
-                              style: TextStyle(fontSize: 15.0)),
                           onPressed: () {
                             Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (_) {
@@ -173,6 +174,8 @@ class _ProfileState extends State<Profile> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
+                          child: const Text('Upgrade Profile',
+                              style: TextStyle(fontSize: 15.0)),
                         ),
                       ],
                     )
@@ -599,10 +602,10 @@ class _ProfileState extends State<Profile> {
             onPressed: () {
               // Your button's onPressed function here...
             },
-            child: const Icon(Icons.next_plan_outlined, size: 30),
             backgroundColor: const Color(0xFF0C1C33),
             foregroundColor:
-                Colors.white, // Replace this with your desired icon
+                Colors.white,
+            child: const Icon(Icons.next_plan_outlined, size: 30), // Replace this with your desired icon
           ),
         ),
       ),
@@ -922,9 +925,9 @@ class _ProfileState extends State<Profile> {
                   return NewPost();
                 }));
               },
-              child: const Icon(Icons.post_add, size: 30),
               backgroundColor: const Color(0xFF0C1C33),
               foregroundColor: Colors.white,
+              child: const Icon(Icons.post_add, size: 30),
             ),
           ),
         ),
