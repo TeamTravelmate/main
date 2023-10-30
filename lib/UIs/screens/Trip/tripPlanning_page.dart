@@ -3,10 +3,7 @@ import 'package:google_places_flutter/model/prediction.dart';
 import 'package:main/Data/env/apiKeys.dart';
 
 import 'package:flutter/material.dart';
-import 'package:main/Domain/models/trip.dart';
 import 'package:main/Domain/provider/trip_provider.dart';
-import 'package:main/Domain/provider/user_auth_provider.dart';
-import 'package:main/Domain/services/trip_services.dart';
 import 'package:main/UIs/screens/Trip/tripView_page.dart';
 import '../../themes/colors.dart';
 import 'publicTrip/publicTripsAll_page.dart';
@@ -14,15 +11,6 @@ import 'package:google_places_flutter/google_places_flutter.dart';
 
 // ignore: must_be_immutable, camel_case_types
 class trip extends ConsumerWidget {
-  List<Tab> tabs = [
-    const Tab(
-      child: Text('Public Trips'),
-    ),
-    const Tab(
-      child: Text('Customize Trips'),
-    )
-  ];
-
 //public trips
   Widget publicTrips = Container(
     child: const publicTripsAll(),
@@ -35,10 +23,11 @@ class trip extends ConsumerWidget {
   );
   //planning trip
   Widget tripPlanning = Container(
-    child: joinedTripView(tripId: 1),
+    child: joinedTripView(),
   );
 
   List<Widget> tabContent = [];
+  List<Tab> tabs = [];
 
   trip({super.key});
 
@@ -46,14 +35,65 @@ class trip extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final tripRequest = ref.watch(tripPlanningNotifierProvider);
     tabContent = [publicTrips, customizeTrips];
+    tabs = [
+      const Tab(
+        text: "Public Trips",
+      ),
+      const Tab(
+        text: "Customize Trips",
+      ),
+    ];
     tripRequest.when(
       data: (tripRequset) {
         if (tripRequset.tripId != null) {
+          tabs = [
+            const Tab(
+              text: "Public Trips",
+            ),
+            const Tab(
+              text: "Trip Planning",
+            ),
+          ];
           tabContent = [publicTrips, tripPlanning];
         }
       },
-      loading: () {},
-      error: (e, s) {},
+      loading: () {
+        tabs = [
+          const Tab(
+            text: "Public Trips",
+          ),
+          const Tab(
+            text: "Customize Trips",
+          ),
+        ];
+        tabContent = [
+          publicTrips,
+          const CircularProgressIndicator(
+            color: Colors.black,
+          )
+        ];
+      },
+      error: (e, s) {
+        tabs = [
+          const Tab(
+            text: "Public Trips",
+          ),
+          const Tab(
+            text: "Customize Trips",
+          ),
+        ];
+        tabContent = [publicTrips, customizeTrips];
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Something went wrong',
+              ),
+              backgroundColor: Color(0xffD32F2F),
+            ),
+          );
+        });
+      },
     );
     return DefaultTabController(
       length: tabs.length,
@@ -208,14 +248,14 @@ class _CustomizeState extends State<Customize> {
                                 return;
                               }
                               if (_formKey.currentState!.validate()) {
-                                final future = ref.read(
-                                  tripPlanningNotifierProvider.notifier).createTrip({
-                                    "startDate": _startDateController.text,
-                                    "numberOfDays": _numberOfDaysController.text,
-                                    "startPlace": _destinationController.text,
-                                    "category": "Private"
-                                    })
-                                    ;
+                                final future = ref
+                                    .read(tripPlanningNotifierProvider.notifier)
+                                    .createTrip({
+                                  "startDate": _startDateController.text,
+                                  "numberOfDays": _numberOfDaysController.text,
+                                  "startPlace": _destinationController.text,
+                                  "category": "Private"
+                                });
                                 setState(() {
                                   _pendingTripCreation = future;
                                 });

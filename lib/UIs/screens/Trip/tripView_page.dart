@@ -16,50 +16,26 @@ import 'publicTrip/joinPublicTripForm.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
+import 'package:main/Domain/provider/trip_provider.dart';
 import 'package:google_places_flutter/model/prediction.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class joinedTripView extends StatefulWidget {
-  final int tripId;
-
-  const joinedTripView({required this.tripId, super.key});
+class joinedTripView extends ConsumerStatefulWidget {
+  const joinedTripView({super.key});
 
   @override
   _joinedTripViewState createState() => _joinedTripViewState();
 }
 
-class _joinedTripViewState extends State<joinedTripView> {
-  late Future<Trip> tripDetails;
+class _joinedTripViewState extends ConsumerState<joinedTripView> {
+  //the provider
+  late final tripProvider;
+  Trip? _trip;
 
   @override
   void initState() {
     super.initState();
-    tripDetails = fetchTripDetails(widget.tripId);
-  }
-
-  Future<Trip> fetchTripDetails(int tripId) async {
-    final response = await http.get(
-      Uri.parse('$backendUrl/trip/$tripId'),
-      headers: {
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImZpcnN0TmFtZSI6IkFtYXNoaSIsImxhc3ROYW1lIjoiU2FuZHVuaSIsImVtYWlsIjoiYW1hc2hpQGdtYWlsLmNvbSIsImlhdCI6MTY5ODU3NTA0OSwiZXhwIjoxNzAxMTY3MDQ5fQ.OTP9sIyqt-q5E316M-q9uLOxau-F8f-diY37goViZd4'
-      }, // Update the URL accordingly
-    );
-
-    if (response.statusCode == 200) {
-      var rawResponseData = json.decode(response.body) as Map<String, dynamic>;
-      var responseData = (rawResponseData as Map<String, dynamic>);
-      // Assuming the API response contains a "trip" object
-      Trip trip = Trip(
-        tripId: responseData['id'],
-        destination: responseData['destination'],
-        startDate: responseData['starting_date'],
-        numberOfDays: responseData['no_of_days'],
-        // Add other properties based on your Trip class
-      );
-      return trip;
-    } else {
-      throw Exception('Failed to fetch trip details');
-    }
+    tripProvider = ref.read(tripPlanningNotifierProvider);
   }
 
   @override
@@ -133,30 +109,28 @@ class _joinedTripViewState extends State<joinedTripView> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 250.0),
-                        child: FutureBuilder<Trip>(
-                          future: tripDetails,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
-                            } else if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}');
-                            } else if (snapshot.hasData) {
-                              Trip trip = snapshot.data as Trip;
-                              return tripCard(
-                                tripLocationTitle:
-                                    'Trip to ${trip.destination}',
-                                location: ' ${trip.destination}',
-                                tripDuration:
-                                    '  ${trip.startDate} - ${trip.numberOfDays} days',
-                                tripmates: '  Kumar & 5 others',
-                              );
-                            } else {
-                              return const Text('No data available');
-                            }
-                          },
-                        ),
+                        padding: const EdgeInsets.only(top: 100.0),
+                        child: //use the provider to display the tripcard. Its an async provider
+                        switch(tripProvider){
+                          AsyncData(:final value) => tripCard(
+                            tripLocationTitle: "Trip to ${value.destination}",
+                            tripDuration: value.numberOfDays.toString(),
+                            tripmates: value.adultCount.toString(),
+                            location: value.destination,
+                          ),
+                          AsyncError(:final error) => Center(
+                            child: Text(
+                              error.toString(),
+                              style: const TextStyle(
+                                color: ColorsTravelMate.primary,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                          _ => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        }
                       ),
                     ],
                   ),

@@ -428,7 +428,7 @@ class CustomFacilities extends StatelessWidget {
           const buttonWidget(
               width: double.infinity,
               labelText: 'Create my plan',
-              path: joinedTripView(tripId: 1,)),
+              path: joinedTripView()),
         ],
       ),
     );
