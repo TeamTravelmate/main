@@ -1,14 +1,18 @@
 class Trip {
-  final int tripId;
-  final String destination;
-  final String startDate;
-  final int numberOfDays;
+  int? tripId;
+  String? destination;
+  String? startDate;
+  int? numberOfDays;
+  int? childrenCount;
+  int? adultCount;
 
   Trip({
-    required this.tripId,
-    required this.destination,
-    required this.startDate,
-    required this.numberOfDays,
+    this.tripId,
+    this.destination,
+    this.startDate,
+    this.numberOfDays,
+    this.childrenCount,
+    this.adultCount,
   });
 
   Map<String, dynamic> toJson() {
@@ -17,6 +21,8 @@ class Trip {
       'destination': destination,
       'startDate': startDate,
       'numberOfDays': numberOfDays,
+      'childrenCount': childrenCount,
+      'adultCount': adultCount,
     };
   }
 
@@ -27,5 +33,5 @@ class Trip {
       startDate: json['starting_date'],
       numberOfDays: json['numberOfDays'],
     );
-  } 
+  }
 }

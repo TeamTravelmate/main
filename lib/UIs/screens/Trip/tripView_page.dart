@@ -32,27 +32,28 @@ class _joinedTripViewState extends State<joinedTripView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     tripDetails = fetchTripDetails(widget.tripId);
   }
 
   Future<Trip> fetchTripDetails(int tripId) async {
     final response = await http.get(
-      Uri.parse(
-          '$backendUrl/get-trip/$tripId'), // Update the URL accordingly
+      Uri.parse('$backendUrl/trip/$tripId'),
+      headers: {
+        'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImZpcnN0TmFtZSI6IkFtYXNoaSIsImxhc3ROYW1lIjoiU2FuZHVuaSIsImVtYWlsIjoiYW1hc2hpQGdtYWlsLmNvbSIsImlhdCI6MTY5ODU3NTA0OSwiZXhwIjoxNzAxMTY3MDQ5fQ.OTP9sIyqt-q5E316M-q9uLOxau-F8f-diY37goViZd4'
+      }, // Update the URL accordingly
     );
 
     if (response.statusCode == 200) {
       var rawResponseData = json.decode(response.body) as Map<String, dynamic>;
-      var responseData = (rawResponseData["trips"] as List<dynamic>)[0] as Map<String, dynamic>;
-      print(responseData);
-    // Assuming the API response contains a "trip" object
+      var responseData = (rawResponseData as Map<String, dynamic>);
+      // Assuming the API response contains a "trip" object
       Trip trip = Trip(
-        tripId: responseData['userId'],
+        tripId: responseData['id'],
         destination: responseData['destination'],
-        startDate: responseData['startDate'],
-        numberOfDays: responseData['numberOfDays'],
+        startDate: responseData['starting_date'],
+        numberOfDays: responseData['no_of_days'],
         // Add other properties based on your Trip class
       );
       return trip;
@@ -63,7 +64,6 @@ class _joinedTripViewState extends State<joinedTripView> {
 
   @override
   Widget build(BuildContext context) {
-    var trip;
     return DefaultTabController(
         length: 5,
         initialIndex: 0,
@@ -179,7 +179,7 @@ class _joinedTripViewState extends State<joinedTripView> {
                       Tab(text: "People"),
                     ],
                   ),
-                   const Expanded(
+                  const Expanded(
                     child: TabBarView(
                       // <-- Your TabBarView
                       children: [
@@ -199,7 +199,6 @@ class _joinedTripViewState extends State<joinedTripView> {
   }
 }
 
-
 //overview tab
 class Overview extends StatefulWidget {
   const Overview({Key? key}) : super(key: key);
@@ -216,28 +215,27 @@ class _OverviewState extends State<Overview> {
       child: Column(
         children: [
           Text('Start in:   ', style: TextStyle(fontSize: 20)),
-            SlideCountdownSeparated(
-              duration: Duration(days: 2),
-              // durationTitle: DurationTitle.en(),
-              separatorType: SeparatorType.symbol,
-              slideDirection: SlideDirection.up,
-              height: 60.0,
-              width: 60.0,
-              textStyle: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-              decoration: BoxDecoration(
-                  color: ColorsTravelMate.secundary,
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(Radius.circular(5.0))),
-            ),
+          SlideCountdownSeparated(
+            duration: Duration(days: 2),
+            // durationTitle: DurationTitle.en(),
+            separatorType: SeparatorType.symbol,
+            slideDirection: SlideDirection.up,
+            height: 60.0,
+            width: 60.0,
+            textStyle: TextStyle(
+                fontSize: 20.0,
+                color: Colors.white,
+                fontWeight: FontWeight.bold),
+            decoration: BoxDecoration(
+                color: ColorsTravelMate.secundary,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.all(Radius.circular(5.0))),
+          ),
         ],
       ),
     );
   }
 }
-
 
 //itinerary tab
 class Itinerary {
@@ -260,22 +258,22 @@ class ItineraryTimeline extends StatefulWidget {
 }
 
 class _ItineraryTimelineState extends State<ItineraryTimeline> {
-  IconData?TimelineIcon(String activity) {
+  IconData? TimelineIcon(String activity) {
     switch (activity) {
       case "surfing":
-      return Icons.beach_access;
-    case "hiking":
-      return Icons.hiking;
-    case "boat riding":
-      return Icons.directions_boat_rounded;
-    case "cycling":
-      return Icons.directions_bike_rounded;
-    case "diving":
-      return Icons.scuba_diving;
-    case "camping":
-      return Icons.bungalow_rounded;
-    default:
-      return Icons.location_on;
+        return Icons.beach_access;
+      case "hiking":
+        return Icons.hiking;
+      case "boat riding":
+        return Icons.directions_boat_rounded;
+      case "cycling":
+        return Icons.directions_bike_rounded;
+      case "diving":
+        return Icons.scuba_diving;
+      case "camping":
+        return Icons.bungalow_rounded;
+      default:
+        return Icons.location_on;
     }
   }
 
@@ -306,8 +304,8 @@ class _ItineraryTimelineState extends State<ItineraryTimeline> {
                 context: context,
                 builder: (context) => AlertDialog(
                   title: const Text('Delete Itinerary'),
-                  content:
-                      const Text('Are you sure you want to delete this itinerary?'),
+                  content: const Text(
+                      'Are you sure you want to delete this itinerary?'),
                   actions: [
                     TextButton(
                       onPressed: () {
@@ -415,15 +413,16 @@ class _IterinarytabState extends State<Iterinarytab> {
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                          userItinerary.add(Itinerary(destinationController.text, activity));
-                          Navigator.pop(context);
-                        });
+                    userItinerary
+                        .add(Itinerary(destinationController.text, activity));
+                    Navigator.pop(context);
+                  });
                 },
                 style: const ButtonStyle(
                   backgroundColor:
                       MaterialStatePropertyAll(ColorsTravelMate.secundary),
-                  foregroundColor: MaterialStatePropertyAll(
-                      ColorsTravelMate.tertiary),
+                  foregroundColor:
+                      MaterialStatePropertyAll(ColorsTravelMate.tertiary),
                 ),
                 child: const Text('Add'),
               ),
@@ -434,8 +433,8 @@ class _IterinarytabState extends State<Iterinarytab> {
                 style: const ButtonStyle(
                   backgroundColor:
                       MaterialStatePropertyAll(ColorsTravelMate.tertiary),
-                  foregroundColor: MaterialStatePropertyAll(
-                      ColorsTravelMate.secundary),
+                  foregroundColor:
+                      MaterialStatePropertyAll(ColorsTravelMate.secundary),
                 ),
                 child: const Text('Cancel'),
               ),
@@ -506,7 +505,6 @@ class _IterinarytabState extends State<Iterinarytab> {
 //   }
 // }
 
-
 //budget tab
 class Budget extends StatefulWidget {
   const Budget({Key? key}) : super(key: key);
@@ -523,11 +521,8 @@ class _BudgetState extends State<Budget> {
       child: Column(
         children: [
           SingleChildScrollView(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              
-              
-            ]),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start, children: []),
           )
         ],
       ),

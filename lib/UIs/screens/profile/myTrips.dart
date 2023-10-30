@@ -99,7 +99,7 @@ class _MyTripsListState extends State<MyTripsList> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                trip.destination,
+                                trip.destination!,
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -128,7 +128,7 @@ class _MyTripsListState extends State<MyTripsList> {
                             children: [
                               const Icon(Icons.location_pin),
                               Text(
-                                trip.destination,
+                                trip.destination!,
                                 style: const TextStyle(
                                   fontSize: 15,
                                 ),

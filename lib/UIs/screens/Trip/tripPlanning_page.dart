@@ -3,6 +3,8 @@ import 'package:google_places_flutter/model/prediction.dart';
 import 'package:main/Data/env/apiKeys.dart';
 
 import 'package:flutter/material.dart';
+import 'package:main/Domain/models/trip.dart';
+import 'package:main/Domain/provider/trip_provider.dart';
 import 'package:main/Domain/provider/user_auth_provider.dart';
 import 'package:main/Domain/services/trip_services.dart';
 import 'package:main/UIs/screens/Trip/tripView_page.dart';
@@ -11,7 +13,7 @@ import 'publicTrip/publicTripsAll_page.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 
 // ignore: must_be_immutable, camel_case_types
-class trip extends StatelessWidget {
+class trip extends ConsumerWidget {
   List<Tab> tabs = [
     const Tab(
       child: Text('Public Trips'),
@@ -21,21 +23,38 @@ class trip extends StatelessWidget {
     )
   ];
 
-  List<Widget> tabContent = [
-    Container(
-      child: const publicTripsAll(),
-    ),
-    Container(
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
-      width: double.infinity,
-      child: const Customize(),
-    )
-  ];
+//public trips
+  Widget publicTrips = Container(
+    child: const publicTripsAll(),
+  );
+//customize trips
+  Widget customizeTrips = Container(
+    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+    width: double.infinity,
+    child: const Customize(),
+  );
+  //planning trip
+  Widget tripPlanning = Container(
+    child: joinedTripView(tripId: 1),
+  );
+
+  List<Widget> tabContent = [];
 
   trip({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tripRequest = ref.watch(tripPlanningNotifierProvider);
+    tabContent = [publicTrips, customizeTrips];
+    tripRequest.when(
+      data: (tripRequset) {
+        if (tripRequset.tripId != null) {
+          tabContent = [publicTrips, tripPlanning];
+        }
+      },
+      loading: () {},
+      error: (e, s) {},
+    );
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
@@ -89,54 +108,12 @@ class _CustomizeState extends State<Customize> {
   final TextEditingController _numberOfDaysController = TextEditingController();
   double? lat;
   double? lng;
-  final TripServices _tripServices = TripServices();
-
-  _sendTripRequest(token) async {
-    if (_formKey.currentState!.validate()) {
-      var request = _tripServices.createTrip({
-        "startDate": _startDateController.text,
-        "numberOfDays": _numberOfDaysController.text,
-        "startPlace": _destinationController.text,
-        "category": "Private"
-      }, token);
-      // request.onError((error, stackTrace) {
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(
-      //       backgroundColor: Colors.red,
-      //       content: Text(error?.message?),
-      //     ),
-      //   );
-      //   throw Exception('Failed to create trip.');
-      // });
-      request.catchError((error) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.red,
-            content: Text(error.message),
-          ),
-        );
-        throw Exception('Failed to create trip.');
-      });
-      request.then((value) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Trip Created Successfully!'),
-          ),
-        );
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => joinedTripView(tripId: value.tripId)),
-        );
-      });
-    }
-  }
+  Future<void>? _pendingTripCreation;
 
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
-        final token = ref.watch(userAuthNotifierProvider);
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -201,42 +178,69 @@ class _CustomizeState extends State<Customize> {
                   SizedBox(
                     width: double.infinity,
                     height: 50,
-                    child: TextButton(
-                      onPressed: () async {
-                        token.when(
-                            data: (token) {
-                              if (token.isNotEmpty) {
-                                _sendTripRequest(token);
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Please login to continue'),
-                                  ),
-                                );
+                    child: FutureBuilder(
+                        future: _pendingTripCreation,
+                        builder: (context, snapshot) {
+                          var isLoading = snapshot.connectionState ==
+                              ConnectionState.waiting;
+                          return TextButton(
+                            onPressed: () {
+                              // token.when(
+                              //     data: (token) {
+                              //       if (token.isNotEmpty) {
+                              //         _sendTripRequest(token);
+                              //       } else {
+                              //         ScaffoldMessenger.of(context).showSnackBar(
+                              //           const SnackBar(
+                              //             content: Text('Please login to continue'),
+                              //           ),
+                              //         );
+                              //       }
+                              //     },
+                              //     loading: () {},
+                              //     error: (e, s) =>
+                              //         ScaffoldMessenger.of(context).showSnackBar(
+                              //           const SnackBar(
+                              //             content: Text('Error'),
+                              //           ),
+                              //         ));
+                              if (isLoading == true) {
+                                return;
+                              }
+                              if (_formKey.currentState!.validate()) {
+                                final future = ref.read(
+                                  tripPlanningNotifierProvider.notifier).createTrip({
+                                    "startDate": _startDateController.text,
+                                    "numberOfDays": _numberOfDaysController.text,
+                                    "startPlace": _destinationController.text,
+                                    "category": "Private"
+                                    })
+                                    ;
+                                setState(() {
+                                  _pendingTripCreation = future;
+                                });
                               }
                             },
-                            loading: () {},
-                            error: (e, s) =>
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Error'),
-                                  ),
-                                ));
-                      },
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(ColorsTravelMate.primary),
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                      ),
-                      child: const Text('Create my Trip'),
-                    ),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  ColorsTravelMate.primary),
+                              foregroundColor:
+                                  MaterialStateProperty.all(Colors.white),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                            ),
+                            //child based on snapshot
+                            child: (isLoading == true)
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                : const Text('Create Trip'),
+                          );
+                        }),
                   ),
                   const SizedBox(height: 20),
                   TextButton(
