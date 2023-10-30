@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Trip {
   int? tripId;
   String? destination;
@@ -29,9 +31,14 @@ class Trip {
   factory Trip.fromJson(Map<String, dynamic> json) {
     return Trip(
       tripId: json['id'],
-      destination: json['startingPlace'],
-      startDate: json['starting_date'],
-      numberOfDays: json['numberOfDays'],
+      destination: json['starting_place'],
+      startDate: parseDate(json['starting_date']),
+      numberOfDays: json['no_of_days'],
     );
   }
+}
+
+String parseDate(String date) {
+  var parsedDate = DateTime.parse(date);
+  return DateFormat('dd/MM/yyyy').format(parsedDate);
 }

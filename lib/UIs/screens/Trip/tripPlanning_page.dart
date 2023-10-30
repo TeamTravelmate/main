@@ -68,8 +68,10 @@ class trip extends ConsumerWidget {
         ];
         tabContent = [
           publicTrips,
-          const CircularProgressIndicator(
-            color: Colors.black,
+          Center(
+            child: const CircularProgressIndicator(
+              color: Colors.black,
+            ),
           )
         ];
       },
@@ -82,6 +84,7 @@ class trip extends ConsumerWidget {
             text: "Customize Trips",
           ),
         ];
+        print(e);
         tabContent = [publicTrips, customizeTrips];
         WidgetsBinding.instance.addPostFrameCallback((_) {
           ScaffoldMessenger.of(context).showSnackBar(
