@@ -40,5 +40,5 @@ class Trip {
 
 String parseDate(String date) {
   var parsedDate = DateTime.parse(date);
-  return DateFormat('dd/MM/yyyy').format(parsedDate);
+  return DateFormat('EEE, M/d/y').format(parsedDate);
 }
