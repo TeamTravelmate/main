@@ -60,6 +60,7 @@ dependencies:
   slide_countdown: ^0.6.0
   flutter_dotenv: ^5.1.0
   uuid: ^3.0.7
+  share: ^2.0.4
 
 dev_dependencies:
   flutter_test:
