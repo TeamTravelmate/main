@@ -357,7 +357,63 @@ class _IterinarytabState extends State<Iterinarytab> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Day ${dayCounter + 1}'),
+                //date picker
+                DropdownButtonHideUnderline(
+                  child: DropdownButtonFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Day",
+                      prefixIcon: Icon(Icons.calendar_today),
+                    ),
+                    value: dayCounter,
+                    items: [
+                      DropdownMenuItem(
+                        child: const Text("Day 1"),
+                        value: 0,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 2"),
+                        value: 1,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 3"),
+                        value: 2,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 4"),
+                        value: 3,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 5"),
+                        value: 4,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 6"),
+                        value: 5,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 7"),
+                        value: 6,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 8"),
+                        value: 7,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 9"),
+                        value: 8,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 10"),
+                        value: 9,
+                      ),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        dayCounter = value as int;
+                      });
+                    },
+                  ),
+                ),
                 GooglePlaceAutoCompleteTextField(
                   textEditingController: destinationController,
                   googleAPIKey: mapApi,
