@@ -25,9 +25,8 @@ class Expense {
     required this.amount,
     required this.date,
     required this.category,
-  }) : id = uuid.v4();
+  });
 
-  final String id;
   final String title;
   final double amount;
   final DateTime date;
@@ -36,5 +35,32 @@ class Expense {
 
   String get formattedDate {
     return formatter.format(date);
+  }
+
+  /*
+  {
+      "id": 5,
+      "expense_name": "Taxi",
+      "amount": "4334",
+      "category": "Transportation",
+      "date": "2023-10-09T18:30:00.000Z"
+    },
+   */
+  factory Expense.fromJson(Map<String, dynamic> json) {
+    return Expense(
+      title: json['expense_name'],
+      amount: double.parse(json['amount']),
+      date: DateTime.parse(json['date']),
+      category: expCategory.values.firstWhere((e) => e.toString() == 'expCategory.${json['category']}'),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'expense_name': title,
+      'amount': amount,
+      'category': category.toString().split('.').last,
+      'date': date.toIso8601String(),
+    };
   }
 }

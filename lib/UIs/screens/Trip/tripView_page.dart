@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:main/Data/env/env.dart';
 import 'package:main/Domain/models/trip.dart';
 import 'package:main/UIs/screens/Trip/privateTrips/budget_page.dart';
@@ -101,8 +103,9 @@ class _joinedTripViewState extends ConsumerState<joinedTripView> {
                             switch (tripProvider) {
                           AsyncData(:final value) => tripCard(
                               tripLocationTitle:
-                                  "Trip to ${value.destination.split(',')[0]}",
-                              tripDuration: value.startDate,
+                                  "Trip to ${value.destination!=null?value.destination.split(',')[0]:"Undefined"}",
+                              tripDuration:
+                                  "${value.startDate} - ${value.numberOfDays.toString()} days",
                               tripmates: value.adultCount != null
                                   ? value.adultCount.toString()
                                   : "",
@@ -148,7 +151,7 @@ class _joinedTripViewState extends ConsumerState<joinedTripView> {
                     children: [
                       Overview(),
                       Iterinarytab(),
-                      Budget(),
+                      BudgetPage(),
                       Explore(),
                       People()
                     ],
@@ -170,28 +173,46 @@ class Overview extends StatefulWidget {
 }
 
 class _OverviewState extends State<Overview> {
+  //current date
+  DateTime now = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.all(15.0),
       child: Column(
         children: [
-          Text('Start in:   ', style: TextStyle(fontSize: 20)),
-          SlideCountdownSeparated(
-            duration: Duration(days: 1),
-            // durationTitle: DurationTitle.en(),
-            separatorType: SeparatorType.symbol,
-            slideDirection: SlideDirection.up,
-            height: 60.0,
-            width: 60.0,
-            textStyle: TextStyle(
-                fontSize: 20.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
-            decoration: BoxDecoration(
-                color: ColorsTravelMate.secundary,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.all(Radius.circular(5.0))),
+          Consumer(
+            builder: (context, ref, child) {
+              final trip = ref.watch(tripPlanningNotifierProvider);
+
+              final duration = trip.value!.startDate != null
+                ? DateFormat('EEE, M/d/y').parse(trip.value!.startDate!).difference(DateTime.now())
+                : Duration(days: 0);
+                if (duration.isNegative) {
+                  return Text('The trip has already started');
+                }
+              return Column(
+                children: [
+                  Text('Start in:   ', style: TextStyle(fontSize: 20)),
+                  SlideCountdownSeparated(
+                    duration: duration,
+                    separatorType: SeparatorType.symbol,
+                    slideDirection: SlideDirection.up,
+                    height: 60.0,
+                    width: 60.0,
+                    textStyle: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                    decoration: BoxDecoration(
+                        color: ColorsTravelMate.secundary,
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                  ),
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -336,7 +357,63 @@ class _IterinarytabState extends State<Iterinarytab> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Day ${dayCounter + 1}'),
+                //date picker
+                DropdownButtonHideUnderline(
+                  child: DropdownButtonFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Day",
+                      prefixIcon: Icon(Icons.calendar_today),
+                    ),
+                    value: dayCounter,
+                    items: [
+                      DropdownMenuItem(
+                        child: const Text("Day 1"),
+                        value: 0,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 2"),
+                        value: 1,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 3"),
+                        value: 2,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 4"),
+                        value: 3,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 5"),
+                        value: 4,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 6"),
+                        value: 5,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 7"),
+                        value: 6,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 8"),
+                        value: 7,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 9"),
+                        value: 8,
+                      ),
+                      DropdownMenuItem(
+                        child: const Text("Day 10"),
+                        value: 9,
+                      ),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        dayCounter = value as int;
+                      });
+                    },
+                  ),
+                ),
                 GooglePlaceAutoCompleteTextField(
                   textEditingController: destinationController,
                   googleAPIKey: mapApi,
@@ -412,17 +489,20 @@ class _IterinarytabState extends State<Iterinarytab> {
     return Scaffold(
       body: Column(
         children: [
+          Center(
+            child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () => _addItinerary(context),
+            ),
+          ],
+        ),
+          ),
           Expanded(
               child: ItineraryTimeline(
                   dayCounter: dayCounter, userItinerary: userItinerary)),
-          Padding(
-            padding: const EdgeInsets.only(left: 300.0),
-            child: FloatingActionButton(
-              onPressed: () => _addItinerary(context),
-              backgroundColor: ColorsTravelMate.secundary,
-              child: const Icon(Icons.add),
-            ),
-          ),
         ],
       ),
     );
