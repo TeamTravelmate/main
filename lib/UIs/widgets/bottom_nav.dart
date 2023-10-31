@@ -23,7 +23,7 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   List pages = [
     const home(),
-    const SearchPlace(),
+    const SearchList(),
     trip(),
     HomePage(),
     const FriendsList(),
