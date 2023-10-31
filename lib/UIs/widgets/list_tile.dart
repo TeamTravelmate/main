@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:main/Data/controller/chat_controller.dart';
 import 'package:main/Domain/models/user.dart';
 import 'package:main/UIs/widgets/button_widget.dart';
+import 'package:get/get.dart';
+
 
 Widget buildListTile(BuildContext context, User friend) {
   return ListTile(
@@ -79,15 +82,47 @@ Widget buildChatTile(BuildContext context, User friend) {
 }
 
 chatPageRoute(User friend) {
+  ChatController chatController = Get.put(ChatController());
   return MaterialPageRoute(
     builder: (context) {
       return Scaffold(
         appBar: AppBar(
           title: Text(friend.name),
         ),
-        body: const Center(
-          child: Text('Chat messages'),
-        ),
+        body: Column(
+        children: [
+          Expanded(
+            child: Obx(() => ListView.builder(
+                  itemCount: chatController.messages.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(chatController.messages[index] as String),
+                    );
+                  },
+                )),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: chatController.messageController,
+                    decoration: InputDecoration(labelText: 'Enter your message'),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.send),
+                  onPressed: () {
+                    chatController.sendMessage(
+                        widget.friend.id, chatController.messageController.text, 'you');
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
       );
     },
   );

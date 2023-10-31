@@ -148,7 +148,7 @@ class _joinedTripViewState extends ConsumerState<joinedTripView> {
                     children: [
                       Overview(),
                       Iterinarytab(),
-                      Budget(),
+                      BudgetPage(),
                       Explore(),
                       People()
                     ],
