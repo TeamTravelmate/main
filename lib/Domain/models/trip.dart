@@ -31,7 +31,7 @@ class Trip {
   factory Trip.fromJson(Map<String, dynamic> json) {
     return Trip(
       tripId: json['id'],
-      destination: json['starting_place'],
+      destination: json['destination'],
       startDate: parseDate(json['starting_date']),
       numberOfDays: json['no_of_days'],
     );
