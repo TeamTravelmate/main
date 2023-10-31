@@ -59,7 +59,7 @@ class FollowersController extends GetxController {
       // Remove the unfollowed user from the following list and update the state
       followers.removeWhere((user) => user.id == id);
       update();
-      
+
     } else {
       // If the server did not return a 200 OK response, throw an exception.
       throw Exception('Failed to remove user from following');
@@ -85,13 +85,10 @@ class _FollowersState extends State<FollowersList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const SideDrawer(),
       appBar: AppBar(
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {},
-        ),
         title: const TextCustom(
           text: 'Followers',
           fontWeight: FontWeight.bold,
