@@ -103,7 +103,7 @@ class _joinedTripViewState extends ConsumerState<joinedTripView> {
                             switch (tripProvider) {
                           AsyncData(:final value) => tripCard(
                               tripLocationTitle:
-                                  "Trip to ${value.destination!=null?value.destination.split(',')[0]:"Undefined"}",
+                                  "Trip to ${value.destination != null ? value.destination.split(',')[0] : "Undefined"}",
                               tripDuration:
                                   "${value.startDate} - ${value.numberOfDays.toString()} days",
                               tripmates: value.adultCount != null
@@ -187,11 +187,13 @@ class _OverviewState extends State<Overview> {
               final trip = ref.watch(tripPlanningNotifierProvider);
 
               final duration = trip.value!.startDate != null
-                ? DateFormat('EEE, M/d/y').parse(trip.value!.startDate!).difference(DateTime.now())
-                : Duration(days: 0);
-                if (duration.isNegative) {
-                  return Text('The trip has already started');
-                }
+                  ? DateFormat('EEE, M/d/y')
+                      .parse(trip.value!.startDate!)
+                      .difference(DateTime.now())
+                  : Duration(days: 0);
+              if (duration.isNegative) {
+                return Text('The trip has already started');
+              }
               return Column(
                 children: [
                   Text('Start in:   ', style: TextStyle(fontSize: 20)),
@@ -334,7 +336,7 @@ class _IterinarytabState extends State<Iterinarytab> {
       context: context,
       builder: (context) {
         final formKey = GlobalKey<FormState>();
-        int dayCounter = 0;
+        int dayCounter = 1;
         String destination = '';
         String activity = '';
         TextEditingController destinationController = TextEditingController();
@@ -358,61 +360,33 @@ class _IterinarytabState extends State<Iterinarytab> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //date picker
-                DropdownButtonHideUnderline(
-                  child: DropdownButtonFormField(
-                    decoration: const InputDecoration(
-                      hintText: "Day",
-                      prefixIcon: Icon(Icons.calendar_today),
-                    ),
-                    value: dayCounter,
-                    items: [
-                      DropdownMenuItem(
-                        child: const Text("Day 1"),
-                        value: 0,
+                Consumer(
+                  builder: (context, ref, child) {
+                  final trip = ref.read(tripPlanningNotifierProvider);
+                    final duration = trip.value!.numberOfDays;
+                    return DropdownButtonHideUnderline(
+                      child: DropdownButtonFormField(
+                        decoration: const InputDecoration(
+                          hintText: "Day",
+                          prefixIcon: Icon(Icons.calendar_today),
+                        ),
+                        value: dayCounter,
+                        items: [
+                          //use a list builder to diplay the days
+                          for (int i = 1; i <= (duration! + 1); i++)
+                            DropdownMenuItem(
+                              child: Text('Day $i'),
+                              value: i,
+                            ),
+                        ],
+                        onChanged: (value) {
+                          setState(() {
+                            dayCounter = value as int;
+                          });
+                        },
                       ),
-                      DropdownMenuItem(
-                        child: const Text("Day 2"),
-                        value: 1,
-                      ),
-                      DropdownMenuItem(
-                        child: const Text("Day 3"),
-                        value: 2,
-                      ),
-                      DropdownMenuItem(
-                        child: const Text("Day 4"),
-                        value: 3,
-                      ),
-                      DropdownMenuItem(
-                        child: const Text("Day 5"),
-                        value: 4,
-                      ),
-                      DropdownMenuItem(
-                        child: const Text("Day 6"),
-                        value: 5,
-                      ),
-                      DropdownMenuItem(
-                        child: const Text("Day 7"),
-                        value: 6,
-                      ),
-                      DropdownMenuItem(
-                        child: const Text("Day 8"),
-                        value: 7,
-                      ),
-                      DropdownMenuItem(
-                        child: const Text("Day 9"),
-                        value: 8,
-                      ),
-                      DropdownMenuItem(
-                        child: const Text("Day 10"),
-                        value: 9,
-                      ),
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        dayCounter = value as int;
-                      });
-                    },
-                  ),
+                    );
+                  },
                 ),
                 GooglePlaceAutoCompleteTextField(
                   textEditingController: destinationController,
@@ -430,13 +404,6 @@ class _IterinarytabState extends State<Iterinarytab> {
                   },
                   isLatLngRequired: false,
                 ),
-                // TextField(
-                //   onChanged: (value) {
-                //     destination = value.toLowerCase().trim();
-                //   },
-                //   controller: destinationController,
-                //   decoration: const InputDecoration(labelText: 'Destination'),
-                // ),
                 TextField(
                   onChanged: (value) {
                     activity = value.toLowerCase().trim();
@@ -491,14 +458,14 @@ class _IterinarytabState extends State<Iterinarytab> {
         children: [
           Center(
             child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () => _addItinerary(context),
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () => _addItinerary(context),
+                ),
+              ],
             ),
-          ],
-        ),
           ),
           Expanded(
               child: ItineraryTimeline(
