@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:google_places_flutter/model/prediction.dart';
-import 'package:main/Data/env/apiKeys.dart';
 
 import 'package:flutter/material.dart';
+import 'package:main/Data/env/apikeys.dart';
 import 'package:main/Domain/models/trip.dart';
 import 'package:main/UIs/screens/Trip/tripView_page.dart';
 import '../../themes/colors.dart';
@@ -165,7 +165,6 @@ class _CustomizeState extends State<Customize> {
                 boxDecoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
-                  
                 ),
                 itemClick: (Prediction prediction) {
                   _destinationController.text = prediction.description!;

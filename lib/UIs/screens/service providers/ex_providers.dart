@@ -73,12 +73,12 @@ class Providerlist extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Profile(),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => Profile(),
+        //   ),
+        // );
       },
       child: ListTile(
         leading: CircleAvatar(

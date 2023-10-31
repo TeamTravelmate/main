@@ -82,12 +82,12 @@ class _ProfileState extends State<Profile> {
                       padding: EdgeInsets.only(top: 3.0),
                       child: Text('@sheromi99', style: TextStyle(fontSize: 15)),
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Column(
                           children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.only(top: 12.0),
                               child: Text('100',
                                   style: TextStyle(
@@ -96,12 +96,14 @@ class _ProfileState extends State<Profile> {
                             ),
                             InkWell(
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (_) {
                                   return FollowersList();
                                 }));
                               },
                               child: Padding(
-                                padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
+                                padding:
+                                    EdgeInsets.only(top: 5.0, bottom: 12.0),
                                 child: Text(
                                   'Followers',
                                   style: TextStyle(
@@ -123,12 +125,14 @@ class _ProfileState extends State<Profile> {
                             ),
                             InkWell(
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (_) {
                                   return FollowingList();
                                 }));
                               },
                               child: Padding(
-                                padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
+                                padding:
+                                    EdgeInsets.only(top: 5.0, bottom: 12.0),
                                 child: Text(
                                   'Followers',
                                   style: TextStyle(
@@ -136,7 +140,7 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                               ),
-                            )
+                            ),
                             Padding(
                               padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
                               child: Text('Following',

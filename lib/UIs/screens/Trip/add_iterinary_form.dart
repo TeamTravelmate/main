@@ -67,13 +67,9 @@ class _AddIterinaryFormState extends State<AddIterinaryForm> {
                       dropDownItemCount: 3,
 
                       dropDownList: const [
-                        DropDownValueModel(
-                            name: 'Day 1', value: "Day 1"),
-                        DropDownValueModel(
-                            name: 'Day 2',
-                            value: "Day 2"),
-                        DropDownValueModel(
-                            name: 'Day 3', value: "Day 3"),  
+                        DropDownValueModel(name: 'Day 1', value: "Day 1"),
+                        DropDownValueModel(name: 'Day 2', value: "Day 2"),
+                        DropDownValueModel(name: 'Day 3', value: "Day 3"),
                       ],
                       onChanged: (val) {},
                     ),
@@ -106,7 +102,12 @@ class _AddIterinaryFormState extends State<AddIterinaryForm> {
                     SizedBox(
                       height: 20,
                     ),
-                    buttonWidget(width: double.infinity, labelText: 'Add Iterinary', path: joinedTripView())
+                    buttonWidget(
+                        width: double.infinity,
+                        labelText: 'Add Iterinary',
+                        path: joinedTripView(
+                          tripId: 1,
+                        ))
                   ],
                 ),
               ))
