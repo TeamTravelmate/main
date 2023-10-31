@@ -9,7 +9,6 @@ import 'package:main/UIs/screens/leaderboard/leaderboard.dart';
 import 'package:main/UIs/screens/profile/myTrips.dart';
 import 'package:main/UIs/screens/vendor/home_page.dart';
 import 'package:main/UIs/themes/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SideDrawer extends ConsumerStatefulWidget {
   const SideDrawer({super.key});
@@ -31,8 +30,6 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
     // Navigate to the "Welcome" screen
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const Welcome()));
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const Welcome()));
   }
 
   @override
@@ -41,7 +38,6 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
           DrawerHeader(
             decoration: const BoxDecoration(
                 color: ColorsTravelMate.secundary,
@@ -66,10 +62,7 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const LeaderBoard()))
             },
-            onTap: () => {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const LeaderBoard()))
-            },
+            
           ),
           ListTile(
             leading: const Icon(Icons.account_circle_rounded),
@@ -83,10 +76,7 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const MyTripsList()))
             },
-            onTap: () => {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const MyTripsList()))
-            },
+           
           ),
           ListTile(
             leading: const Icon(Icons.shopping_bag),
@@ -95,10 +85,7 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => HomePage()))
             },
-            onTap: () => {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => HomePage()))
-            },
+            
           ),
           ListTile(
             leading: const Icon(Icons.emergency_share),

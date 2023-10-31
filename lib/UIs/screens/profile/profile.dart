@@ -81,13 +81,13 @@ class _ProfileState extends State<Profile> {
                       padding: EdgeInsets.only(top: 3.0),
                       child: Text('@sheromi99', style: TextStyle(fontSize: 15)),
                     ),
-                    Row(
+                   
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Column(
                           children: [
-                            const Padding(
+                            
                             const Padding(
                               padding: EdgeInsets.only(top: 12.0),
                               child: Text('100',
