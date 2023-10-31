@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/addCard/address.dart';
 import 'package:main/UIs/screens/addCard/paycard.dart';
+import 'package:main/UIs/screens/vendor/shipping_address.dart';
 import 'package:main/UIs/screens/vendor/success.dart';
 
 class Checkout extends StatelessWidget{
@@ -61,7 +62,7 @@ class Checkout extends StatelessWidget{
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Address()
+                              builder: (context) => Shipping_address()
                           )
                       );
                     },
@@ -117,82 +118,82 @@ class Checkout extends StatelessWidget{
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(
-                  left: 20.0,
-                  right: 20.0,
-                  bottom: 5.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Payment',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PayCard()
-                          )
-                      );
-                    },
-                    child: Text(
-                      'Change',
-                      style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 18.0
-                      ),
-                      textAlign: TextAlign.end,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              child: Row(
-                children: [
-                  Card(
-                    margin: EdgeInsets.only(
-                        left: 30.0,
-                        right: 20.0,
-                        bottom: 20.0
-                    ),
-                    elevation: 5,
-                    shadowColor: Colors.black,
-                    color: Colors.white,
-                    child: Container(
-                      padding: EdgeInsets.all(10.0),
-                      width: 70.0,
-                      height: 55.0,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/img/mc.png'),
-                          )
-                      ),
-
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                        right: 60.0
-                    ),
-                    child: Text(
-                      '**** **** **** 3197',
-                      style: TextStyle(
-                          fontSize: 12.0,
-                          color: Colors.black
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
+            // Container(
+            //   margin: EdgeInsets.only(
+            //       left: 20.0,
+            //       right: 20.0,
+            //       bottom: 5.0),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Text(
+            //         'Payment',
+            //         style: TextStyle(
+            //           fontSize: 18.0,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //         textAlign: TextAlign.left,
+            //       ),
+            //       GestureDetector(
+            //         onTap: (){
+            //           Navigator.push(
+            //               context,
+            //               MaterialPageRoute(
+            //                   builder: (context) => PayCard()
+            //               )
+            //           );
+            //         },
+            //         child: Text(
+            //           'Change',
+            //           style: TextStyle(
+            //               color: Colors.red,
+            //               fontSize: 18.0
+            //           ),
+            //           textAlign: TextAlign.end,
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // ),
+            // Container(
+            //   child: Row(
+            //     children: [
+            //       Card(
+            //         margin: EdgeInsets.only(
+            //             left: 30.0,
+            //             right: 20.0,
+            //             bottom: 20.0
+            //         ),
+            //         elevation: 5,
+            //         shadowColor: Colors.black,
+            //         color: Colors.white,
+            //         child: Container(
+            //           padding: EdgeInsets.all(10.0),
+            //           width: 70.0,
+            //           height: 55.0,
+            //           decoration: BoxDecoration(
+            //               image: DecorationImage(
+            //                 image: AssetImage('assets/img/mc.png'),
+            //               )
+            //           ),
+            //
+            //         ),
+            //       ),
+            //       Container(
+            //         margin: EdgeInsets.only(
+            //             right: 60.0
+            //         ),
+            //         child: Text(
+            //           '**** **** **** 3197',
+            //           style: TextStyle(
+            //               fontSize: 12.0,
+            //               color: Colors.black
+            //           ),
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // ),
             Container(
               margin: EdgeInsets.only(
                   left: 20.0,

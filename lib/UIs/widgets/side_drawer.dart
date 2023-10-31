@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:main/Domain/provider/user_auth_provider.dart';
+import 'package:main/UIs/screens/Ad%20Mate/ad_mate_res.dart';
 import 'package:main/UIs/screens/Welcome/welcome.dart';
 import 'package:main/UIs/screens/emergency_support/emergency_support_home.dart';
 import 'package:main/UIs/screens/leaderboard/leaderboard.dart';
@@ -12,7 +15,7 @@ class SideDrawer extends StatefulWidget {
   const SideDrawer({super.key});
 
   @override
-  State<SideDrawer> createState() => _SideDrawerState();
+  ConsumerState<SideDrawer> createState() => _SideDrawerState();
 }
 
 class _SideDrawerState extends State<SideDrawer> {
@@ -21,7 +24,7 @@ class _SideDrawerState extends State<SideDrawer> {
   @override
   void initState() {
     super.initState();
-    _loadLoggedInUserName;
+    tokenProvider = ref.read(userAuthNotifierProvider.notifier);
   }
 
   Future<void> _loadLoggedInUserName() async {
@@ -41,10 +44,6 @@ class _SideDrawerState extends State<SideDrawer> {
   }
 
   void _logout() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // Remove the token from shared preferences to simulate logging out
-    prefs.clear();
-
     // Navigate to the "Welcome" screen
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const Welcome()));

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:galleryimage/galleryimage.dart';
+import 'package:main/Data/env/env.dart';
 import 'package:main/Domain/models/trip.dart';
 import 'package:http/http.dart' as http;
 
@@ -35,7 +36,7 @@ class _MyTripsListState extends State<MyTripsList> {
 
   Future<List<Trip>> fetchTrips() async {
     final response = await http.get(
-      Uri.parse('http://192.168.198.1:3000/trip/1'),
+      Uri.parse('$backendUrl/trip/1'),
     );
 
     if (response.statusCode == 200) {
@@ -43,7 +44,7 @@ class _MyTripsListState extends State<MyTripsList> {
       var responseData = rawResponseData["trips"] as List<dynamic>;
       List<Trip> trips = responseData
           .map((data) => Trip(
-                userId: data['userId'],
+                tripId: data['userId'],
                 destination: data['destination'],
                 startDate: data['startDate'],
                 numberOfDays: data['numberOfDays'],
@@ -98,7 +99,7 @@ class _MyTripsListState extends State<MyTripsList> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                trip.destination,
+                                trip.destination!,
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -127,7 +128,7 @@ class _MyTripsListState extends State<MyTripsList> {
                             children: [
                               const Icon(Icons.location_pin),
                               Text(
-                                trip.destination,
+                                trip.destination!,
                                 style: const TextStyle(
                                   fontSize: 15,
                                 ),

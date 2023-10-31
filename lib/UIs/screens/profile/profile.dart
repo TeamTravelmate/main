@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:galleryimage/galleryimage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -13,13 +12,14 @@ import '../friendList/following_list.dart';
 
 class Profile extends StatefulWidget {
   final token;
-  const Profile({required this.token, super.key});
+  const Profile({super.key, this.token});
 
   @override
   State<Profile> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
+  late int userId;
   late String firstName;
   late String lastName;
 
@@ -29,9 +29,10 @@ class _ProfileState extends State<Profile> {
     super.initState();
 
     Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+    userId = jwtDecodedToken['userId'];
+    firstName = "Kaleel";
+    lastName = "Sheromi";
 
-    firstName = jwtDecodedToken['firstName'];
-    lastName = jwtDecodedToken['lastName'];
   }
 
   @override
@@ -53,13 +54,10 @@ class _ProfileState extends State<Profile> {
             leading: const BackButton(
               color: Colors.black,
             ),
-            // Remove the Container from the bottom property of AppBar
-            // Add the Container above the TabBar
           ),
           body: Column(
             children: [
               Container(
-                // Place the Container above the TabBar
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 width: double.infinity,
                 child: Column(
@@ -70,11 +68,11 @@ class _ProfileState extends State<Profile> {
                       backgroundImage: AssetImage('assets/profile_pic.jpeg'),
                       radius: 50,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 8.0),
                       child: Text(
-                        '$firstName $lastName',
-                        style: const TextStyle(
+                        'Susan Perera',
+                        style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -116,7 +114,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         Column(
                           children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.only(top: 12.0),
                               child: Text('90',
                                   style: TextStyle(
@@ -154,8 +152,6 @@ class _ProfileState extends State<Profile> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         FilledButton(
-                          child: const Text('Edit Profile',
-                              style: TextStyle(fontSize: 15.0)),
                           onPressed: () {
                             Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (_) {
@@ -169,10 +165,10 @@ class _ProfileState extends State<Profile> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
+                          child: const Text('Edit Profile',
+                              style: TextStyle(fontSize: 15.0)),
                         ),
                         FilledButton(
-                          child: const Text('Upgrade Profile',
-                              style: TextStyle(fontSize: 15.0)),
                           onPressed: () {
                             Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (_) {
@@ -186,6 +182,8 @@ class _ProfileState extends State<Profile> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
+                          child: const Text('Upgrade Profile',
+                              style: TextStyle(fontSize: 15.0)),
                         ),
                       ],
                     )
@@ -442,7 +440,7 @@ class _ProfileState extends State<Profile> {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Trip to Lipton's seat",
                           style: TextStyle(
                             fontSize: 20,
@@ -535,7 +533,7 @@ class _ProfileState extends State<Profile> {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Trip to Nanuoya",
                           style: TextStyle(
                             fontSize: 20,
@@ -612,10 +610,10 @@ class _ProfileState extends State<Profile> {
             onPressed: () {
               // Your button's onPressed function here...
             },
-            child: const Icon(Icons.next_plan_outlined, size: 30),
             backgroundColor: const Color(0xFF0C1C33),
             foregroundColor:
-                Colors.white, // Replace this with your desired icon
+                Colors.white,
+            child: const Icon(Icons.next_plan_outlined, size: 30), // Replace this with your desired icon
           ),
         ),
       ),
@@ -894,11 +892,11 @@ class _ProfileState extends State<Profile> {
   Widget Tab1(BuildContext context) {
     return Stack(
       children: [
-        SingleChildScrollView(
+        const SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const feedCard(
+              feedCard(
                 profile: 'assets/profile.png',
                 title: 'Nimesh Jayasinha',
                 subtitle: 'Colombo, Sri Lanka',
@@ -907,10 +905,10 @@ class _ProfileState extends State<Profile> {
                 likes: '100',
                 comments: '12',
               ),
-              const SizedBox(
+              SizedBox(
                 height: 10,
               ),
-              const feedCard(
+              feedCard(
                 profile: 'assets/profile.png',
                 title: 'Nimesh Jayasinha',
                 subtitle: 'Colombo, Sri Lanka',
@@ -919,7 +917,7 @@ class _ProfileState extends State<Profile> {
                 likes: '100',
                 comments: '12',
               ),
-              const SizedBox(
+              SizedBox(
                 height: 10,
               ),
             ],
@@ -928,16 +926,16 @@ class _ProfileState extends State<Profile> {
         Align(
           alignment: Alignment.bottomRight,
           child: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: FloatingActionButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (_) {
                   return NewPost();
                 }));
               },
-              child: Icon(Icons.post_add, size: 30),
-              backgroundColor: Color(0xFF0C1C33),
+              backgroundColor: const Color(0xFF0C1C33),
               foregroundColor: Colors.white,
+              child: const Icon(Icons.post_add, size: 30),
             ),
           ),
         ),
