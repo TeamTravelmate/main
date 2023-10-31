@@ -38,6 +38,33 @@ class FollowersController extends GetxController {
       throw Exception('Failed to load data');
     }
   }
+
+  void follow(int id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    // response for unfollow
+    var followResponse = await http.delete(
+      Uri.parse('$backendUrl/follower/follow/$id'),
+      headers: {
+        "Authorization": "Bearer $token",
+      },
+    );
+
+    if (followResponse.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      var jsonResponse = jsonDecode(followResponse.body);
+      print('JSON Response: $jsonResponse');
+
+      // Remove the unfollowed user from the following list and update the state
+      followers.removeWhere((user) => user.id == id);
+      update();
+      
+    } else {
+      // If the server did not return a 200 OK response, throw an exception.
+      throw Exception('Failed to remove user from following');
+    }
+  }
 }
 class FollowersList extends StatefulWidget {
   const FollowersList({super.key});
@@ -90,13 +117,13 @@ class _FollowersState extends State<FollowersList> {
                     buttonWidget(
                       labelText: 'follow',
                       onPressed: () {
-                        // controller
-                        //     .unfollow(controller.following[index].id ?? 0);
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => const FollowingList()),
-                        // );
+                        controller
+                            .follow(controller.followers[index].id ?? 0);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const FollowersList()),
+                        );
                       },
                       width: 95,
                       height: 30,

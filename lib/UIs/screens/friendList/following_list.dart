@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:main/UIs/themes/colors.dart';
 import 'package:main/UIs/widgets/side_drawer.dart';
 import 'package:main/Domain/models/friends.dart';
 import 'package:main/UIs/widgets/text_custom.dart';
@@ -9,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../Data/env/env.dart';
 import '../../widgets/button_widget.dart';
-import '../../widgets/list_tile.dart';
 
 class FollowingController extends GetxController {
   var following = <User>[].obs;
@@ -85,13 +83,10 @@ class _FollowingListState extends State<FollowingList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const SideDrawer(),
       appBar: AppBar(
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {},
-        ),
         title: const TextCustom(
           text: 'Following',
           fontWeight: FontWeight.bold,
