@@ -11,20 +11,36 @@ import 'package:main/UIs/screens/vendor/home_page.dart';
 import 'package:main/UIs/themes/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SideDrawer extends ConsumerStatefulWidget {
+class SideDrawer extends StatefulWidget {
   const SideDrawer({super.key});
 
   @override
   ConsumerState<SideDrawer> createState() => _SideDrawerState();
 }
 
-class _SideDrawerState extends ConsumerState<SideDrawer> {
-  late var tokenProvider;
+class _SideDrawerState extends State<SideDrawer> {
+  late String _loggedUserFullName = "Guest User";
 
   @override
   void initState() {
     super.initState();
     tokenProvider = ref.read(userAuthNotifierProvider.notifier);
+  }
+
+  Future<void> _loadLoggedInUserName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var jwtToken = prefs.getString('token');
+    if (jwtToken != null) {
+      print("JWT Token: $jwtToken"); // Debugging line
+      Map<String, dynamic> decodedToken = JwtDecoder.decode(jwtToken);
+      print("Decoded Token: $decodedToken"); // Debugging line
+      setState(() {
+        _loggedUserFullName =
+            decodedToken['firstName'] + " " + decodedToken['lastName'];
+      });
+    } else {
+      print("No JWT Token found."); // Debugging line
+    }
   }
 
   void _logout() async {
@@ -46,10 +62,7 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
                     fit: BoxFit.fill,
                     image: AssetImage('assets/img/cover2.jpg'))),
             child: Text(
-              switch (tokenProvider.state) {
-                AsyncData(:final value) => JwtDecoder.decode(value)['firstName'] + ' ' + JwtDecoder.decode(value)['lastName'],
-                _ => '',
-              },
+              _loggedUserFullName,
               style: const TextStyle(
                   color: ColorsTravelMate.primary,
                   fontSize: 25,
@@ -93,18 +106,10 @@ class _SideDrawerState extends ConsumerState<SideDrawer> {
                   builder: (context) => const EmergencySupportHome()))
             },
           ),
-           ListTile(
-            leading: const Icon(Icons.ads_click),
-            title: const Text('Ad Mate'),
-            onTap: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AdMate2()))},
-          ),
           ListTile(
               leading: const Icon(Icons.exit_to_app),
               title: const Text('Logout'),
-              onTap: (){
-                final logoutFuture = ref.read(userAuthNotifierProvider.notifier).logout();
-                logoutFuture.then((value) => _logout());
-              }),
+              onTap: _logout),
         ],
       ),
     );

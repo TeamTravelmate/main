@@ -16,7 +16,7 @@ class home extends StatelessWidget {
   Widget build(BuildContext context) {
     const shape = StadiumBorder();
     return Scaffold(
-      drawer: const SideDrawer(),
+      drawer: SideDrawer(),
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(

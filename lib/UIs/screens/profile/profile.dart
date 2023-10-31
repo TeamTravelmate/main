@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:galleryimage/galleryimage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -95,12 +94,14 @@ class _ProfileState extends State<Profile> {
                             ),
                             InkWell(
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                                  return const FollowersList();
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (_) {
+                                  return FollowersList();
                                 }));
                               },
-                              child: const Padding(
-                                padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.only(top: 5.0, bottom: 12.0),
                                 child: Text(
                                   'Followers',
                                   style: TextStyle(
@@ -122,13 +123,20 @@ class _ProfileState extends State<Profile> {
                             ),
                             InkWell(
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                                  return const FollowingList();
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (_) {
+                                  return FollowingList();
                                 }));
                               },
-                              child: const Padding(
-                                padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
-                                
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.only(top: 5.0, bottom: 12.0),
+                                child: Text(
+                                  'Followers',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
                               ),
                             ),
                             Padding(

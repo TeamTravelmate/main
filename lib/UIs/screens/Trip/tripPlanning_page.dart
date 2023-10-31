@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_places_flutter/model/prediction.dart';
-import 'package:main/Data/env/apiKeys.dart';
 
 import 'package:flutter/material.dart';
-import 'package:main/Domain/provider/trip_provider.dart';
+import 'package:main/Data/env/apikeys.dart';
+import 'package:main/Domain/models/trip.dart';
 import 'package:main/UIs/screens/Trip/tripView_page.dart';
 import '../../themes/colors.dart';
 import 'publicTrip/publicTripsAll_page.dart';
@@ -155,23 +155,93 @@ class _CustomizeState extends State<Customize> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(
-      builder: (context, ref, child) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  GooglePlaceAutoCompleteTextField(
-                    textEditingController: _destinationController,
-                    googleAPIKey: mapApi,
-                    countries: ["LK"],
-                    // isCrossBtnShown: false,
-                    inputDecoration: InputDecoration(
-                      hintText: "Where to go?",
-                      prefixIcon: const Icon(Icons.location_on),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              // TextFormField(
+              //   decoration: const InputDecoration(
+              //     labelText: 'Where to go?',
+              //     hintText: 'Eg. Galle, Trincomalee',
+              //     prefixIcon: Icon(Icons.location_on),
+              //   ),
+              //   controller: _destinationController,
+              //   validator: (value) {
+              //     if (value!.isEmpty) {
+              //       return 'Please enter a destination';
+              //     }
+              //     return null;
+              //   },
+              // ),
+              GooglePlaceAutoCompleteTextField(
+                textEditingController: _destinationController,
+                googleAPIKey: mapApi,
+                countries: ["LK"],
+                // isCrossBtnShown: false,
+                inputDecoration: InputDecoration(
+                  hintText: "Where to go?",
+                  prefixIcon: const Icon(Icons.location_on),
+                ),
+                boxDecoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                itemClick: (Prediction prediction) {
+                  _destinationController.text = prediction.description!;
+                },
+                isLatLngRequired: false,
+              ),
+
+              const SizedBox(height: 20),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Start Date',
+                  hintText: 'Select a start date',
+                  prefixIcon: Icon(Icons.calendar_month),
+                ),
+                controller: _startDateController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a start date';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'No. of Days',
+                  hintText: 'Enter the no. of days',
+                  prefixIcon: Icon(Icons.people_alt),
+                ),
+                controller: _numberOfDaysController,
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter the number of days';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 80),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: TextButton(
+                  onPressed: () {
+                    _sendTripRequest();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(ColorsTravelMate.primary),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
                     ),
                     boxDecoration: BoxDecoration(
                       color: Colors.white,

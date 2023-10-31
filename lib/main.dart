@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:main/Domain/provider/register_form_provider.dart';
-import 'package:main/UIs/screens/login/login_page.dart';
+import 'package:main/UIs/screens/Trip/publicTrip/activity_page.dart';
+import 'package:main/UIs/screens/Welcome/welcome.dart';
+import 'package:main/UIs/screens/emergency_support/emergency_support_home.dart';
+import 'package:main/UIs/screens/login/reg_alt.dart';
 import 'package:main/UIs/widgets/bottom_nav.dart';
 import 'package:provider/provider.dart' as provider;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,16 +24,16 @@ void main() async {
     statusBarBrightness: Brightness.dark,
   ));
 
-  runApp(ProviderScope(
-    child: MyApp(
+  runApp(
+    MyApp(
       token: prefs.getString('token'),
     ),
-  ));
+  );
 }
 
 class MyApp extends StatelessWidget {
   final String? token;
-  const MyApp({this.token, super.key});
+  MyApp({this.token, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,25 +48,17 @@ class MyApp extends StatelessWidget {
           fontFamily: GoogleFonts.poppins().fontFamily,
           primarySwatch: Colors.blueGrey,
           scaffoldBackgroundColor: Colors.white,
-        ).copyWith(useMaterial3: true),
-        // home: (JwtDecoder.isExpired(token!) == false)?BottomNav(token: token):const WelcomeScreenOne(),
-        // home: const WelcomeScreenOne(),
-        home: redirect(token),
+        ),
+        // home: (token != null && !JwtDecoder.isExpired(token!))
+        //     ? BottomNav(token: token)
+        //     : const WelcomeScreenOne(),
+        // home: const joinedTripView(tripId: 1),
+        
+        home: const ActivityPage(),
+
+        // home: const EmergencySupportHome(),
+        
       ),
     );
   }
-}
-
-Widget redirect(token) {
-  if (token != null) {
-    if (token.isEmpty) {
-      return const LoginScreen();
-    }
-    if (JwtDecoder.isExpired(token) == false) {
-      return BottomNav(token: token);
-    } else {
-      return LoginScreen();
-    }
-  }
-  return const WelcomeScreenOne();
 }
