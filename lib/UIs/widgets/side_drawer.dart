@@ -15,7 +15,7 @@ class SideDrawer extends StatefulWidget {
   const SideDrawer({super.key});
 
   @override
-  ConsumerState<SideDrawer> createState() => _SideDrawerState();
+  _SideDrawerState createState() => _SideDrawerState();
 }
 
 class _SideDrawerState extends State<SideDrawer> {
