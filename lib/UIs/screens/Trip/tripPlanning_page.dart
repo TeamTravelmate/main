@@ -1,41 +1,104 @@
-import 'dart:convert';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_places_flutter/model/prediction.dart';
+import 'package:intl/intl.dart';
 import 'package:main/Data/env/apiKeys.dart';
 
 import 'package:flutter/material.dart';
-import 'package:main/Domain/models/trip.dart';
+import 'package:main/Domain/provider/trip_provider.dart';
 import 'package:main/UIs/screens/Trip/tripView_page.dart';
 import '../../themes/colors.dart';
 import 'publicTrip/publicTripsAll_page.dart';
-import 'package:http/http.dart' as http;
 import 'package:google_places_flutter/google_places_flutter.dart';
 
 // ignore: must_be_immutable, camel_case_types
-class trip extends StatelessWidget {
-  List<Tab> tabs = [
-    const Tab(
-      child: Text('Public Trips'),
-    ),
-    const Tab(
-      child: Text('Customize Trips'),
-    )
-  ];
+class trip extends ConsumerWidget {
+//public trips
+  Widget publicTrips = Container(
+    child: const publicTripsAll(),
+  );
+//customize trips
+  Widget customizeTrips = Container(
+    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+    width: double.infinity,
+    child: const Customize(),
+  );
+  //planning trip
+  Widget tripPlanning = Container(
+    child: joinedTripView(),
+  );
 
-  List<Widget> tabContent = [
-    Container(
-      child: const publicTripsAll(),
-    ),
-    Container(
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
-      width: double.infinity,
-      child: const Customize(),
-    )
-  ];
+  List<Widget> tabContent = [];
+  List<Tab> tabs = [];
 
   trip({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tripRequest = ref.watch(tripPlanningNotifierProvider);
+    tabContent = [publicTrips, customizeTrips];
+    tabs = [
+      const Tab(
+        text: "Public Trips",
+      ),
+      const Tab(
+        text: "Customize Trips",
+      ),
+    ];
+    tripRequest.when(
+      data: (tripRequset) {
+        if (tripRequset.tripId != null) {
+          tabs = [
+            const Tab(
+              text: "Public Trips",
+            ),
+            const Tab(
+              text: "Trip Planning",
+            ),
+          ];
+          tabContent = [publicTrips, tripPlanning];
+        }
+      },
+      loading: () {
+        tabs = [
+          const Tab(
+            text: "Public Trips",
+          ),
+          const Tab(
+            text: "Customize Trips",
+          ),
+        ];
+        tabContent = [
+          publicTrips,
+          Center(
+            child: const CircularProgressIndicator(
+              color: Colors.black,
+            ),
+          )
+        ];
+      },
+      error: (e, s) {
+        tabs = [
+          const Tab(
+            text: "Public Trips",
+          ),
+          const Tab(
+            text: "Customize Trips",
+          ),
+        ];
+        print(e);
+        tabContent = [publicTrips, customizeTrips];
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Something went wrong',
+              ),
+              backgroundColor: Color(0xffD32F2F),
+            ),
+          );
+        });
+      },
+    );
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
@@ -84,155 +147,172 @@ class Customize extends StatefulWidget {
 
 class _CustomizeState extends State<Customize> {
   final _formKey = GlobalKey<FormState>();
+  final formatter = DateFormat.yMMMd();
   final TextEditingController _destinationController = TextEditingController();
   final TextEditingController _startDateController = TextEditingController();
   final TextEditingController _numberOfDaysController = TextEditingController();
-  int _userId = 1; // Extract this from your JWT token
+  double? lat;
+  double? lng;
+  DateTime? _selectedDate;
+  Future<void>? _pendingTripCreation;
 
-  Future<void> _sendTripRequest() async {
-    if (_formKey.currentState!.validate()) {
-      Trip trip = Trip(
-        userId: _userId,
-        destination: _destinationController.text,
-        startDate: _startDateController.text,
-        numberOfDays: int.parse(_numberOfDaysController.text),
-      );
-
-      final response = await http.post(
-        Uri.parse(
-            'http://192.168.198.1:3000/trip'), // Replace with your API endpoint
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(trip.toJson()),
-      );
-      print(response.statusCode);
-
-      if (response.statusCode == 201) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Trip Created Successfully!'),
-          ),
-        );
-
-        var responseData = json.decode(response.body);
-        var tripId = responseData['trip']['id'];
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => joinedTripView(tripId: tripId)),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Error'),
-          ),
-        );
-      }
-    }
+void _presentDatePicker() async {
+    final now = DateTime.now();
+    final lastDate = DateTime(now.year, now.month+4);
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: now,
+      lastDate: lastDate,
+    );
+    setState(() {
+      _selectedDate = pickedDate!.add(const Duration(days: 1));
+      _startDateController.text = formatter.format(_selectedDate!);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              // TextFormField(
-              //   decoration: const InputDecoration(
-              //     labelText: 'Where to go?',
-              //     hintText: 'Eg. Galle, Trincomalee',
-              //     prefixIcon: Icon(Icons.location_on),
-              //   ),
-              //   controller: _destinationController,
-              //   validator: (value) {
-              //     if (value!.isEmpty) {
-              //       return 'Please enter a destination';
-              //     }
-              //     return null;
-              //   },
-              // ),
-              GooglePlaceAutoCompleteTextField(
-                textEditingController: _destinationController,
-                googleAPIKey: mapApi,
-                countries: ["LK"],
-                // isCrossBtnShown: false,
-                inputDecoration: InputDecoration(
-                  hintText: "Where to go?",
-                  prefixIcon: const Icon(Icons.location_on),
-                ),
-                boxDecoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  
-                ),
-                itemClick: (Prediction prediction) {
-                  _destinationController.text = prediction.description!;
-                },
-                isLatLngRequired: false,
-              ),
-
-              const SizedBox(height: 20),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Start Date',
-                  hintText: 'Select a start date',
-                  prefixIcon: Icon(Icons.calendar_month),
-                ),
-                controller: _startDateController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter a start date';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'No. of Days',
-                  hintText: 'Enter the no. of days',
-                  prefixIcon: Icon(Icons.people_alt),
-                ),
-                controller: _numberOfDaysController,
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter the number of days';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 80),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: TextButton(
-                  onPressed: () {
-                    _sendTripRequest();
-                  },
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(ColorsTravelMate.primary),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
+    return Consumer(
+      builder: (context, ref, child) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  GooglePlaceAutoCompleteTextField(
+                    textEditingController: _destinationController,
+                    googleAPIKey: mapApi,
+                    countries: ["LK"],
+                    // isCrossBtnShown: false,
+                    inputDecoration: InputDecoration(
+                      hintText: "Where to go?",
+                      prefixIcon: const Icon(Icons.location_on),
                     ),
+                    boxDecoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    itemClick: (Prediction prediction) {
+                      _destinationController.text = prediction.description!;
+                    },
+                    isLatLngRequired: true,
+                    getPlaceDetailWithLatLng: (Prediction prediction) {
+                      lat = double.parse(prediction.lat!.toString());
+                      lng = double.parse(prediction.lng!.toString());
+                    },
                   ),
-                  child: const Text('Create my Trip'),
-                ),
+                  const SizedBox(height: 20),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     IconButton(
+                  //       onPressed: _presentDatePicker,
+                  //       icon: const Icon(Icons.calendar_month),
+                  //     ),
+                  //     Text(
+                  //       _selectedDate == null
+                  //           ? 'Selected Date'
+                  //           : formatter.format(_selectedDate!),
+                  //     ),
+                  //   ],
+                  // ),
+                  TextFormField(
+                    readOnly: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Start Date',
+                      hintText: 'Select a start date',
+                      prefixIcon: Icon(Icons.calendar_month),
+                    ),
+                    controller: _startDateController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a start date';
+                      }
+                      return null;
+                    },
+                    //make the presentdatepicker function and dont allow the user to type
+                    onTap: () {
+                      _presentDatePicker();
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'No. of Days',
+                      hintText: 'Enter the no. of days',
+                      prefixIcon: Icon(Icons.people_alt),
+                    ),
+                    controller: _numberOfDaysController,
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter the number of days';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 80),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: FutureBuilder(
+                        future: _pendingTripCreation,
+                        builder: (context, snapshot) {
+                          var isLoading = snapshot.connectionState ==
+                              ConnectionState.waiting;
+                          return TextButton(
+                            onPressed: () {
+                              if (isLoading == true) {
+                                return;
+                              }
+                              if (_formKey.currentState!.validate()) {
+                                final future = ref
+                                    .read(tripPlanningNotifierProvider.notifier)
+                                    .createTrip({
+                                  "startDate": _selectedDate.toString(),
+                                  "numberOfDays": _numberOfDaysController.text,
+                                  "destination": _destinationController.text,
+                                  "category": "Private"
+                                });
+                                setState(() {
+                                  _pendingTripCreation = future;
+                                });
+                              }
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  ColorsTravelMate.primary),
+                              foregroundColor:
+                                  MaterialStateProperty.all(Colors.white),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                            ),
+                            //child based on snapshot
+                            child: (isLoading == true)
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                : const Text('Create Trip'),
+                          );
+                        }),
+                  ),
+                  const SizedBox(height: 20),
+                  TextButton(
+                      onPressed: () => newMethod,
+                      child: const Text("+ Invite Friends")),
+                ],
               ),
-              const SizedBox(height: 20),
-              TextButton(
-                  onPressed: () => newMethod,
-                  child: const Text("+ Invite Friends")),
-            ],
-          ),
-        ),
-      ],
+            ),
+          ],
+        );
+      },
     );
   }
 

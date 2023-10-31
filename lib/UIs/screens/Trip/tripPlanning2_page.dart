@@ -425,7 +425,7 @@ class CustomFacilities extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 140),
-          buttonWidget(
+          const buttonWidget(
               width: double.infinity,
               labelText: 'Create my plan',
               path: joinedTripView()),

@@ -29,10 +29,10 @@ class feedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => feed()),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (_) => feed()),
+        // );
       },
       child: Container(
         margin: const EdgeInsets.only(right:20.0, left:20.0, top:20.0),
@@ -53,30 +53,27 @@ class feedCard extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
-                leading: FloatingActionButton.small(
-                    onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => profile(),
-                      //   ),
-                      // );
-                    },
-                    backgroundColor: ColorsTravelMate.secundary,
-                    child: Image.asset(profile)),
                 title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
                 subtitle: Row(
                   children: [
                     Icon(subtitleIcon, size: 20),
                     Text(subtitle,
-                        style:
-                        const TextStyle(fontSize: 11, fontWeight: FontWeight.bold))
+                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold))
                   ],
                 ),
                 trailing: const Icon(
                   Icons.more_horiz,
-                  color: ColorsTravelMate.primary,
+                  color: Colors.blue, // Use your desired color
                   size: 30,
+                ),
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(25), // Adjust the radius as needed
+                  child: Image.asset(
+                    profile, // Replace with your image asset path
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Text(post),
