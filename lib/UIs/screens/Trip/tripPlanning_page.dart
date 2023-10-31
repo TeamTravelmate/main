@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_places_flutter/model/prediction.dart';
-import 'package:main/Data/env/apiKeys.dart';
 
 import 'package:flutter/material.dart';
 import 'package:main/Domain/provider/trip_provider.dart';

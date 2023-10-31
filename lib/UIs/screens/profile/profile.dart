@@ -82,10 +82,12 @@ class _ProfileState extends State<Profile> {
                       child: Text('@sheromi99', style: TextStyle(fontSize: 15)),
                     ),
                     Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Column(
                           children: [
+                            const Padding(
                             const Padding(
                               padding: EdgeInsets.only(top: 12.0),
                               child: Text('100',

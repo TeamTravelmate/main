@@ -2,22 +2,61 @@ import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/emergency_support/contacts.dart';
 import 'package:main/UIs/screens/emergency_support/guidelines.dart';
 import 'package:main/UIs/screens/emergency_support/sos_confirmed.dart';
-import 'emergency_support_home.dart'; // Replace 'emergency_support_home.dart' with the correct path to your EmergencySupportHome class
+import 'package:main/UIs/screens/emergency_support/emergency_support_home.dart'; 
+import 'package:url_launcher/url_launcher.dart';
 
 class Options extends StatelessWidget {
   const Options({Key? key}) : super(key: key);
+
+  Future<void> _makePhoneCall(String number) async {
+    if (await canLaunch(number)) {
+      await launch(number);
+    } else {
+      throw 'Could not launch $number';
+    }
+  }
+
+  Future<void> _showSOSConfirmationDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm SOS Request'),
+          content: Text('Are you sure you want to send an SOS request?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Dismiss the dialog
+              },
+            ),
+            TextButton(
+              child: Text('Yes'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SOS_Confirmed(),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Text('Options'),
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           color: Colors.black,
           onPressed: () {
-            // Navigate back to the EmergencySupportHome UI when the back arrow is pressed
             Navigator.pop(context);
           },
         ),
@@ -27,7 +66,6 @@ class Options extends StatelessWidget {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-              // Greetings row
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -38,16 +76,12 @@ class Options extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  // Notification
                   Icon(Icons.notifications),
                 ],
               ),
               SizedBox(
                 height: 15,
               ),
-              // Search bar
-              //
-
               Container(
                 width: 350,
                 height: 40,
@@ -56,11 +90,10 @@ class Options extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.5), // Shadow color
-                      spreadRadius: 5, // The spread radius of the shadow
-                      blurRadius: 7, // The blur radius of the shadow
-                      offset: Offset(0,
-                          3), // The position of the shadow offset from the widget
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3),
                     ),
                   ],
                 ),
@@ -71,7 +104,7 @@ class Options extends StatelessWidget {
                     Icon(Icons.location_pin),
                     SizedBox(width: 15),
                     Text(
-                      'Thalapathpitiya Road,Galle',
+                      'Thalapathpitiya Road, Galle',
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -93,13 +126,10 @@ class Options extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
+              // Replace your InkWell widget with this one to show the confirmation dialog
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SOS_Confirmed()),
-                  );
+                  _showSOSConfirmationDialog(context);
                 },
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
@@ -132,217 +162,55 @@ class Options extends StatelessWidget {
               SizedBox(
                 height: 30,
               ),
+              // First Row of Support Cards
 
-              // InkWell(
-              //   onTap: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //           builder: (context) => const SOS_Confirmed()),
-              //     );
-              //   },
-              //   borderRadius: BorderRadius.circular(20),
-              //   child: Container(
-              //     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-              //     decoration: BoxDecoration(
-              //       color: Colors.grey,
-              //       borderRadius: BorderRadius.circular(40),
-              //     ),
-              //     child: Row(
-              //       mainAxisSize: MainAxisSize.min,
-              //       children: [
-              //         // Icon(Icons.phone),
-              //         Image.asset(
-              //           'assets/img/phone-call.png',
-              //           width: 50,
-              //           height: 50,
-              //         ),
-              //         SizedBox(width: 8),
-              //         Text(
-              //           '119 Police Emergency',
-              //           style: TextStyle(
-              //             color: Colors.white,
-              //             fontSize: 20,
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-
-              Container(
-                width: 350,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(25),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5), // Shadow color
-                      spreadRadius: 5, // The spread radius of the shadow
-                      blurRadius: 7, // The blur radius of the shadow
-                      offset: Offset(0,
-                          3), // The position of the shadow offset from the widget
+              Row(
+                children: [
+                  Expanded(
+                    child: SupportCard(
+                      icon: Icons.phone,
+                      label: '119 Police Emergency',
+                      onTap: () {
+                        _makePhoneCall('tel:119');
+                      },
                     ),
-                  ],
-                ),
-                padding: EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    SizedBox(width: 10),
-                    Icon(Icons.phone),
-                    SizedBox(width: 40),
-                    Text(
-                      '119 Police Emergency',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  ),
+                  Expanded(
+                    child: SupportCard(
+                      icon: Icons.phone,
+                      label: '1919 Suwa Seriya',
+                      onTap: () {
+                        _makePhoneCall('tel:1919');
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: 350,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(25),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5), // Shadow color
-                      spreadRadius: 5, // The spread radius of the shadow
-                      blurRadius: 7, // The blur radius of the shadow
-                      offset: Offset(0,
-                          3), // The position of the shadow offset from the widget
+              SizedBox(height: 10),
+              // Second Row of Support Cards
+              Row(
+                children: [
+                  Expanded(
+                    child: SupportCard(
+                      icon: Icons.phone,
+                      label: '118 Help Desk',
+                      onTap: () {
+                        _makePhoneCall('tel:118');
+                      },
                     ),
-                  ],
-                ),
-                padding: EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    SizedBox(width: 10),
-                    Icon(Icons.phone),
-                    SizedBox(width: 40),
-                    Text(
-                      '1919 Suwa Seriya',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  ),
+                  Expanded(
+                    child: SupportCard(
+                      icon: Icons.phone,
+                      label: '110 Fire and Rescue',
+                      onTap: () {
+                        _makePhoneCall('tel:110');
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: 350,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(25),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5), // Shadow color
-                      spreadRadius: 5, // The spread radius of the shadow
-                      blurRadius: 7, // The blur radius of the shadow
-                      offset: Offset(0,
-                          3), // The position of the shadow offset from the widget
-                    ),
-                  ],
-                ),
-                padding: EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    SizedBox(width: 10),
-                    Icon(Icons.phone),
-                    SizedBox(width: 40),
-                    Text(
-                      '118 National Help Desk',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              // Emergency support container
-
-              // Text(
-              //   'Pick the Support',
-              //   style: TextStyle(
-              //     fontWeight: FontWeight.bold,
-              //     fontSize: 20,
-              //   ),
-              // ),
-
-              // Row of cards 1 (Phone Call Icon and 1990 Suwa Seriya)
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Container(
-              //       width: 200, // Adjust the width as needed
-              //       height: 120, // Adjust the height as needed
-              //       child: SupportCard(
-              //         icon: Icons.phone,
-              //         label: '1990 Suwa Seriya',
-              //         onTap: () {
-              //           // Handle onTap action for this card
-              //         },
-              //       ),
-              //     ),
-              //     SizedBox(width: 8), // Adjust the spacing between cards
-              //   ],
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Container(
-              //       width: 120, // Adjust the width as needed
-              //       height: 120, // Adjust the height as needed
-              //       child: SupportCard(
-              //         icon: Icons.phone,
-              //         label: '1990 Suwa Seriya',
-              //         onTap: () {
-              //           // Handle onTap action for this card
-              //         },
-              //       ),
-              //     ),
-              //     SizedBox(width: 8), // Adjust the spacing between cards
-              //   ],
-              // ),
-
-              SizedBox(height: 16), // Adjust the spacing between rows
-
-              // // Row of cards 2 (Placeholder for additional cards if needed)
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     // Add your third card here
-              //     SupportCard(
-              //       icon: Icons.phone,
-              //       label: 'Third Card',
-              //       onTap: () {
-              //         // Handle onTap action for this card
-              //       },
-              //     ),
-              //     SizedBox(width: 8), // Adjust the spacing between cards
-              //     // Add your fourth card here
-              //     SupportCard(
-              //       icon: Icons.phone,
-              //       label: 'Fourth Card',
-              //       onTap: () {
-              //         // Handle onTap action for this card
-              //       },
-              //     ),
-              //   ],
-              // ),
+              SizedBox(height: 16),
               Expanded(
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(
@@ -370,8 +238,7 @@ class Options extends StatelessWidget {
                             Expanded(
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors
-                                      .white, // Change this to the desired background color
+                                  color: Colors.white,
                                   borderRadius: BorderRadius.circular(12),
                                   boxShadow: [
                                     BoxShadow(
@@ -389,22 +256,19 @@ class Options extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Contacts(),
+                                          builder: (context) =>  Contacts(),
                                         ),
                                       );
                                     },
                                     child: Padding(
                                       padding: EdgeInsets.all(16),
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Icon(
                                             Icons.record_voice_over_sharp,
                                             size: 36,
-                                            color: Colors
-                                                .black, // Customize the icon color
+                                            color: Colors.black,
                                           ),
                                           SizedBox(height: 8),
                                           Text(
@@ -412,8 +276,7 @@ class Options extends StatelessWidget {
                                             style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
-                                              color: Colors
-                                                  .black, // Customize the text color
+                                              color: Colors.black,
                                             ),
                                           ),
                                         ],
@@ -427,8 +290,7 @@ class Options extends StatelessWidget {
                             Expanded(
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors
-                                      .white, // Change this to the desired background color
+                                  color: Colors.white,
                                   borderRadius: BorderRadius.circular(12),
                                   boxShadow: [
                                     BoxShadow(
@@ -453,14 +315,12 @@ class Options extends StatelessWidget {
                                     child: Padding(
                                       padding: EdgeInsets.all(16),
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Icon(
                                             Icons.info_sharp,
                                             size: 36,
-                                            color: Colors
-                                                .black, // Customize the icon color
+                                            color: Colors.black,
                                           ),
                                           SizedBox(height: 8),
                                           Text(
@@ -468,8 +328,7 @@ class Options extends StatelessWidget {
                                             style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
-                                              color: Colors
-                                                  .black, // Customize the text color
+                                              color: Colors.black,
                                             ),
                                           ),
                                         ],
@@ -479,57 +338,15 @@ class Options extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 8),
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors
-                                      .white, // Change this to the desired background color
-                                  borderRadius: BorderRadius.circular(12),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 2,
-                                      blurRadius: 5,
-                                      offset: Offset(0, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(16),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.emergency_recording_sharp,
-                                        size: 36,
-                                        color: Colors
-                                            .black, // Customize the icon color
-                                      ),
-                                      SizedBox(height: 8),
-                                      Text(
-                                        'Record',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors
-                                              .black, // Customize the text color
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                         SizedBox(height: 20),
                         SizedBox(height: 10),
-                      ],
+                       ],
                     ),
                   ),
                 ),
-              ),
+              ), 
             ],
           ),
         ),
@@ -537,6 +354,7 @@ class Options extends StatelessWidget {
     );
   }
 }
+
 
 class SupportCard extends StatelessWidget {
   final IconData icon;
