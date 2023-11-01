@@ -7,7 +7,7 @@ part of 'trip_provider.dart';
 // **************************************************************************
 
 String _$tripPlanningNotifierHash() =>
-    r'0ef00600fd4398bea112dab3d66980ca9934ad20';
+    r'e216abb5110c08d80e262e3e1c344d10b0158211';
 
 /// See also [TripPlanningNotifier].
 @ProviderFor(TripPlanningNotifier)

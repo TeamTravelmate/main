@@ -111,9 +111,13 @@ class _ProfileState extends State<Profile> {
             leading: const BackButton(
               color: Colors.black,
             ),
+
+
             // Remove the Container from the bottom property of AppBar
             // Add the Container above the TabBar
           ),
+
+
           body: Column(
             children: [
               Container(
@@ -151,6 +155,13 @@ class _ProfileState extends State<Profile> {
                       child: Text('${username ?? "Unknown"}',
                           style: TextStyle(fontSize: 15)),
                     ),
+
+                    Padding(
+                      padding: EdgeInsets.only(top: 3.0),
+                      child: Text('Traveller',
+                          style: TextStyle(fontSize: 15)),
+                    ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:main/Data/env/apiKeys.dart';
 
 import 'package:flutter/material.dart';
+import 'package:main/Data/env/apiKeys.dart';
 import 'package:main/Domain/provider/trip_provider.dart';
 import 'package:main/UIs/screens/Trip/tripView_page.dart';
 import '../../themes/colors.dart';
@@ -24,7 +25,7 @@ class trip extends ConsumerWidget {
   );
   //planning trip
   Widget tripPlanning = Container(
-    child: joinedTripView(),
+    child: joinedTripView(tripId: 1,),
   );
 
   List<Widget> tabContent = [];
@@ -86,6 +87,10 @@ class trip extends ConsumerWidget {
           ),
         ];
         print(e);
+        //run a future to refresh the provider after 5 seconds
+        Future.delayed(const Duration(seconds: 5), () {
+          ref.refresh(tripPlanningNotifierProvider);
+        });
         tabContent = [publicTrips, customizeTrips];
         WidgetsBinding.instance.addPostFrameCallback((_) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -166,7 +171,7 @@ void _presentDatePicker() async {
       lastDate: lastDate,
     );
     setState(() {
-      _selectedDate = pickedDate!.add(const Duration(days: 1));
+      _selectedDate = pickedDate!.add(const Duration(hours: 6));
       _startDateController.text = formatter.format(_selectedDate!);
     });
   }
@@ -196,7 +201,7 @@ void _presentDatePicker() async {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     itemClick: (Prediction prediction) {
-                      _destinationController.text = prediction.description!;
+                      _destinationController.text = prediction.id!;
                     },
                     isLatLngRequired: true,
                     getPlaceDetailWithLatLng: (Prediction prediction) {
@@ -205,20 +210,6 @@ void _presentDatePicker() async {
                     },
                   ),
                   const SizedBox(height: 20),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     IconButton(
-                  //       onPressed: _presentDatePicker,
-                  //       icon: const Icon(Icons.calendar_month),
-                  //     ),
-                  //     Text(
-                  //       _selectedDate == null
-                  //           ? 'Selected Date'
-                  //           : formatter.format(_selectedDate!),
-                  //     ),
-                  //   ],
-                  // ),
                   TextFormField(
                     readOnly: true,
                     decoration: const InputDecoration(

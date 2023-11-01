@@ -94,18 +94,19 @@ class _homeState extends State<home> {
           width: 200,
         ),
         actions: [
-          FloatingActionButton.small(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Profile(),
-                ),
-              );
-            },
-
-            child: Image.asset('assets/profile.png', height: 30, width: 30),
-          ),
+           FloatingActionButton.small(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Profile(),
+                  ),
+                );
+              },
+              
+              child: const CircleAvatar(backgroundImage: AssetImage('assets/profile.png'),
+               radius: 30, backgroundColor: Colors.transparent)
+            ),
         ],
         backgroundColor: ColorsTravelMate.tertiary,
         foregroundColor: ColorsTravelMate.primary,

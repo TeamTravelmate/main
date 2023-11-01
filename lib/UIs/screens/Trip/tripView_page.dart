@@ -4,9 +4,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:main/Data/env/env.dart';
+import 'package:main/Domain/models/itinerary.dart';
 import 'package:main/Domain/models/trip.dart';
+import 'package:main/Domain/provider/budget_provider.dart';
+import 'package:main/Domain/provider/itinerary_provider.dart';
 import 'package:main/UIs/screens/Trip/privateTrips/budget_page.dart';
 import 'package:main/UIs/screens/Trip/tripPlanning2_page.dart';
+import 'package:main/UIs/widgets/add_starting_place_widget.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 import '../../../Data/env/apiKeys.dart';
 import '../../themes/colors.dart';
@@ -23,7 +27,7 @@ import 'package:google_places_flutter/model/prediction.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class joinedTripView extends ConsumerStatefulWidget {
-  const joinedTripView({super.key});
+  const joinedTripView({super.key, required int tripId});
 
   @override
   _joinedTripViewState createState() => _joinedTripViewState();
@@ -43,6 +47,8 @@ class _joinedTripViewState extends ConsumerState<joinedTripView> {
   @override
   Widget build(BuildContext context) {
     _trip = tripProvider.value;
+    ref.read(itineraryNotifierProvider);
+    ref.read(budgetNotifierProvider(_trip!.tripId));
     return DefaultTabController(
         length: 5,
         initialIndex: 0,
@@ -212,6 +218,32 @@ class _OverviewState extends State<Overview> {
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.all(Radius.circular(5.0))),
                   ),
+                  SizedBox(height: 20),
+                  //Starting location display
+                  Row(
+                    children: [
+                      const Text('Starting Location: ',
+                          style: TextStyle(fontSize: 20)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          //add a total amount of expenses
+                          Text(
+                            trip.value!.startPlace!.split(',')[0] ??
+                                "Add where you'll start",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          (trip.value!.startPlace == null)
+                              ? AddStartingPlace(context: context)
+                              : Container(),
+                        ],
+                      ),
+                      //add a button to change the starting location
+                    ],
+                  ),
                 ],
               );
             },
@@ -222,20 +254,10 @@ class _OverviewState extends State<Overview> {
   }
 }
 
-//itinerary tab
-class Itinerary {
-  final String destination;
-  final String activity;
-
-  Itinerary(this.destination, this.activity);
-}
-
 class ItineraryTimeline extends StatefulWidget {
-  final List<Itinerary> userItinerary;
-  final int dayCounter;
+  final Itinerary userItinerary;
 
-  const ItineraryTimeline(
-      {Key? key, required this.userItinerary, required this.dayCounter})
+  const ItineraryTimeline({Key? key, required this.userItinerary})
       : super(key: key);
 
   @override
@@ -262,91 +284,95 @@ class _ItineraryTimelineState extends State<ItineraryTimeline> {
     }
   }
 
+  final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    return Timeline(
-      children: widget.userItinerary.asMap().entries.map((entry) {
-        final index = entry.key;
-        final activity = entry.value;
-        final dayNumber = widget.dayCounter + index + 1;
-
-        return TimelineModel(
-          GestureDetector(
-            child: Card(
-              child: ListTile(
-                title: Text('Day $dayNumber'),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(activity.destination),
-                    Text(activity.activity),
-                  ],
+    //a timeline with dummy datas
+    //use a timeline builder to display the iterinary
+    return Consumer(
+      builder: (context, ref, child) {
+        final itineraryElements = widget.userItinerary.itineraryElements;
+        return Timeline.builder(
+          controller: _scrollController,
+          itemBuilder: (BuildContext context, int index) {
+            // final itineraryElements = widget.userItinerary.itineraryElements.;
+            //filter all the elements with the same day. day is the index + 1
+            final filteredElements = itineraryElements!.where((element) {
+              return element.day == index + 1;
+            }).toList();
+            return TimelineModel(
+                Card(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Day ${index + 1}',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      for (var element in filteredElements)
+                        ListTile(
+                          title: Text(element.location!),
+                          subtitle: Text(element.activity!),
+                        ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Delete Itinerary'),
-                  content: const Text(
-                      'Are you sure you want to delete this itinerary?'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          widget.userItinerary.removeAt(index);
-                        });
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Delete'),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-          iconBackground: const Color.fromARGB(255, 255, 196, 68),
-          icon: Icon(TimelineIcon(activity.activity), color: Colors.white),
+                position: index % 2 == 0
+                    ? TimelineItemPosition.right
+                    : TimelineItemPosition.left,
+                iconBackground: ColorsTravelMate.secundary,
+                icon: Icon(
+                  TimelineIcon(filteredElements.firstWhere((element) {
+                    return element.activity != null;
+                  }, orElse: () => ItineraryElements(activity: "")).activity!),
+                  color: ColorsTravelMate.tertiary,
+                ));
+          },
+          itemCount:
+              ref.read(tripPlanningNotifierProvider).value!.numberOfDays!,
+          physics: const BouncingScrollPhysics(),
+          position: TimelinePosition.Center,
+          shrinkWrap: true,
         );
-      }).toList(),
+      },
     );
   }
 }
 
-class Iterinarytab extends StatefulWidget {
+class Iterinarytab extends ConsumerStatefulWidget {
   const Iterinarytab({super.key});
 
   @override
-  State<Iterinarytab> createState() => _IterinarytabState();
+  ConsumerState<Iterinarytab> createState() => _IterinarytabState();
 }
 
-class _IterinarytabState extends State<Iterinarytab> {
-  final List<Itinerary> userItinerary = [];
-  int dayCounter = 0;
+class _IterinarytabState extends ConsumerState<Iterinarytab> {
+  var userItinerary;
+  @override
+  void initState() {
+    super.initState();
+    // userItinerary = ref.read(itineraryNotifierProvider);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   void _addItinerary(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) {
         final formKey = GlobalKey<FormState>();
-        int dayCounter = 1;
-        String destination = '';
-        String activity = '';
-        TextEditingController destinationController = TextEditingController();
+        TextEditingController locationController = TextEditingController();
         TextEditingController activityController = TextEditingController();
-
-        String errorMessage = '';
+        int dayNumber = 1;
 
         @override
         void dispose() {
-          destinationController.dispose();
+          locationController.dispose();
           activityController.dispose();
           super.dispose();
         }
@@ -362,7 +388,7 @@ class _IterinarytabState extends State<Iterinarytab> {
                 //date picker
                 Consumer(
                   builder: (context, ref, child) {
-                  final trip = ref.read(tripPlanningNotifierProvider);
+                    final trip = ref.read(tripPlanningNotifierProvider);
                     final duration = trip.value!.numberOfDays;
                     return DropdownButtonHideUnderline(
                       child: DropdownButtonFormField(
@@ -370,46 +396,38 @@ class _IterinarytabState extends State<Iterinarytab> {
                           hintText: "Day",
                           prefixIcon: Icon(Icons.calendar_today),
                         ),
-                        value: dayCounter,
+                        value: dayNumber,
                         items: [
                           //use a list builder to diplay the days
-                          for (int i = 1; i <= (duration! + 1); i++)
+                          for (int i = 1; i <= duration!; i++)
                             DropdownMenuItem(
                               child: Text('Day $i'),
                               value: i,
                             ),
                         ],
                         onChanged: (value) {
-                          setState(() {
-                            dayCounter = value as int;
-                          });
+                          dayNumber = value!;
                         },
                       ),
                     );
                   },
                 ),
                 GooglePlaceAutoCompleteTextField(
-                  textEditingController: destinationController,
+                  textEditingController: locationController,
                   googleAPIKey: mapApi,
                   countries: ["LK"],
                   inputDecoration: const InputDecoration(
                     hintText: "Destination",
                     prefixIcon: Icon(Icons.location_on),
                   ),
-                  boxDecoration: BoxDecoration(
-                    color: Colors.white,
-                  ),
                   itemClick: (Prediction prediction) {
-                    destinationController.text = prediction.description!;
+                    locationController.text = prediction.description!;
                   },
                   isLatLngRequired: false,
                 ),
                 TextField(
-                  onChanged: (value) {
-                    activity = value.toLowerCase().trim();
-                  },
                   controller: activityController,
-                  decoration: const InputDecoration(labelText: 'Activity'),
+                  decoration: const InputDecoration(labelText: 'What to do?'),
                   autocorrect: true,
                   enableSuggestions: true,
                 ),
@@ -418,11 +436,17 @@ class _IterinarytabState extends State<Iterinarytab> {
             actions: [
               ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    userItinerary
-                        .add(Itinerary(destinationController.text, activity));
-                    Navigator.pop(context);
-                  });
+                  userItinerary.itineraryElements!.add(ItineraryElements(
+                      day: dayNumber,
+                      location: locationController.text,
+                      activity: activityController.text));
+
+                  ref.read(itineraryNotifierProvider.notifier).createItinerary(
+                      ItineraryElements(
+                          day: dayNumber,
+                          location: locationController.text,
+                          activity: activityController.text));
+                  Navigator.pop(context);
                 },
                 style: const ButtonStyle(
                   backgroundColor:
@@ -453,11 +477,13 @@ class _IterinarytabState extends State<Iterinarytab> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Center(
-            child: Row(
+    final userItineraryProvider = ref.watch(itineraryNotifierProvider);
+    userItineraryProvider.whenData((value) =>
+        userItinerary = Itinerary(itineraryElements: value.itineraryElements));
+    return switch (userItineraryProvider) {
+      AsyncData(:final value) => Column(
+          children: [
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
@@ -466,53 +492,26 @@ class _IterinarytabState extends State<Iterinarytab> {
                 ),
               ],
             ),
+            Expanded(
+              child: ItineraryTimeline(userItinerary: value),
+            ),
+          ],
+        ),
+      AsyncError(:final error) => Center(
+          child: Text(
+            error.toString(),
+            style: const TextStyle(
+              color: ColorsTravelMate.primary,
+              fontSize: 20,
+            ),
           ),
-          Expanded(
-              child: ItineraryTimeline(
-                  dayCounter: dayCounter, userItinerary: userItinerary)),
-        ],
-      ),
-    );
+        ),
+      _ => const Center(
+          child: CircularProgressIndicator(),
+        ),
+    };
   }
 }
-
-// class Iterinary extends StatefulWidget {
-//   const Iterinary({Key? key}) : super(key: key);
-
-//   @override
-//   _IterinaryState createState() => _IterinaryState();
-// }
-
-// class _IterinaryState extends State<Iterinary> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-//       child: SingleChildScrollView(
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             const Text(
-//               'No iterinary yet!',
-//               style: TextStyle(
-//                   fontSize: 14,
-//                   fontWeight: FontWeight.w700,
-//                   color: ColorsTravelMate.primary),
-//             ),
-//             FloatingActionButton(
-//                 onPressed: () {
-//                   Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                           builder: (context) => AddIterinaryForm()));
-//                 },
-//                 child: const Icon(Icons.add)),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 //budget tab
 class Budget extends StatefulWidget {

@@ -7,9 +7,21 @@ class Products {
   final int? quantity;
   final String? name;
   final String? description;
+  final String? category;
   final int? vendor_id;
 
-  Products({required this.id, required this.vendor_essential_id, required this.colour, required this.size, required this.price, required this.quantity, required this.name, required this.description, required this.vendor_id});
+  Products({
+    required this.id,
+    required this.vendor_essential_id,
+    required this.colour,
+    required this.size,
+    required this.price,
+    required this.quantity,
+    required this.name,
+    required this.description,
+    required this.category,
+    required this.vendor_id
+  });
 
   factory Products.fromJson(Map<String, dynamic> json) {
     return Products(
@@ -21,6 +33,7 @@ class Products {
       quantity: json['quantity'],
       name: json['vendor_essential']['assential_name'],
       description: json['vendor_essential']['description'],
+      category: json['vendor_essential']['category'],
       vendor_id: json['vendor_essential']['user_id'],
     );
   }
