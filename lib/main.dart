@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -51,7 +52,6 @@ class MyApp extends StatelessWidget {
         // home: (JwtDecoder.isExpired(token!) == false)?BottomNav(token: token):const WelcomeScreenOne(),
         // home: const WelcomeScreenOne(),
         home: redirect(token),
-    
       ),
     );
   }

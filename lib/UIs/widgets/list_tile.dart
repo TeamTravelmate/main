@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:main/Data/controller/chat_controller.dart';
 import 'package:main/Domain/models/user.dart';
+import 'package:main/UIs/screens/Chat/chat_screen.dart';
 import 'package:main/UIs/widgets/button_widget.dart';
 import 'package:get/get.dart';
-
 
 Widget buildListTile(BuildContext context, User friend) {
   return ListTile(
@@ -15,7 +15,13 @@ Widget buildListTile(BuildContext context, User friend) {
       trailing: IconButton(
           icon: const Icon(Icons.chat),
           onPressed: () {
-            Navigator.of(context).push(chatPageRoute(friend));
+            // Navigator.of(context).push(chatPageRoute(friend));
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChatScreen(user: friend),
+              ),
+            );
           }));
 }
 
@@ -90,39 +96,37 @@ chatPageRoute(User friend) {
           title: Text(friend.name),
         ),
         body: Column(
-        children: [
-          Expanded(
-            child: Obx(() => ListView.builder(
-                  itemCount: chatController.messages.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(chatController.messages[index] as String),
-                    );
-                  },
-                )),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: chatController.messageController,
-                    decoration: InputDecoration(labelText: 'Enter your message'),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () {
-                    chatController.sendMessage(
-                        widget.friend.id, chatController.messageController.text, 'you');
-                  },
-                ),
-              ],
+          children: [
+            Expanded(
+              child: Obx(() => ListView.builder(
+                    itemCount: chatController.messages.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(chatController.messages[index] as String),
+                      );
+                    },
+                  )),
             ),
-          ),
-        ],
-      ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: chatController.messageController,
+                      decoration:
+                          InputDecoration(labelText: 'Enter your message'),
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.send),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       );
     },
   );
