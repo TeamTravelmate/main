@@ -20,8 +20,8 @@ class popularTrips extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 100,
-            width: 100,
+            height: 110,
+            width: 110,
             decoration: BoxDecoration(
               border: Border.all(width: 4, color: ColorsTravelMate.secundary),
               borderRadius: BorderRadius.circular(100),
@@ -37,7 +37,6 @@ class popularTrips extends StatelessWidget {
               },
               child: CircleAvatar(
                 radius: 50,
-                backgroundColor: Colors.transparent,
                 backgroundImage: AssetImage(
                   imagePath,
                 ),
