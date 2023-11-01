@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/zondicons.dart';
+import 'package:main/UIs/screens/Ad%20Mate/boost_a_post.dart';
 import 'package:main/UIs/widgets/ad_variant.dart';
 import 'package:main/UIs/widgets/appbar_title_with_icon.dart';
 import 'package:main/UIs/widgets/drop_down_button.dart';
@@ -78,16 +79,23 @@ class AdMate2 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  AdVariant(
-                    iconData: Icons.bolt_rounded,
-                    adText: 'Boost a post',
-                    textStyle: const TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Poppins',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      height: 1.17,
-                      letterSpacing: -0.32,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => AdListScreen(),
+            ));
+                    },
+                    child: AdVariant(
+                      iconData: Icons.bolt_rounded,
+                      adText: 'Boost a post',
+                      textStyle: const TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Poppins',
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        height: 1.17,
+                        letterSpacing: -0.32,
+                      ),
                     ),
                   ),
                   AdVariant(
