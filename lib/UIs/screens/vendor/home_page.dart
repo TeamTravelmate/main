@@ -14,6 +14,30 @@ import 'package:http/http.dart' as http;
 class ProductsController extends GetxController {
   var products = <Products>[].obs;
 
+  void getAllProducts() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    var response = await http.get(
+      Uri.parse('$backendUrl/vendor/products/'),
+      headers: {
+        "Authorization": "Bearer $token",
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      var jsonResponse = jsonDecode(response.body);
+      print('JSON Response: $jsonResponse');
+
+      List<dynamic> jsonList = jsonResponse['products'] ?? [];
+      products.value = Products.fromJsonList(jsonList);
+    } else {
+      // If the server did not return a 200 OK response, throw an exception.
+      throw Exception('Failed to load data');
+    }
+  }
+
   void getSurfProducts(String category) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
@@ -30,7 +54,7 @@ class ProductsController extends GetxController {
       var jsonResponse = jsonDecode(response.body);
       print('JSON Response: $jsonResponse');
 
-      List<dynamic> jsonList = jsonResponse['products'] ?? [];
+      List<dynamic> jsonList = jsonResponse['products_category'] ?? [];
       products.value = Products.fromJsonList(jsonList);
     } else {
       // If the server did not return a 200 OK response, throw an exception.
@@ -240,6 +264,8 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+
+
 class All extends StatefulWidget {
   const All({Key? key}) : super(key: key);
 
@@ -248,6 +274,14 @@ class All extends StatefulWidget {
 }
 
 class _AllState extends State<All> with AutomaticKeepAliveClientMixin<All> {
+  final ProductsController controller = Get.put(ProductsController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.getAllProducts();
+  }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -273,13 +307,14 @@ class _AllState extends State<All> with AutomaticKeepAliveClientMixin<All> {
                   ))
             ],
           ),
-          const SizedBox(height: 20),
           SurfProduct()
         ],
       ),
     );
   }
 }
+
+
 
 class Camping extends StatefulWidget {
   const Camping({Key? key}) : super(key: key);
@@ -303,7 +338,7 @@ class _CampingState extends State<Camping>
         children: [
           const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround, children: []),
-          const SizedBox(height: 20),
+          // const SizedBox(height: 20),
           Row(
             children: [
               Container(
@@ -319,13 +354,14 @@ class _CampingState extends State<Camping>
                   ))
             ],
           ),
-          const SizedBox(height: 20),
           SurfProduct()
         ],
       ),
     );
   }
 }
+
+
 
 class Hiking extends StatefulWidget {
   const Hiking({Key? key}) : super(key: key);
@@ -362,13 +398,14 @@ class _HikingState extends State<Hiking>
                   ))
             ],
           ),
-          const SizedBox(height: 20),
           SurfProduct()
         ],
       ),
     );
   }
 }
+
+
 
 class Surfing extends StatefulWidget {
   const Surfing({Key? key}) : super(key: key);
@@ -405,7 +442,6 @@ class _SurfingState extends State<Surfing>
                     ))
               ],
             ),
-            const SizedBox(height: 20),
             SurfProducts()
           ],
         ),
@@ -413,6 +449,8 @@ class _SurfingState extends State<Surfing>
     );
   }
 }
+
+
 
 // all surfing products
 class SurfProducts extends StatefulWidget {
@@ -428,7 +466,7 @@ class _SurfProductsState extends State<SurfProducts> {
   @override
   void initState() {
     super.initState();
-    controller.getSurfProducts('surfing');
+    controller.getSurfProducts('Surfing');
   }
 
   @override
@@ -521,6 +559,8 @@ class _SurfProductsState extends State<SurfProducts> {
   }
 }
 
+
+
 // product card
 class SurfProduct extends StatefulWidget {
   const SurfProduct({super.key});
@@ -530,89 +570,105 @@ class SurfProduct extends StatefulWidget {
 }
 
 class _SurfProductState extends State<SurfProduct> {
+  // final ProductsController controller = Get.put(ProductsController());
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   controller.getAllProducts();
+  // }
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
-    return Container(
-      child: Card(
-        elevation: 5.0,
-        shadowColor: Colors.black,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        child: Container(
-            width: size.width * 0.8,
-            height: 220.0,
-            padding: const EdgeInsets.all(5.0),
-            child: Column(
-              children: [
-                GestureDetector(
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+               Container(
+                child: Card(
+                  elevation: 5.0,
+                  shadowColor: Colors.black,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
                   child: Container(
-                    width: size.width * 0.7,
-                    height: 160.0,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      image: DecorationImage(
-                        image: AssetImage(
-                          'assets/img/surfboard.jpg',
+                    width: 320.0,
+                    height: 220.0,
+                    padding: const EdgeInsets.all(5.0),
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          child: Container(
+                            width: 300.0,
+                            height: 160.0,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              image: DecorationImage(
+                                image: AssetImage('assets/img/surfboard.jpg'),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Catalog(),
+                              ),
+                            );
+                          },
                         ),
-                        fit: BoxFit.fill,
-                      ),
+                        Container(
+                          margin: const EdgeInsets.only(left: 10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Text(
+                                  'surfing',
+                                  style: TextStyle(
+                                    color: Color(0xff2FACBB),
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ),
+                              const Rating(),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(left: 10.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(
+                                  right: 220.0,
+                                ),
+                                child: Text(
+                                  'Rs.5000',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 10.0,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Catalog()));
-                  },
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: const Text(
-                          'Surfing Board',
-                          style: TextStyle(
-                            color: Color(0xff2FACBB),
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ),
-                      const Rating(),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 10.0),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(
-                          right: 220.0,
-                        ),
-                        child: const Text(
-                          'Rs.6500',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 10.0,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            )),
+              )
+
+
+        ],
       ),
     );
   }
 }
+
 
 // rating
 class Rating extends StatelessWidget {
