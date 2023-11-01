@@ -11,7 +11,6 @@ import 'package:main/Domain/provider/itinerary_provider.dart';
 import 'package:main/UIs/screens/Trip/privateTrips/budget_page.dart';
 import 'package:main/UIs/screens/Trip/tripPlanning2_page.dart';
 import 'package:main/UIs/widgets/add_starting_place_widget.dart';
-import 'package:timelines/timelines.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 import '../../../Data/env/apiKeys.dart';
 import '../../themes/colors.dart';
@@ -20,8 +19,8 @@ import 'upload_pic.dart';
 import 'package:http/http.dart' as http;
 import 'invitematesForm.dart';
 import 'publicTrip/joinPublicTripForm.dart';
-// import 'package:timeline_list/timeline.dart';
-// import 'package:timeline_list/timeline_model.dart';
+import 'package:timeline_list/timeline.dart';
+import 'package:timeline_list/timeline_model.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:main/Domain/provider/trip_provider.dart';
 import 'package:google_places_flutter/model/prediction.dart';
@@ -208,8 +207,8 @@ class _OverviewState extends State<Overview> {
                     duration: duration,
                     separatorType: SeparatorType.symbol,
                     slideDirection: SlideDirection.up,
-                    height: 60.0,
-                    width: 60.0,
+                    // height: 60.0,
+                    // width: 60.0,
                     textStyle: TextStyle(
                         fontSize: 20.0,
                         color: Colors.white,
