@@ -1,13 +1,22 @@
-import 'package:main/Domain/models/user.dart';
 
 class Message {
-  final User sender;
-  final String content;
-  final DateTime timestamp;
+  String idFrom;
+  String idTo;
+  String timestamp;
+  String content;
+  int type;
+  String? userImage; // Add userImage property
+  String? username; // Add username property
+  bool isMe; // Add isMe property
 
   Message({
-    required this.sender,
-    required this.content,
+    required this.idFrom,
+    required this.idTo,
     required this.timestamp,
+    required this.content,
+    required this.type,
+    this.userImage,
+    this.username,
+    this.isMe = true,
   });
 }
