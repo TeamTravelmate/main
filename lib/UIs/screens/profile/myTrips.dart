@@ -6,6 +6,7 @@ import 'package:main/Data/env/env.dart';
 import 'package:main/Domain/models/trip.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod/riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class MyTripsList extends StatefulWidget {
@@ -37,8 +38,12 @@ class _MyTripsListState extends State<MyTripsList> {
     ];
 
 Future<List<Trip>> fetchTrips() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    
   final Map<String, String> headers = {
-    'Authorization': 'Bearer token', // Include your bearer token
+    'Authorization': 'Bearer $token',
+    'Content-Type': 'application/json', // Include your bearer token
   };
 
   final response = await http.get(
@@ -47,7 +52,9 @@ Future<List<Trip>> fetchTrips() async {
   );
 
   if (response.statusCode == 200) {
+    
     var rawResponseData = json.decode(response.body) as Map<String, dynamic>;
+    print(rawResponseData);
     var responseData = rawResponseData["trips"] as List<dynamic>;
     List<Trip> trips = responseData
         .map((data) => Trip(
