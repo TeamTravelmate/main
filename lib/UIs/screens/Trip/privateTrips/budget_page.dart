@@ -40,8 +40,11 @@ class _BudgetPageState extends ConsumerState<BudgetPage> {
     final budget = ref.read(budgetNotifierProvider(trip.value!.tripId));
     if(budget.value!.amount==0){
         ref.read(budgetNotifierProvider(trip.value!.tripId).notifier).createBudget(expense, trip.value!.tripId);
+        return;
     }
-    final updatedBudget = Budget(id: budget.value!.id, amount: budget.value!.amount+expense.amount, expenses: [...budget.value!.expenses, expense]);
+    final updatedBudget = budget.value!.copyWith(
+      expenses: [...budget.value!.expenses, expense],
+    );
     ref.read(budgetNotifierProvider(trip.value!.tripId).notifier).updateBudget(updatedBudget);
   }
 
