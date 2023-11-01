@@ -33,13 +33,13 @@ class tripCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     var mapBtn = Padding(
-      padding: const EdgeInsets.only(bottom: 40.0),
+      padding: const EdgeInsets.only(bottom: 40.0, right: 10.0),
       child: FloatingActionButton.small(
         heroTag: UniqueKey().toString(),
           onPressed: () {
             //just push the map page
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return MapToDoScreen(tripId: 1,);
+              return MapToDoScreen();
             }));
           },
           backgroundColor: ColorsTravelMate.tertiary,
@@ -87,68 +87,71 @@ class tripCard extends StatelessWidget {
           subtitle: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right: MediaQuery.of(context).size.width / 60),
-                        child: const Icon(
-                          Icons.location_on_rounded,
-                          color: ColorsTravelMate.primary,
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              right: MediaQuery.of(context).size.width / 60),
+                          child: const Icon(
+                            Icons.location_on_rounded,
+                            color: ColorsTravelMate.primary,
+                          ),
                         ),
-                      ),
-                      Text(
-                        location,
-                        style: const TextStyle(color: ColorsTravelMate.primary),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right: MediaQuery.of(context).size.width / 60),
-                        child: const Icon(
-                          Icons.calendar_month,
-                          color: ColorsTravelMate.primary,
+                        Text(
+                          location,
+                          style: const TextStyle(color: ColorsTravelMate.primary),
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                      Text(
-                        tripDuration,
-                        style: const TextStyle(color: ColorsTravelMate.primary),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right: MediaQuery.of(context).size.width / 60),
-                        child: const Icon(
-                          Icons.supervised_user_circle_sharp,
-                          color: ColorsTravelMate.primary,
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              right: MediaQuery.of(context).size.width / 60),
+                          child: const Icon(
+                            Icons.calendar_month,
+                            color: ColorsTravelMate.primary,
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right: MediaQuery.of(context).size.width / 60),
-                        child: Image.asset(
-                          'assets/profile.png',
-                          width: 20,
-                          height: 20,
+                        Text(
+                          tripDuration,
+                          style: const TextStyle(color: ColorsTravelMate.primary),
                         ),
-                      ),
-                      Text(
-                        tripmates,
-                        style: const TextStyle(color: ColorsTravelMate.primary),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              right: MediaQuery.of(context).size.width / 60),
+                          child: const Icon(
+                            Icons.supervised_user_circle_sharp,
+                            color: ColorsTravelMate.primary,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              right: MediaQuery.of(context).size.width / 60),
+                          child: Image.asset(
+                            'assets/profile.png',
+                            width: 20,
+                            height: 20,
+                          ),
+                        ),
+                        Text(
+                          tripmates,
+                          style: const TextStyle(color: ColorsTravelMate.primary),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               !isMap ? mapBtn : Container(),
             ],

@@ -11,6 +11,7 @@ class ActivityCard extends StatefulWidget {
     super.key,
     required this.title,
     // required this.icon,
+    required this.packageName,
     required this.imagepath,
     required this.locationTitle,
     required this.time,
@@ -20,6 +21,7 @@ class ActivityCard extends StatefulWidget {
 
   final String title;
   // final Icon icon;
+  final String packageName;
   final String imagepath;
   final String locationTitle;
   final String time;
@@ -114,6 +116,17 @@ class _ActivityCardState extends State<ActivityCard> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        Row(
+                                          children: [
+                                            const Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  0, 0, 5, 0),
+                                              child: Icon(
+                                                  Icons.access_time_rounded),
+                                            ),
+                                            Text(widget.time),
+                                          ],
+                                        ),
                                         Row(
                                           children: [
                                             const Padding(
@@ -228,7 +241,7 @@ class _ActivityCardState extends State<ActivityCard> {
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Icon(Icons.access_time_rounded),
                   ),
-                  Text('Duration: 2 - 3 Hours')
+                  Text('Duration: 2 - 3 Hourses')
                 ],
               ),
               Row(

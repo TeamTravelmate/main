@@ -1,53 +1,5 @@
 import 'package:flutter/material.dart';
 import '../themes/colors.dart';
-
-
-// class PlaceCard extends StatelessWidget {
-//   const PlaceCard({
-//     super.key,
-//     required this.imagePath,
-//     required this.title,
-//     required this.path,
-//   });
-
-//   final String imagePath;
-//   final String title;
-//   final Widget path;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       height: 220,
-//       width: 280,
-//       child: Card(
-//         child: GestureDetector(
-//           onTap: () {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(
-//                 builder: (context) => path,
-//               ),
-//             );
-//           },
-//           child: Column(
-//             children: [
-//               Image.asset(
-//                 imagePath,
-//                 fit: BoxFit.cover,
-//                 height: 150,
-//                 width: 240,
-//               ),
-//               ListTile(
-//                 title: Text(title),
-//                 trailing: const Icon(Icons.favorite, color: Colors.red, size: 30),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 // // ignore: camel_case_types
 class popularTrips extends StatelessWidget {
   const popularTrips({
@@ -68,8 +20,8 @@ class popularTrips extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 110,
-            width: 110,
+            height: 100,
+            width: 100,
             decoration: BoxDecoration(
               border: Border.all(width: 4, color: ColorsTravelMate.secundary),
               borderRadius: BorderRadius.circular(100),
@@ -85,6 +37,7 @@ class popularTrips extends StatelessWidget {
               },
               child: CircleAvatar(
                 radius: 50,
+                backgroundColor: Colors.transparent,
                 backgroundImage: AssetImage(
                   imagePath,
                 ),

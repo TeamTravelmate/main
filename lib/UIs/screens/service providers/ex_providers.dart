@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import '../../themes/colors.dart';
 import '../profile/profile.dart';
 
-class ExperienceProviders extends StatelessWidget {
+class ExperienceProviders extends StatefulWidget {
   const ExperienceProviders({Key? key}) : super(key: key);
+
+  @override
+  State<ExperienceProviders> createState() => _ExperienceProvidersState();
+}
+
+class _ExperienceProvidersState extends State<ExperienceProviders> {
 
   @override
   Widget build(BuildContext context) {
@@ -72,11 +78,12 @@ class Providerlist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      
       onTap: () {
         // Navigator.push(
         //   context,
         //   MaterialPageRoute(
-        //     builder: (context) => const Profile(token: null,),
+        //     builder: (context) => Profile(),
         //   ),
         // );
       },

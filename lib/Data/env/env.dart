@@ -1,1 +1,1 @@
-String backendUrl = 'http://192.168.198.1:3000';
+String backendUrl = 'https://4vhksvv3-3002.asse.devtunnels.ms';
