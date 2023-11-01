@@ -5,14 +5,18 @@ import 'package:http/http.dart' as http;
 
 class PlaceServices {
   final String key = mapApi; //specify this in lib\Data\env\apiKeys.dart
-  late String searchedLocation; //like 333.33, 444.44
-  String
+  late String? searchedLocation; //like 333.33, 444.44
+  String?
       filterType; //restaurant, atm, etc. Check https://developers.google.com/maps/documentation/places/web-service/supported_types
 
-  PlaceServices({required this.searchedLocation, required this.filterType});
+  PlaceServices({this.searchedLocation, this.filterType});
+
 
   Future<List<dynamic>> getPlaces() async {
-    String urlEncodedLocation = Uri.encodeComponent(searchedLocation);
+    if(searchedLocation == null || filterType == null){
+      throw Exception('Searched location or filter type is null');
+    }
+    String urlEncodedLocation = Uri.encodeComponent(searchedLocation!);
     String url =
         "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$urlEncodedLocation&radius=1000&type=$filterType&key=$key";
     Uri uri = Uri.parse(url);
