@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/Trip/publicTrip/activity_page.dart';
 import '../../themes/colors.dart';
 import '../../widgets/button_widget.dart';
 import '../Marketplace/marketplace_page.dart';
@@ -327,7 +328,7 @@ class CustomFacilities extends StatelessWidget {
                 indicatorOffset: Offset.zero,
                 contentOffset: Offset.zero,
                 child: const Facility(
-                    widgetName: CustomizeActivities(),
+                    widgetName: ActivityPage(),
                     title: 'Activities',
                     icon: Icons.hiking),
               ),
@@ -428,7 +429,7 @@ class CustomFacilities extends StatelessWidget {
           const buttonWidget(
               width: double.infinity,
               labelText: 'Create my plan',
-              path: joinedTripView()),
+              path: joinedTripView(tripId: 1,)),
         ],
       ),
     );
