@@ -86,10 +86,6 @@ class trip extends ConsumerWidget {
           ),
         ];
         print(e);
-        //run a future to refresh the provider after 5 seconds
-        Future.delayed(const Duration(seconds: 5), () {
-          ref.refresh(tripPlanningNotifierProvider);
-        });
         tabContent = [publicTrips, customizeTrips];
         WidgetsBinding.instance.addPostFrameCallback((_) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -200,7 +196,7 @@ void _presentDatePicker() async {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     itemClick: (Prediction prediction) {
-                      _destinationController.text = prediction.id!;
+                      _destinationController.text = prediction.description!;
                     },
                     isLatLngRequired: true,
                     getPlaceDetailWithLatLng: (Prediction prediction) {
@@ -209,6 +205,20 @@ void _presentDatePicker() async {
                     },
                   ),
                   const SizedBox(height: 20),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     IconButton(
+                  //       onPressed: _presentDatePicker,
+                  //       icon: const Icon(Icons.calendar_month),
+                  //     ),
+                  //     Text(
+                  //       _selectedDate == null
+                  //           ? 'Selected Date'
+                  //           : formatter.format(_selectedDate!),
+                  //     ),
+                  //   ],
+                  // ),
                   TextFormField(
                     readOnly: true,
                     decoration: const InputDecoration(

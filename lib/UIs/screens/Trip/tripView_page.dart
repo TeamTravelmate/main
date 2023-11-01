@@ -10,7 +10,6 @@ import 'package:main/Domain/provider/budget_provider.dart';
 import 'package:main/Domain/provider/itinerary_provider.dart';
 import 'package:main/UIs/screens/Trip/privateTrips/budget_page.dart';
 import 'package:main/UIs/screens/Trip/tripPlanning2_page.dart';
-import 'package:main/UIs/widgets/add_starting_place_widget.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 import '../../../Data/env/apiKeys.dart';
 import '../../themes/colors.dart';
@@ -388,7 +387,7 @@ class _IterinarytabState extends ConsumerState<Iterinarytab> {
                 //date picker
                 Consumer(
                   builder: (context, ref, child) {
-                    final trip = ref.read(tripPlanningNotifierProvider);
+                  final trip = ref.read(tripPlanningNotifierProvider);
                     final duration = trip.value!.numberOfDays;
                     return DropdownButtonHideUnderline(
                       child: DropdownButtonFormField(
