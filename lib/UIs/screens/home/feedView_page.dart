@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:main/UIs/widgets/side_drawer.dart';
+import 'package:main/UIs/widgets/feed_widget.dart';
 import '../../themes/colors.dart';
-import '../../widgets/feed_widget.dart';
+
 
 // ignore: camel_case_types
 class feed extends StatelessWidget {

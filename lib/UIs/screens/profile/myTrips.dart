@@ -5,6 +5,9 @@ import 'package:galleryimage/galleryimage.dart';
 import 'package:main/Data/env/env.dart';
 import 'package:main/Domain/models/trip.dart';
 import 'package:http/http.dart' as http;
+import 'package:riverpod/riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class MyTripsList extends StatefulWidget {
   const MyTripsList({super.key});
@@ -34,27 +37,38 @@ class _MyTripsListState extends State<MyTripsList> {
 
     ];
 
-  Future<List<Trip>> fetchTrips() async {
-    final response = await http.get(
-      Uri.parse('$backendUrl/trip/1'),
-    );
+Future<List<Trip>> fetchTrips() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    
+  final Map<String, String> headers = {
+    'Authorization': 'Bearer $token',
+    'Content-Type': 'application/json', // Include your bearer token
+  };
 
-    if (response.statusCode == 200) {
-      var rawResponseData = json.decode(response.body) as Map<String, dynamic>;
-      var responseData = rawResponseData["trips"] as List<dynamic>;
-      List<Trip> trips = responseData
-          .map((data) => Trip(
-                userId: data['userId'],
-                destination: data['destination'],
-                startDate: data['startDate'],
-                numberOfDays: data['numberOfDays'],
-              ))
-          .toList();
-      return trips;
-    } else {
-      throw Exception('Failed to fetch trips');
-    }
+  final response = await http.get(
+    Uri.parse('$backendUrl/trip/myTrips'),
+    headers: headers, // Include the headers with the bearer token
+  );
+
+  if (response.statusCode == 200) {
+    
+    var rawResponseData = json.decode(response.body) as Map<String, dynamic>;
+    print(rawResponseData);
+    var responseData = rawResponseData["trips"] as List<dynamic>;
+    List<Trip> trips = responseData
+        .map((data) => Trip(
+              tripId: data['userId'],
+              destination: data['destination'],
+              startDate: data['startDate'],
+              numberOfDays: data['numberOfDays'],
+            ))
+        .toList();
+    return trips;
+  } else {
+    throw Exception('Failed to fetch trips');
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +113,7 @@ class _MyTripsListState extends State<MyTripsList> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                trip.destination,
+                                trip.destination!,
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -128,7 +142,7 @@ class _MyTripsListState extends State<MyTripsList> {
                             children: [
                               const Icon(Icons.location_pin),
                               Text(
-                                trip.destination,
+                                trip.destination!,
                                 style: const TextStyle(
                                   fontSize: 15,
                                 ),
@@ -152,7 +166,7 @@ class _MyTripsListState extends State<MyTripsList> {
                             children: [
                               Icon(Icons.person),
                               Text(
-                                "Nima & 12 others", // Replace with your trip members
+                                "Nima & 12 others", 
                                 style: TextStyle(
                                   fontSize: 15,
                                 ),
@@ -164,7 +178,7 @@ class _MyTripsListState extends State<MyTripsList> {
                             children: [
                               Icon(Icons.surfing),
                               Text(
-                                "Swimming", // Replace with your trip activities
+                                "Swimming", 
                                 style: TextStyle(
                                   fontSize: 15,
                                 ),

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:main/Data/env/apiKeys.dart';
 import 'package:http/http.dart' as http;
+import 'package:main/Data/env/apikeys.dart';
 
 class PlaceServices {
   final String key = mapApi; //specify this in lib\Data\env\apiKeys.dart
@@ -29,7 +29,7 @@ class PlaceServices {
   }
 
   Image getPlaceImage(String photoReference) {
-    if(photoReference == ""){
+    if (photoReference == "") {
       return Image.asset('assets/icons.png');
     }
     String url =

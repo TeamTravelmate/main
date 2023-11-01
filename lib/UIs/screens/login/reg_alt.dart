@@ -48,7 +48,7 @@ class _RegisterAltState extends State<RegisterAlt> {
       };
 
       // Send the POST request to the backend API
-      final Uri regUri = Uri.parse('$backendUrl/register');
+      final Uri regUri = Uri.parse('$backendUrl/user/register');
       print(regUri);
       final response = await http.post(
         regUri,
