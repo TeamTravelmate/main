@@ -1,5 +1,42 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:main/UIs/screens/vendor/checkout.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../Data/env/env.dart';
+import 'package:http/http.dart' as http;
+
+class CartController extends GetxController{
+  var cart = <Cart>[].obs;
+
+  void getCart() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    // response to get following
+    var cartResponse = await http.get(
+      Uri.parse('$backendUrl/vendor/myCart/'),
+      headers: {
+        "Authorization": "Bearer $token",
+      },
+    );
+
+    if (cartResponse.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      var jsonResponse = jsonDecode(cartResponse.body);
+      print('JSON Response: $jsonResponse');
+
+      // List<dynamic> jsonList = jsonResponse['following'] ?? [];
+      // cart.value = Cart.fromJsonList(jsonList);
+    } else {
+      // If the server did not return a 200 OK response, throw an exception.
+      throw Exception('Failed to load data');
+    }
+  }
+}
 
 class Cart extends StatefulWidget {
   @override

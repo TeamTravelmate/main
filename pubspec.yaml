@@ -60,8 +60,8 @@ dependencies:
   form_field_validator: ^1.0.1
   flutter_riverpod: ^2.4.4
   riverpod_annotation: ^2.2.1
-  timeline_list: ^0.0.3
-  slide_countdown: ^0.6.0
+  timeline_list: ^0.0.6
+  slide_countdown: ^1.0.2
   flutter_dotenv: ^5.1.0
   uuid: ^3.0.7
   share: ^2.0.4

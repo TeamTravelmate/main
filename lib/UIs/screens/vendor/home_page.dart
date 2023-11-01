@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           body: Padding(
-            padding: const EdgeInsets.only(top: 10.0, left: 10, right: 10),
+            padding: const EdgeInsets.only(left: 10, right: 10),
             child: Expanded(
               child: Column(
                 children: [
@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                               width: 30.0,
                               height: 30.0,
                               margin: const EdgeInsets.only(
-                                  // left: 60.0,
+                                // left: 60.0,
                                   right: 20.0),
                               child: GestureDetector(
                                 onTap: () {
@@ -142,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const TrackOrder()));
+                                          const TrackOrder()));
                                 },
                                 child: const Image(
                                   image: AssetImage('assets/img/cart.png'),
@@ -223,7 +223,7 @@ class _HomePageState extends State<HomePage> {
                                   color: const Color(0xff2FACBB),
                                   shape: const RoundedRectangleBorder(
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(5)),
+                                    BorderRadius.all(Radius.circular(5)),
                                   ),
                                   child: Container(
                                     padding: const EdgeInsets.all(4.0),
@@ -231,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                                       children: [
                                         Image(
                                           image:
-                                              AssetImage('assets/img/grid.png'),
+                                          AssetImage('assets/img/grid.png'),
                                         ),
                                       ],
                                     ),
@@ -264,8 +264,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-
-
 class All extends StatefulWidget {
   const All({Key? key}) : super(key: key);
 
@@ -274,14 +272,6 @@ class All extends StatefulWidget {
 }
 
 class _AllState extends State<All> with AutomaticKeepAliveClientMixin<All> {
-  final ProductsController controller = Get.put(ProductsController());
-
-  @override
-  void initState() {
-    super.initState();
-    controller.getAllProducts();
-  }
-
   @override
   bool get wantKeepAlive => true;
 
@@ -307,14 +297,13 @@ class _AllState extends State<All> with AutomaticKeepAliveClientMixin<All> {
                   ))
             ],
           ),
-          SurfProduct()
+          const SizedBox(height: 20),
+          AllProduct()
         ],
       ),
     );
   }
 }
-
-
 
 class Camping extends StatefulWidget {
   const Camping({Key? key}) : super(key: key);
@@ -338,7 +327,7 @@ class _CampingState extends State<Camping>
         children: [
           const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround, children: []),
-          // const SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             children: [
               Container(
@@ -354,14 +343,13 @@ class _CampingState extends State<Camping>
                   ))
             ],
           ),
-          SurfProduct()
+          const SizedBox(height: 20),
+          CampProducts()
         ],
       ),
     );
   }
 }
-
-
 
 class Hiking extends StatefulWidget {
   const Hiking({Key? key}) : super(key: key);
@@ -398,14 +386,13 @@ class _HikingState extends State<Hiking>
                   ))
             ],
           ),
-          SurfProduct()
+          const SizedBox(height: 20),
+          HikeProducts()
         ],
       ),
     );
   }
 }
-
-
 
 class Surfing extends StatefulWidget {
   const Surfing({Key? key}) : super(key: key);
@@ -442,6 +429,7 @@ class _SurfingState extends State<Surfing>
                     ))
               ],
             ),
+            const SizedBox(height: 20),
             SurfProducts()
           ],
         ),
@@ -450,7 +438,219 @@ class _SurfingState extends State<Surfing>
   }
 }
 
+// all camping products
+class CampProducts extends StatefulWidget {
+  const CampProducts({super.key});
 
+  @override
+  State<CampProducts> createState() => _CampProductsState();
+}
+
+class _CampProductsState extends State<CampProducts> {
+  final ProductsController controller = Get.put(ProductsController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.getSurfProducts('Camping');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => Expanded(
+      child: ListView.builder(
+        itemCount: controller.products.length,
+        itemBuilder: (context, index) {
+          return Container(
+            child: Card(
+              elevation: 5.0,
+              shadowColor: Colors.black,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              child: Container(
+                  width: 320.0,
+                  height: 220.0,
+                  padding: const EdgeInsets.all(5.0),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        child: Container(
+                          width: 300.0,
+                          height: 160.0,
+                          decoration: const BoxDecoration(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(10)),
+                            image: DecorationImage(
+                              image: AssetImage(
+                                'assets/img/tent4.jpg',
+                              ),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Catalog()));
+                        },
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(left: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Text(
+                                controller.products[index].name ?? 'N/A',
+                                style: TextStyle(
+                                  color: Color(0xff2FACBB),
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                            ),
+                            const Rating(),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(left: 10.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                right: 220.0,
+                              ),
+                              child: Text(
+                                controller.products[index].price ?? 'N/A',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 10.0,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
+          );
+        },
+      ),
+    ));
+  }
+}
+
+// all hiking products
+class HikeProducts extends StatefulWidget {
+  const HikeProducts({super.key});
+
+  @override
+  State<HikeProducts> createState() => _HikeProductsState();
+}
+
+class _HikeProductsState extends State<HikeProducts> {
+  final ProductsController controller = Get.put(ProductsController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.getSurfProducts('Hiking');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => Expanded(
+      child: ListView.builder(
+        itemCount: controller.products.length,
+        itemBuilder: (context, index) {
+          return Container(
+            child: Card(
+              elevation: 5.0,
+              shadowColor: Colors.black,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              child: Container(
+                  width: 320.0,
+                  height: 220.0,
+                  padding: const EdgeInsets.all(5.0),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        child: Container(
+                          width: 300.0,
+                          height: 160.0,
+                          decoration: const BoxDecoration(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(10)),
+                            image: DecorationImage(
+                              image: AssetImage(
+                                'assets/img/tent2.jpg',
+                              ),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Catalog()));
+                        },
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(left: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Text(
+                                controller.products[index].name ?? 'N/A',
+                                style: TextStyle(
+                                  color: Color(0xff2FACBB),
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                            ),
+                            const Rating(),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(left: 10.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                right: 220.0,
+                              ),
+                              child: Text(
+                                controller.products[index].price ?? 'N/A',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 10.0,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
+          );
+        },
+      ),
+    ));
+  }
+}
 
 // all surfing products
 class SurfProducts extends StatefulWidget {
@@ -472,203 +672,200 @@ class _SurfProductsState extends State<SurfProducts> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Expanded(
-          child: ListView.builder(
-            itemCount: controller.products.length,
-            itemBuilder: (context, index) {
-              return Container(
-                child: Card(
-                  elevation: 5.0,
-                  shadowColor: Colors.black,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Container(
-                      width: 320.0,
-                      height: 220.0,
-                      padding: const EdgeInsets.all(5.0),
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            child: Container(
-                              width: 300.0,
-                              height: 160.0,
-                              decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    'assets/img/surfboard.jpg',
-                                  ),
-                                  fit: BoxFit.fill,
-                                ),
+      child: ListView.builder(
+        itemCount: controller.products.length,
+        itemBuilder: (context, index) {
+          return Container(
+            child: Card(
+              elevation: 5.0,
+              shadowColor: Colors.black,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              child: Container(
+                  width: 320.0,
+                  height: 220.0,
+                  padding: const EdgeInsets.all(5.0),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        child: Container(
+                          width: 300.0,
+                          height: 160.0,
+                          decoration: const BoxDecoration(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(10)),
+                            image: DecorationImage(
+                              image: AssetImage(
+                                'assets/img/surfboard.jpg',
                               ),
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const Catalog()));
-                            },
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(left: 10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    controller.products[index].name ?? 'N/A',
-                                    style: TextStyle(
-                                      color: Color(0xff2FACBB),
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                ),
-                                const Rating(),
-                              ],
+                              fit: BoxFit.fill,
                             ),
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(left: 10.0),
-                            child: Row(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(
-                                    right: 220.0,
-                                  ),
-                                  child: Text(
-                                    controller.products[index].price ?? 'N/A',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 10.0,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )),
-                ),
-              );
-            },
-          ),
-        ));
-  }
-}
-
-
-
-// product card
-class SurfProduct extends StatefulWidget {
-  const SurfProduct({super.key});
-
-  @override
-  State<SurfProduct> createState() => _SurfProductState();
-}
-
-class _SurfProductState extends State<SurfProduct> {
-  // final ProductsController controller = Get.put(ProductsController());
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   controller.getAllProducts();
-  // }
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-               Container(
-                child: Card(
-                  elevation: 5.0,
-                  shadowColor: Colors.black,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Container(
-                    width: 320.0,
-                    height: 220.0,
-                    padding: const EdgeInsets.all(5.0),
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                          child: Container(
-                            width: 300.0,
-                            height: 160.0,
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                              image: DecorationImage(
-                                image: AssetImage('assets/img/surfboard.jpg'),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.push(
+                        ),
+                        onTap: () {
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const Catalog(),
-                              ),
-                            );
-                          },
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: Text(
-                                  'surfing',
-                                  style: TextStyle(
-                                    color: Color(0xff2FACBB),
-                                    fontSize: 15.0,
-                                  ),
+                                  builder: (context) => const Catalog()));
+                        },
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(left: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Text(
+                                controller.products[index].name ?? 'N/A',
+                                style: TextStyle(
+                                  color: Color(0xff2FACBB),
+                                  fontSize: 15.0,
                                 ),
                               ),
-                              const Rating(),
-                            ],
-                          ),
+                            ),
+                            const Rating(),
+                          ],
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 10.0),
-                          child: Row(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  right: 220.0,
-                                ),
-                                child: Text(
-                                  'Rs.5000',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 10.0,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(left: 10.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                right: 220.0,
                               ),
-                            ],
-                          ),
+                              child: Text(
+                                controller.products[index].price ?? 'N/A',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 10.0,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-              )
-
-
-        ],
+                      ),
+                    ],
+                  )),
+            ),
+          );
+        },
       ),
-    );
+    ));
   }
 }
 
+
+
+// all product card
+class AllProduct extends StatefulWidget {
+  const AllProduct({super.key});
+
+  @override
+  State<AllProduct> createState() => _AllProductState();
+}
+
+class _AllProductState extends State<AllProduct> {
+  final ProductsController controller = Get.put(ProductsController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.getAllProducts();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => Expanded(
+      child: ListView.builder(
+        itemCount: controller.products.length,
+        itemBuilder: (context, index) {
+          return Container(
+            child: Card(
+              elevation: 5.0,
+              shadowColor: Colors.black,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              child: Container(
+                  width: 320.0,
+                  height: 220.0,
+                  padding: const EdgeInsets.all(5.0),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        child: Container(
+                          width: 300.0,
+                          height: 160.0,
+                          decoration: const BoxDecoration(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(10)),
+                            image: DecorationImage(
+                              image: AssetImage(
+                                'assets/img/surfboard.jpg',
+                              ),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Catalog()));
+                        },
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(left: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Text(
+                                controller.products[index].name ?? 'N/A',
+                                style: TextStyle(
+                                  color: Color(0xff2FACBB),
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                            ),
+                            const Rating(),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(left: 10.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                right: 220.0,
+                              ),
+                              child: Text(
+                                controller.products[index].price ?? 'N/A',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 10.0,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
+          );
+        },
+      ),
+    ));
+  }
+}
 
 // rating
 class Rating extends StatelessWidget {
@@ -677,36 +874,36 @@ class Rating extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 20.0, top: 5.0),
-      child: const Row(
-        children: [
-          Icon(
-            Icons.star,
-            color: Color.fromARGB(255, 255, 193, 59),
-            size: 15.0,
-          ),
-          Icon(
-            Icons.star,
-            color: Color.fromARGB(255, 255, 193, 59),
-            size: 15.0,
-          ),
-          Icon(
-            Icons.star,
-            color: Color.fromARGB(255, 255, 193, 59),
-            size: 15.0,
-          ),
-          Icon(
-            Icons.star,
-            color: Color.fromARGB(255, 255, 193, 59),
-            size: 15.0,
-          ),
-          Icon(
-            Icons.star,
-            color: Color.fromARGB(255, 255, 193, 59),
-            size: 15.0,
-          )
-        ],
-      ),
-    );
+        margin: const EdgeInsets.only(right: 20.0, top: 5.0),
+        child: const Row(
+            children: [
+              Icon(
+                Icons.star,
+                color: Color.fromARGB(255, 255, 193, 59),
+                size: 15.0,
+              ),
+              Icon(
+                Icons.star,
+                color: Color.fromARGB(255, 255, 193, 59),
+                size: 15.0,
+              ),
+              Icon(
+                Icons.star,
+                color: Color.fromARGB(255, 255, 193, 59),
+                size: 15.0,
+              ),
+              Icon(
+                Icons.star,
+                color: Color.fromARGB(255, 255, 193, 59),
+                size: 15.0,
+              ),
+              Icon(
+                Icons.star,
+                color: Color.fromARGB(255, 255, 193, 59),
+                size: 15.0,
+              )
+            ]
+            ),
+      );
   }
 }
