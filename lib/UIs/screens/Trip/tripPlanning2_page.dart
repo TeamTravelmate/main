@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:main/UIs/screens/Trip/privateTrips/budget_page.dart';
 import '../../themes/colors.dart';
 import '../../widgets/button_widget.dart';
 import '../Marketplace/marketplace_page.dart';
@@ -90,7 +91,6 @@ class CustomFacilities extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(height: 30),
           Row(
             children: [
               InfoPopupWidget(
@@ -190,44 +190,8 @@ class CustomFacilities extends StatelessWidget {
                     widgetName: CustomizeHotels(),
                     title: 'Hotels',
                     icon: Icons.hotel),
-              ),
-              const SizedBox(width: 25),
-              InfoPopupWidget(
-                customContent: Container(
-                  decoration: BoxDecoration(
-                    color: ColorsTravelMate.tertiary,
-                    border: Border.all(
-                      color: ColorsTravelMate.primary,
-                      style: BorderStyle.solid,
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  child: const Text(
-                    'Set a budget, Split budget\n among the members,\n currency conversion.',
-                    style: TextStyle(
-                      color: ColorsTravelMate.primary,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-                arrowTheme: const InfoPopupArrowTheme(
-                  color: ColorsTravelMate.primary,
-                  arrowDirection: ArrowDirection.up,
-                ),
-                dismissTriggerBehavior: PopupDismissTriggerBehavior.onTapArea,
-                areaBackgroundColor: Colors.transparent,
-                indicatorOffset: Offset.zero,
-                contentOffset: Offset.zero,
-                child: const Facility(
-                    widgetName: CustomizeBudget(),
-                    title: 'Budget',
-                    icon: Icons.wallet),
-              ),
-            ],
+              ),],
           ),
-          const SizedBox(height: 45),
           Row(
             children: [
               InfoPopupWidget(
@@ -292,8 +256,8 @@ class CustomFacilities extends StatelessWidget {
                 areaBackgroundColor: Colors.transparent,
                 indicatorOffset: Offset.zero,
                 contentOffset: Offset.zero,
-                child: const Facility(
-                    widgetName: Placeholder(),
+                child:  Facility(
+                    widgetName: CustomizeResturants(),
                     title: 'Resturants',
                     icon: Icons.restaurant_menu),
               ),
@@ -368,9 +332,6 @@ class CustomFacilities extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
-            height: 80,
-          ),
           Column(
             children: [
               GestureDetector(
@@ -424,7 +385,6 @@ class CustomFacilities extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 140),
           const buttonWidget(
               width: double.infinity,
               labelText: 'Create my plan',

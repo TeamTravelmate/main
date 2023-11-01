@@ -1,5 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class GlobalController extends GetxController {
   // create various variables
@@ -23,7 +24,7 @@ class GlobalController extends GetxController {
 
   getLocation() async {
     bool isServiceEnabled;
-    LocationPermission locationPermission;
+    PermissionStatus locationPermission;
 
     isServiceEnabled = await Geolocator.isLocationServiceEnabled();
     // return if service is not enabled
@@ -32,16 +33,10 @@ class GlobalController extends GetxController {
     }
 
     // status of permission
-    locationPermission = await Geolocator.checkPermission();
+    locationPermission = await Permission.location.request();
 
-    if (locationPermission == LocationPermission.deniedForever) {
-      return Future.error("Location permission are denied forever");
-    } else if (locationPermission == LocationPermission.denied) {
-      // request permission
-      locationPermission = await Geolocator.requestPermission();
-      if (locationPermission == LocationPermission.denied) {
-        return Future.error("Location permission is denied");
-      }
+    if (locationPermission == PermissionStatus.denied) {
+      return Future.error("Location permission are denied");
     }
 
     // getting the currentposition
