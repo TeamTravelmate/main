@@ -27,7 +27,7 @@ import 'package:google_places_flutter/model/prediction.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class joinedTripView extends ConsumerStatefulWidget {
-  const joinedTripView({super.key});
+  const joinedTripView({super.key, required int tripId});
 
   @override
   _joinedTripViewState createState() => _joinedTripViewState();

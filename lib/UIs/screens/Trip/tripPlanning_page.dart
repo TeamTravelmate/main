@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:main/Data/env/apiKeys.dart';
 
 import 'package:flutter/material.dart';
+import 'package:main/Data/env/apiKeys.dart';
 import 'package:main/Domain/provider/trip_provider.dart';
 import 'package:main/UIs/screens/Trip/tripView_page.dart';
 import '../../themes/colors.dart';
@@ -24,7 +25,7 @@ class trip extends ConsumerWidget {
   );
   //planning trip
   Widget tripPlanning = Container(
-    child: joinedTripView(),
+    child: joinedTripView(tripId: 1,),
   );
 
   List<Widget> tabContent = [];

@@ -157,11 +157,13 @@ class _ProfileState extends State<Profile> {
                       child: Text('Traveller',
                           style: TextStyle(fontSize: 15)),
                     ),
+                   
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Column(
                           children: [
+                            
                             const Padding(
                               padding: EdgeInsets.only(top: 12.0),
                               child: Text('100',
