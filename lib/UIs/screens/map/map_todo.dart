@@ -1,7 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:main/Domain/provider/budget_provider.dart';
-import 'package:main/Domain/provider/itinerary_provider.dart';
-import 'package:main/Domain/provider/trip_provider.dart';
 import 'package:main/UIs/themes/colors.dart';
 import 'package:main/UIs/widgets/map_widget.dart';
 import 'package:main/UIs/widgets/todo_day_tile.dart';
@@ -14,7 +10,9 @@ import 'package:timelines/timelines.dart';
 import '../../widgets/tripCard_widget.dart';
 
 class MapToDoScreen extends StatefulWidget {
-  const MapToDoScreen({super.key});
+  final int tripId;
+
+  const MapToDoScreen({super.key, required this.tripId});
 
   @override
   State<MapToDoScreen> createState() => _MapToDoScreenState();
@@ -26,10 +24,22 @@ class _MapToDoScreenState extends State<MapToDoScreen> {
       name: "Colombo",
       description: "Capital of Sri Lanka",
       image: 'assets/images/colombo.jpg');
+  List<TripDay> _tripDays = [];
+  List<User> _friends = [];
 
   @override
   void initState() {
     super.initState();
+    tripModel.getDays().then((value) => {
+          setState(() {
+            _tripDays = tripModel.getDaysList();
+          })
+        });
+    tripModel.getTripMates("").then((value) => {
+          setState(() {
+            _friends = tripModel.getTripMatesList();
+          })
+        });
   }
 
   @override
@@ -41,6 +51,7 @@ class _MapToDoScreenState extends State<MapToDoScreen> {
         panelBuilder: (sc) => MapSlidingPanel(
           sc: sc,
           context: context,
+          tripDays: _tripDays,
         ),
         collapsed: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -61,18 +72,11 @@ class _MapToDoScreenState extends State<MapToDoScreen> {
                 color: ColorsTravelMate.tertiary,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
-              child: Consumer(
-                builder: (context, ref, child) {
-                  final tripProvider = ref.read(tripPlanningNotifierProvider);
-                  return tripCard.map(
-                    tripLocationTitle:
-                        "Trip to ${tripProvider.value!.destination != null ? tripProvider.value!.destination!.split(',')[0] : "Somewhere"}",
-                    location: tripProvider.value!.destination ?? "Somewhere",
-                    tripDuration:
-                        "${tripProvider.value!.startDate} - ${tripProvider.value!.numberOfDays.toString()} days",
-                    tripmates: "",
-                  );
-                },
+              child: tripCard.map(
+                tripLocationTitle: tripModel.name,
+                location: tripModel.description,
+                tripDuration: _tripDays.length.toString(),
+                tripmates: _friends.length.toString(),
               ),
             ),
           ],
@@ -89,10 +93,12 @@ class MapSlidingPanel extends StatefulWidget {
     super.key,
     required this.sc,
     required this.context,
+    required this.tripDays,
   });
 
   final ScrollController sc;
   final BuildContext context;
+  final List<TripDay> tripDays;
 
   @override
   State<MapSlidingPanel> createState() => _MapSlidingPanelState();
@@ -100,45 +106,28 @@ class MapSlidingPanel extends StatefulWidget {
 
 class _MapSlidingPanelState extends State<MapSlidingPanel> {
   bool _isExpanded = false;
-  Map<String, dynamic>? tripDay;
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(
-      builder: (context, ref, child) {
-        return Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: _isExpanded
-                ? TripDayView(
-                    day: tripDay!['day'],
-                    locations: "Places to visit in ${tripDay!['locations']}",
-                    approxBudget: "${tripDay!['approxBudget']}",
-                    weather: "Weather: ${tripDay!['weather']}",
-                    backMethod: () {
-                      setState(() {
-                        _isExpanded = !_isExpanded;
-                      });
-                    },
-                  )
-                : TripTimeline(
-                    sc: widget.sc,
-                    displayDayMethod: _expandDayView,
-                    tripDays: ref.read(itineraryNotifierProvider).value!,
-                    budget: ref
-                        .read(budgetNotifierProvider(ref
-                            .read(tripPlanningNotifierProvider)
-                            .value!
-                            .tripId))
-                        .value!,
-                  ));
-      },
-    );
+    return Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: _isExpanded
+            ? TripDayView(
+                locations: "Galle Face Green, Lotus tower, Floating market",
+                approxBudget: "Rs. 5000",
+                weather: "Rainy",
+                backMethod: _expandDayView,
+              )
+            : TripTimeline(
+                sc: widget.sc,
+                displayDayMethod: _expandDayView,
+                tripDays: widget.tripDays,
+              ));
   }
 
-  void _expandDayView(Map<String, dynamic> tripDay) {
+  void _expandDayView() {
     setState(() {
       _isExpanded = !_isExpanded;
-      this.tripDay = tripDay;
     });
   }
 }

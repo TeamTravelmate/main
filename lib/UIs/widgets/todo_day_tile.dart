@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
-import 'package:main/Domain/models/budget.dart';
-import 'package:main/Domain/models/itinerary.dart';
-import 'package:main/Domain/provider/trip_provider.dart';
 import 'package:main/UIs/themes/colors.dart';
 import 'package:main/UIs/widgets/text_custom.dart';
 import 'package:timelines/timelines.dart';
@@ -17,14 +12,12 @@ class TodoDayTile extends StatelessWidget {
     required this.approxBudget,
     required this.weather,
     required this.displayDayMethod,
-    required this.day,
   });
 
   final String locations;
   final String approxBudget;
   final String weather;
-  final int day;
-  final void Function(Map<String, dynamic> tripDay) displayDayMethod;
+  final void Function() displayDayMethod;
 
   @override
   Widget build(BuildContext context) {
@@ -53,14 +46,7 @@ class TodoDayTile extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.arrow_forward_ios_outlined),
           color: ColorsTravelMate.primary,
-          onPressed: (){
-            displayDayMethod({
-              'day': day,
-              'locations': locations,
-              'approxBudget': approxBudget,
-              'weather': weather,
-            });
-          },
+          onPressed: displayDayMethod,
         ),
       ],
     );
@@ -104,27 +90,20 @@ class IconWithText extends StatelessWidget {
   }
 }
 
-class TripTimeline extends ConsumerWidget {
+class TripTimeline extends StatelessWidget {
   const TripTimeline({
     super.key,
     required this.sc,
     required this.displayDayMethod,
     required this.tripDays,
-    required this.budget,
   });
 
   final ScrollController sc;
-  final Itinerary tripDays;
-  final Budget budget;
-  final void Function(Map<String, dynamic> tripDay) displayDayMethod;
+  final List<TripDay> tripDays;
+  final void Function() displayDayMethod;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final tripProvider = ref.read(tripPlanningNotifierProvider);
-    final itinerayMap = tripDays.getItineraryMap(tripProvider.value!.numberOfDays!);
-    final startDateString = tripProvider.value!.startDate!;
-    final startDate = DateFormat('EEE, MM/dd/yyyy').parse(startDateString);
-    final dayTotals = budget.getBudgetMap(tripProvider.value!.numberOfDays!, startDate);
+  Widget build(BuildContext context) {
     return Timeline.tileBuilder(
       controller: sc,
       theme: TimelineThemeData(
@@ -136,7 +115,7 @@ class TripTimeline extends ConsumerWidget {
       ),
       builder: TimelineTileBuilder.connected(
         connectionDirection: ConnectionDirection.after,
-        itemCount: tripProvider.value!.numberOfDays!,
+        itemCount: tripDays.length,
         indicatorBuilder: (_, index) => OutlinedDotIndicator(
           key: Key("Day ${index + 1}"),
           size: 20,
@@ -159,11 +138,12 @@ class TripTimeline extends ConsumerWidget {
           child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: TodoDayTile(
-                day: index + 1,
                 key: Key("Day ${index + 1}"),
-                locations: itinerayMap[index+1]!['locations'].toString().replaceAll('[','').replaceAll(']',''),
-                approxBudget: "Rs. ${dayTotals[index + 1]}",
-                weather: "",
+                locations: tripDays[index].places,
+                approxBudget: tripDays[index].budget.toString(),
+                weather: tripDays[index].weather,
+                // displayDayMethod: () => print(this.key),
+                //print the key of the widget
                 displayDayMethod: displayDayMethod, //print the day number of the widget
               )),
         ),
@@ -179,10 +159,8 @@ class TripDayView extends StatelessWidget {
     required this.approxBudget,
     required this.weather,
     required this.backMethod,
-    required this.day,
   });
 
-  final int day;
   final String locations;
   final String approxBudget;
   final String weather;
@@ -199,7 +177,7 @@ class TripDayView extends StatelessWidget {
             color: ColorsTravelMate.primary,
           ),
           title: TextCustom(
-            text: "Day $day",
+            text: "Day 01",
             color: ColorsTravelMate.primary,
             fontSize: 20,
           ),
@@ -207,7 +185,7 @@ class TripDayView extends StatelessWidget {
         Row(
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width/1.5,
+              width: MediaQuery.of(context).size.width / 2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
