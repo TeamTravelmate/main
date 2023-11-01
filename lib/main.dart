@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:main/Domain/provider/register_form_provider.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
         provider.ChangeNotifierProvider(
             create: (context) => RegistrationFormProvider())
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: GoogleFonts.poppins().fontFamily,
