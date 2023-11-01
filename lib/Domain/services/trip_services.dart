@@ -126,32 +126,4 @@ class TripServices {
     }
     throw Exception('Network Error');
   }
-
-  //update trip details
-  Future<Trip> updateTrip(Map<String, dynamic> trip, String token) async {
-    var url = Uri.parse('$backendUrl/trip');
-    var response;
-    try {
-      response = await http.put(url,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer $token'
-          },
-          body: jsonEncode(trip));
-    } on Exception catch (e) {
-      print(e);
-      throw Exception('Network Error');
-    }
-    if (response.statusCode == 200) {
-      //its just a message so return a blank trip
-      return Trip();
-    }
-    if (response.statusCode == 401) {
-      throw Exception('Please login to update your trip');
-    }
-    if (response.statusCode == 500 || response.statusCode == 404) {
-      throw Exception("Server error. It's not you, it's us");
-    }
-    throw Exception('Network Error');
-  }
 }
