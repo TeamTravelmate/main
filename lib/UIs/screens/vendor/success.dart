@@ -7,6 +7,7 @@ class Success extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
           body: Stack(
             fit: StackFit.expand,
@@ -148,12 +149,12 @@ class Success extends StatelessWidget {
                                   children: [
                                     Container(
                                       margin: EdgeInsets.only(
-                                          left: 18.0
+                                          left: 14.0
                                       ),
                                       child: Text(
                                         'Continue Shopping',
                                         style: TextStyle(
-                                          fontSize: 18.0,
+                                          fontSize: 16.0,
                                         ),
                                         textAlign: TextAlign.center,
                                       ),

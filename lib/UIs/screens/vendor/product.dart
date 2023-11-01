@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:main/UIs/screens/vendor/cart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../Data/env/env.dart';
 import '../../../Domain/models/product_detail.dart';
 
@@ -28,7 +27,7 @@ class ProductDetailController extends GetxController {
       var jsonResponse = jsonDecode(response.body);
 
       // Update the productdetail value with the parsed ProductDetail object
-      productdetail.value = ProductDetail.fromJson(jsonResponse);
+      productdetail.value = ProductDetail.fromJson(jsonResponse['product']);
       print('ProductDetail: ${productdetail.value}');
     } else {
       // If the server did not return a 200 OK response, throw an exception.
@@ -166,91 +165,8 @@ class ProductState extends State<Product>{
                         ),
                       ),
                       Container(
-                        child: Row(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(
-                                top: 5.0,
-                                right: 0.2,
-                              ),
-                              width: 15.0,
-                              height: 15.0,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                      'assets/img/rate.png',
-                                    ),
-                                    fit: BoxFit.cover
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(
-                                top: 5.0,
-                                right: 0.2,
-                              ),
-                              width: 15.0,
-                              height: 15.0,
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                        'assets/img/rate.png',
-                                      ),
-                                      fit: BoxFit.cover
-                                  )
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(
-                                top: 5.0,
-                                right: 0.2,
-                              ),
-                              width: 15.0,
-                              height: 15.0,
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                        'assets/img/rate.png',
-                                      ),
-                                      fit: BoxFit.cover
-                                  )
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(
-                                top: 5.0,
-                                right: 0.2,
-                              ),
-                              width: 15.0,
-                              height: 15.0,
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                        'assets/img/rate.png',
-                                      ),
-                                      fit: BoxFit.cover
-                                  )
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(
-                                top: 5.0,
-                              ),
-                              width: 15.0,
-                              height: 15.0,
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                        'assets/img/rate.png',
-                                      ),
-                                      fit: BoxFit.cover
-                                  )
-                              ),
-                            ),
-                          ],
-                        ),
+                        child: Rating()
                       ),
-
                     ],
                   ),
                 ),
@@ -280,6 +196,7 @@ class ProductState extends State<Product>{
                             fontSize: 12
                         ),
                       ),
+                      SizedBox(height: 10,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -456,7 +373,7 @@ class ProductState extends State<Product>{
                                   child: Text(
                                     'Add to cart',
                                     style: TextStyle(
-                                        fontSize: 20
+                                        fontSize: 16
                                     ),
                                   ),
                                 )
@@ -478,5 +395,46 @@ class ProductState extends State<Product>{
           }
         }),
     );
+  }
+}
+
+// rating
+class Rating extends StatelessWidget {
+  const Rating({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: const EdgeInsets.only(right: 20.0, top: 5.0),
+        child: const Row(
+            children: [
+              Icon(
+                Icons.star,
+                color: Color.fromARGB(255, 255, 193, 59),
+                size: 15.0,
+              ),
+              Icon(
+                Icons.star,
+                color: Color.fromARGB(255, 255, 193, 59),
+                size: 15.0,
+              ),
+              Icon(
+                Icons.star,
+                color: Color.fromARGB(255, 255, 193, 59),
+                size: 15.0,
+              ),
+              Icon(
+                Icons.star,
+                color: Color.fromARGB(255, 255, 193, 59),
+                size: 15.0,
+              ),
+              Icon(
+                Icons.star,
+                color: Color.fromARGB(255, 255, 193, 59),
+                size: 15.0,
+              )
+            ]
+            ),
+      );
   }
 }
