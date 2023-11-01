@@ -6,7 +6,7 @@ part of 'budget_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$budgetNotifierHash() => r'ce67fe63044def3a5ae6d9ef134516a0ecb4ceac';
+String _$budgetNotifierHash() => r'66a95912faf70a4b21e3717ae8e78417de0d884c';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -32,7 +32,7 @@ class _SystemHash {
 abstract class _$BudgetNotifier extends BuildlessAsyncNotifier<Budget> {
   late final tripId;
 
-  Future<Budget> build(
+  FutureOr<Budget> build(
     tripId,
   );
 }
@@ -45,6 +45,20 @@ const budgetNotifierProvider = BudgetNotifierFamily();
 class BudgetNotifierFamily extends Family<AsyncValue<Budget>> {
   /// See also [BudgetNotifier].
   const BudgetNotifierFamily();
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'budgetNotifierProvider';
 
   /// See also [BudgetNotifier].
   BudgetNotifierProvider call(
@@ -65,19 +79,27 @@ class BudgetNotifierFamily extends Family<AsyncValue<Budget>> {
     );
   }
 
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
+  /// Enables overriding the behavior of this provider, no matter the parameters.
+  Override overrideWith(BudgetNotifier Function() create) {
+    return _$BudgetNotifierFamilyOverride(this, create);
+  }
+}
+
+class _$BudgetNotifierFamilyOverride
+    implements FamilyOverride<AsyncValue<Budget>> {
+  _$BudgetNotifierFamilyOverride(this.overriddenFamily, this.create);
+
+  final BudgetNotifier Function() create;
 
   @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+  final BudgetNotifierFamily overriddenFamily;
 
   @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'budgetNotifierProvider';
+  BudgetNotifierProvider getProviderOverride(
+    covariant BudgetNotifierProvider provider,
+  ) {
+    return provider._copyWith(create);
+  }
 }
 
 /// See also [BudgetNotifier].
@@ -101,7 +123,7 @@ class BudgetNotifierProvider
         );
 
   BudgetNotifierProvider._internal(
-    super._createNotifier, {
+    super.create, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
@@ -113,7 +135,7 @@ class BudgetNotifierProvider
   final tripId;
 
   @override
-  Future<Budget> runNotifierBuild(
+  FutureOr<Budget> runNotifierBuild(
     covariant BudgetNotifier notifier,
   ) {
     return notifier.build(
@@ -145,6 +167,20 @@ class BudgetNotifierProvider
   @override
   AsyncNotifierProviderElement<BudgetNotifier, Budget> createElement() {
     return _BudgetNotifierProviderElement(this);
+  }
+
+  BudgetNotifierProvider _copyWith(
+    BudgetNotifier Function() create,
+  ) {
+    return BudgetNotifierProvider._internal(
+      () => create()..tripId = tripId,
+      name: name,
+      dependencies: dependencies,
+      allTransitiveDependencies: allTransitiveDependencies,
+      debugGetCreateSourceHash: debugGetCreateSourceHash,
+      from: from,
+      tripId: tripId,
+    );
   }
 
   @override
