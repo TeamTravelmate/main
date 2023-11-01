@@ -43,7 +43,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImZpc
   "activity": "Picnic"
 }
   */
-  Future<Itinerary> addItinerary(
+  Future<void> addItinerary(
       int tripId, ItineraryElements element, String token) async {
     var url = Uri.parse('$backendUrl/trip/itinerary/$tripId');
     var response;
@@ -58,9 +58,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImZpc
       print(e);
       throw Exception('Failed to add itinerary');
     }
-    if (response.statusCode == 200) {
-      return Itinerary.fromJson(
-          (jsonDecode(response.body) as Map<String, dynamic>));
+    if (response.statusCode == 201) {
+      return ;
     }
     if (response.statusCode == 401) {
       throw Exception('Please login to add itinerary');

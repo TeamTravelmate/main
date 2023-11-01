@@ -93,7 +93,7 @@ class ProductState extends State<Product>{
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      controller.assential_name ?? 'N/A',
+                        controller.products.isNotEmpty ? controller.products.first.assential_name ?? 'N/A' : 'N/A',
                       style: TextStyle(
                           fontSize: 20.0,
                           color: Colors.black
