@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:main/Data/env/env.dart';
+import 'profile.dart';
+import 'dart:io';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UpgradeProfile extends StatelessWidget {
   @override
@@ -59,18 +65,20 @@ class ExperienceProviderForm extends StatefulWidget {
 
 class ExperienceProviderFormState extends State<ExperienceProviderForm> {
   final _formKey = GlobalKey<FormState>();
+  late File? _imageFile1;
+  late File? _imageFile2;
+  String? _imageFileName1;  // For the first image
+  String? _imageFileName2;  // For the second image
+  List<String> filed = ['Hiking', 'Camping', 'Adventure'];
+  late String NIC;
+  late String experienceField = 'Hiking';
+  late String address;
+  late String price;
+  late String phone;
+  late String num_of_experiences;
 
-  late PickedFile? _imageFile;
-
-
-
-  List<String> selectedItems = []; // To store the selected items
-
-  final List<String> items = [
-    'English',
-    'Sinhala',
-    'Tamil',
-  ];
+  List<String> selectedItems = [];
+  final List<String> items = ['English', 'Sinhala', 'Tamil'];
 
   void _handleCheckboxChange(bool? value, String item) {
     setState(() {
@@ -82,47 +90,94 @@ class ExperienceProviderFormState extends State<ExperienceProviderForm> {
     });
   }
 
+  Future<void> _upgradeToServiceProvider(
 
 
+      File? imageFile1,
+      File? imageFile2,
+      String NIC,
+      String experienceField,
+      String address,
+      String price,
+      String phone,
+      String num_of_experiences) async {
+    if (imageFile1 == null || imageFile2 == null) {
+      print("Image files not selected.");
+      return;
+    }
 
-  List<String> filed = [
-    'Hiking',
-    'Camping',
-    'Adventure'
-    // Add more languages as needed
-  ];
+    // Replace 'backendUrl' with your actual backend URL
+    final Uri profileUri = Uri.parse('$backendUrl/user/upgrade_service_provider');
 
-  late String NIC;
-  late FileImage SLTDA;
-  String selectedLanguage ='English';
-  late String experiences;
-  String experience_filed = 'Hiking';
-  late String address;
-  late String price;
-  late String name;
+    // Create a multipart request
+    final request = http.MultipartRequest('POST', profileUri);
 
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    // Set your authorization token
+    request.headers['Authorization'] =
+    'Bearer $token';
+
+    // Add the image files
+    // request.files.add(
+    //   await http.MultipartFile.fromPath('file', imageFile1.path),
+    // );
+    request.files.add(
+      await http.MultipartFile.fromPath('file', imageFile2.path),
+    );
+
+
+    // Add other form fields
+    request.fields['nic'] = NIC;
+    request.fields['num_of_years'] = num_of_experiences;
+    request.fields['field'] = experienceField;
+    request.fields['price_per_hour'] = price;
+    request.fields['address'] = address;
+    request.fields['tel_no'] = phone;
+    request.fields['language'] = selectedItems.join(',');
+    print(request.fields);
+    print(request.files);
+    try {
+      final response = await request.send();
+      print('Response status code: ${response.statusCode}');
+      final responseBody = await response.stream.bytesToString();
+      print('Response body: $responseBody');
+    } catch (error) {
+      print('Error uploading data: $error');
+    }
+  }
+
+  Future<void> _pickImage(ImageSource source, int index) async {
+    final pickedFile = await ImagePicker().pickImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        if (index == 1) {
+          _imageFile1 = File(pickedFile.path);
+          _imageFileName1 = pickedFile.name;
+        } else if (index == 2) {
+          _imageFile2 = File(pickedFile.path);
+          _imageFileName2 = pickedFile.name;
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView( // Wrap the Column with SingleChildScrollView
+    return SingleChildScrollView(
       child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
             child: Text(
-              'Become a Experience Provider', // Your desired title here
+              'Become an Experience Provider', // Your desired title here
               style: TextStyle(
                 fontSize: 15.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-
-
-
-
-
-
           Form(
             key: _formKey,
             child: Container(
@@ -131,8 +186,6 @@ class ExperienceProviderFormState extends State<ExperienceProviderForm> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-
-
                   Padding(
                     padding: EdgeInsets.only(bottom: 20.0),
                     child: SizedBox(
@@ -142,29 +195,22 @@ class ExperienceProviderFormState extends State<ExperienceProviderForm> {
                         decoration: InputDecoration(
                           labelText: "NIC",
                           prefixIcon: Icon(Icons.person),
-                          border: myinputborder(),
-                          enabledBorder: myinputborder(),
-                          focusedBorder: myfocusborder(),
+                          border: OutlineInputBorder(),
                         ),
-
-                        validator: (text){
-                          if(text!.isEmpty){
-                            return 'NIC Cannot be Empty';
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'NIC cannot be empty';
                           }
-                          return null;
+                          // return null;
                         },
-
-                        onSaved: (text){
-                          NIC= text!;
+                        onChanged: (text) {
+                          setState(() {
+                            NIC = text;
+                          });
                         },
-
                       ),
                     ),
                   ),
-
-
-
-
                   Padding(
                     padding: EdgeInsets.only(bottom: 20.0),
                     child: SizedBox(
@@ -176,36 +222,26 @@ class ExperienceProviderFormState extends State<ExperienceProviderForm> {
                           TextFormField(
                             enabled: false,
                             decoration: InputDecoration(
-                              labelText: "Upload NIC copy",
+                              labelText: _imageFileName1 ?? "Upload NIC copy",
                               prefixIcon: Icon(Icons.file_copy),
-                              border: myinputborder(),
-                              enabledBorder: myinputborder(),
-                              focusedBorder: myfocusborder(),
+                              border: OutlineInputBorder(),
                             ),
                             validator: (text) {
-                              if (text!.isEmpty) {
-                                return 'NIC Cannot be Empty';
+                              if (_imageFileName1 == null) {
+                                return 'NIC copy cannot be empty';
                               }
                               return null;
-                            },
-                            onSaved: (text) {
-                              NIC = text!;
                             },
                           ),
                           Positioned(
                             right: 0,
                             child: ElevatedButton(
                               onPressed: () async {
-                                final pickedImage = await _pickImage(ImageSource.gallery);
-                                if (pickedImage != null) {
-                                  setState(() {
-                                    _imageFile = pickedImage as PickedFile?;
-                                  });
-                                }
+                                await _pickImage(ImageSource.gallery, 1);
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.transparent,
-                                elevation: 0, // Set elevation to 0
+                                elevation: 0,
                                 padding: EdgeInsets.zero,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(0),
@@ -214,30 +250,72 @@ class ExperienceProviderFormState extends State<ExperienceProviderForm> {
                               ),
                               child: Icon(
                                 Icons.upload,
-                                color: Color(0xFF0C1C33), // Change the color of the button icon
+                                color: Color(0xFF0C1C33),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
                   ),
-
-
-
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: SizedBox(
+                      width: 340.0,
+                      height: 55.0,
+                      child: Stack(
+                        alignment: Alignment.centerRight,
+                        children: [
+                          TextFormField(
+                            enabled: false,
+                            decoration: InputDecoration(
+                              labelText: _imageFileName2 ?? "Upload SLTDA copy",
+                              prefixIcon: Icon(Icons.file_copy),
+                              border: OutlineInputBorder(),
+                            ),
+                            validator: (text) {
+                              if (_imageFileName2 == null) {
+                                return 'SLTDA license copy cannot be empty';
+                              }
+                              return null;
+                            },
+                          ),
+                          Positioned(
+                            right: 0,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                await _pickImage(ImageSource.gallery, 2);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.transparent,
+                                elevation: 0,
+                                padding: EdgeInsets.zero,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0),
+                                  side: BorderSide(color: Colors.transparent),
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.upload,
+                                color: Color(0xFF0C1C33),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 16.0),
                     child: Text(
                       'Select languages that you can', // Your desired title here
                       style: TextStyle(
                         fontSize: 18.0,
-                         // Set text alignment to left
+                        // Set text alignment to left
                       ),
-
                       textAlign: TextAlign.left,
                     ),
                   ),
-
                   Column(
                     children: items.map((item) {
                       return CheckboxListTile(
@@ -249,47 +327,7 @@ class ExperienceProviderFormState extends State<ExperienceProviderForm> {
                       );
                     }).toList(),
                   ),
-
-                  SizedBox(height:10.0),
-
-                  // Padding(
-                  //   padding: EdgeInsets.only(bottom: 20.0),
-                  //   child: SizedBox(
-                  //     width: 340.0,
-                  //     height: 55.0,
-                  //     child: DropdownButtonFormField<String>(
-                  //       value: selectedLanguage,
-                  //       decoration: InputDecoration(
-                  //         labelText: "Languages",
-                  //         prefixIcon: Icon(Icons.language),
-                  //         border: myinputborder(),
-                  //         enabledBorder: myinputborder(),
-                  //         focusedBorder: myfocusborder(),
-                  //       ),
-                  //       onChanged: (newValue) {
-                  //         setState(() {
-                  //           selectedLanguage = newValue!;
-                  //         });
-                  //       },
-                  //       items: languages.map((language) {
-                  //         return DropdownMenuItem<String>(
-                  //           value: language,
-                  //           child: Text(language),
-                  //         );
-                  //       }).toList(),
-                  //       // validator: (value) {
-                  //       //   if (value == null || value.isEmpty) {
-                  //       //     return 'Please select a language';
-                  //       //   }
-                  //       //   return null;
-                  //       // },
-                  //       onSaved: (value) {
-                  //         selectedLanguage = value!; // Save the selected language to your variable.
-                  //       },
-                  //     ),
-                  //   ),
-                  // ),
-
+                  SizedBox(height: 10.0),
                   Padding(
                     padding: EdgeInsets.only(bottom: 20.0),
                     child: SizedBox(
@@ -298,45 +336,39 @@ class ExperienceProviderFormState extends State<ExperienceProviderForm> {
                       child: TextFormField(
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          labelText: "No of trips",
+                          labelText: "No of years experience",
                           prefixIcon: Icon(Icons.book),
-                          border: myinputborder(),
-                          enabledBorder: myinputborder(),
-                          focusedBorder: myfocusborder(),
+                          border: OutlineInputBorder(),
                         ),
-
-                        // validator: (text){
-                        //   if(text!.isEmpty){
-                        //     return 'Current Password Cannot be Empty';
-                        //   }
-                        //   return null;
-                        // },
-
-                        onSaved: (text){
-                          experiences= text!;
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'No of years experience cannot be empty';
+                          }
+                          return null;
                         },
-
+                        onChanged: (text) {
+                          setState(() {
+                            num_of_experiences = text;
+                          });
+                        },
                       ),
                     ),
                   ),
-
                   Padding(
                     padding: EdgeInsets.only(bottom: 20.0),
                     child: SizedBox(
                       width: 340.0,
                       height: 55.0,
                       child: DropdownButtonFormField<String>(
-                        value: experience_filed,
+                        value: experienceField,
                         decoration: InputDecoration(
-                          labelText: "Experience Filed",
+                          labelText: "Experience Field",
                           prefixIcon: Icon(Icons.hail_outlined),
-                          border: myinputborder(),
-                          enabledBorder: myinputborder(),
-                          focusedBorder: myfocusborder(),
+                          border: OutlineInputBorder(),
                         ),
                         onChanged: (newValue) {
                           setState(() {
-                            experience_filed = newValue!;
+                            experienceField = newValue!;
                           });
                         },
                         items: filed.map((file) {
@@ -345,20 +377,14 @@ class ExperienceProviderFormState extends State<ExperienceProviderForm> {
                             child: Text(file),
                           );
                         }).toList(),
-                        // validator: (value) {
-                        //   if (value == null || value.isEmpty) {
-                        //     return 'Please select a language';
-                        //   }
-                        //   return null;
-                        // },
                         onSaved: (value) {
-                          experience_filed = value!; // Save the selected language to your variable.
+                          setState(() {
+                            experienceField = value!;
+                          });
                         },
                       ),
                     ),
                   ),
-
-
                   Padding(
                     padding: EdgeInsets.only(bottom: 20.0),
                     child: SizedBox(
@@ -369,27 +395,22 @@ class ExperienceProviderFormState extends State<ExperienceProviderForm> {
                         decoration: InputDecoration(
                           labelText: "Price per Hour",
                           prefixIcon: Icon(Icons.money),
-                          border: myinputborder(),
-                          enabledBorder: myinputborder(),
-                          focusedBorder: myfocusborder(),
+                          border: OutlineInputBorder(),
                         ),
-
-                        validator: (text){
-                          if(text!.isEmpty){
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
                             return 'Price per hour cannot be empty';
                           }
                           return null;
                         },
-
-                        onSaved: (text){
-                          price= text!;
+                        onChanged: (text) {
+                          setState(() {
+                            price = text;
+                          });
                         },
-
                       ),
                     ),
                   ),
-
-
                   Padding(
                     padding: EdgeInsets.only(bottom: 20.0),
                     child: SizedBox(
@@ -399,20 +420,47 @@ class ExperienceProviderFormState extends State<ExperienceProviderForm> {
                         decoration: InputDecoration(
                           labelText: "Address",
                           prefixIcon: Icon(Icons.house),
-                          border: myinputborder(),
-                          enabledBorder: myinputborder(),
-                          focusedBorder: myfocusborder(),
+                          border: OutlineInputBorder(),
+                        ),
+                        onChanged: (text) {
+                          setState(() {
+                            address = text;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: SizedBox(
+                      width: 340.0,
+                      height: 55.0,
+
+                      child: TextFormField(
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          labelText: "Phone number",
+                          prefixIcon: Icon(Icons.phone),
+                          border: OutlineInputBorder(),
                         ),
 
-                        // validator: (text){
-                        //   if(text!.isEmpty){
-                        //     return 'Address Cannot be Empty';
-                        //   }
-                        //   return null;
-                        // },
 
-                        onSaved: (text){
-                          address= text!;
+                        validator: (text){
+                          if(text!.isEmpty){
+                            return 'Phone no Cannot be Empty';
+                          }
+
+                          if (text.length < 10) {
+                            return 'Value must be at least 10 characters long.';
+                          }
+                          return null;
+                        },
+
+                        onChanged: (text) {
+                          setState(() {
+                            phone = text;
+                          });
                         },
 
                       ),
@@ -421,20 +469,24 @@ class ExperienceProviderFormState extends State<ExperienceProviderForm> {
 
                   Center(
                     child: Container(
-                      child: FilledButton(
-                        onPressed: () {
-                          if(_formKey.currentState!.validate()){
-                            _formKey.currentState?.save();
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          print('Button Clicked');
+                          print(NIC);
+                          try {
+                            await _upgradeToServiceProvider(_imageFile1, _imageFile2, NIC, experienceField, address,price, phone, num_of_experiences);
+                          } catch (e) {
+                            print('Error in _upgradeToServiceProvider: $e');
                           }
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Color(0xFF0C1C33),
-                          minimumSize: Size(300.0,50.0),
+                          minimumSize: Size(300.0, 50.0),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0), // Change the radius here
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
-                        child: Text('Upgrade Profile', style: TextStyle(fontSize: 18.0),),
+                        child: Text('Upgrade Profile', style: TextStyle(fontSize: 18.0)),
                       ),
                     ),
                   ),
@@ -444,20 +496,10 @@ class ExperienceProviderFormState extends State<ExperienceProviderForm> {
           ),
         ],
       ),
-
     );
-
-
-
-
   }
-
-  Future<XFile?> _pickImage(ImageSource source) async {
-    final pickedFile = await ImagePicker().pickImage(source: source);
-    return pickedFile;
-  }
-
 }
+
 
 
 
@@ -482,27 +524,18 @@ class TourGuideForm extends StatefulWidget {
 
 class TourGuideFormState extends State<TourGuideForm> {
   final _formKey = GlobalKey<FormState>();
+  late File? _imageFile1;
+  late File? _imageFile2;
+  String? _imageFileName1;  // For the first image
+  String? _imageFileName2;  // For the second image
+  // List<String> filed = ['Hiking', 'Camping', 'Adventure'];
+  late String NIC;
+  // late String experienceField = 'Hiking';
+  late String price;
+  late String num_of_experiences;
 
-
-  List<String> languages = [
-    'English',
-    'Sinhala',
-    'Tamil'
-    // Add more languages as needed
-  ];
-
-
-  late PickedFile? _imageFile;
-
-
-
-  List<String> selectedItems = []; // To store the selected items
-
-  final List<String> items = [
-    'English',
-    'Sinhala',
-    'Tamil',
-  ];
+  List<String> selectedItems = [];
+  final List<String> items = ['English', 'Sinhala', 'Tamil'];
 
   void _handleCheckboxChange(bool? value, String item) {
     setState(() {
@@ -514,21 +547,96 @@ class TourGuideFormState extends State<TourGuideForm> {
     });
   }
 
+  Future<void> _upgradeToTourGuide(
+      File? imageFile1,
+      File? imageFile2,
+      String NIC,
+      // String experienceField,
+      String price,
+      String num_of_experiences) async {
+    if (imageFile1 == null || imageFile2 == null) {
+      print("Image files not selected.");
+      return;
+    }
+
+    // Replace 'backendUrl' with your actual backend URL
+    final Uri profileUri = Uri.parse('$backendUrl/user/upgrade_travelguide');
+
+    // Create a multipart request
+    final request = http.MultipartRequest('POST', profileUri);
+
+    // Set your authorization token
+    request.headers['Authorization'] =
+    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImZpcnN0TmFtZSI6IkFtYXNoaSIsImxhc3ROYW1lIjoiU2FuZHVuaSIsImVtYWlsIjoiYW1hc2hpQGdtYWlsLmNvbSIsImlhdCI6MTY5ODUyNjAyNywiZXhwIjoxNzAxMTE4MDI3fQ.o33iAm4TldDV-x1Q8AL7UDq3ymLbee_cBX4Sw4C_oW8';
+
+    // Add the image files
+    // request.files.add(
+    //   await http.MultipartFile.fromPath('file', imageFile1.path),
+    // );
+    request.files.add(
+      await http.MultipartFile.fromPath('file', imageFile2.path),
+    );
 
 
-  late String NIC;
-  late FileImage SLTDA;
-  String selectedLanguage ='English';
-  late String experiences;
-  String experience_filed = 'Hiking';
-  late String address;
-  late String price;
-  late String name;
+    // Add other form fields
+    request.fields['nic'] = NIC;
+    request.fields['num_of_experiences'] = num_of_experiences;
+    // request.fields['field'] = experienceField;
+    request.fields['price_per_day'] = price;
+    // request.fields['tel_no'] = phone;
+    request.fields['language'] = selectedItems.join(',');
+    print(request.fields);
+    print(request.files);
+    try {
+      final response = await request.send();
+      print('Response status code: ${response.statusCode}');
+      final responseBody = await response.stream.bytesToString();
+      print('Response body: $responseBody');
 
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Profile Upgrade submitted Successfully'),
+            content: Text('Your details has been uploaded successfully.'),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the alert dialog
+                  // Navigate to the profile screen
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                    return Profile(); // Replace with your Profile screen widget
+                  }));
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (error) {
+      print('Error uploading data: $error');
+    }
+  }
+
+  Future<void> _pickImage(ImageSource source, int index) async {
+    final pickedFile = await ImagePicker().pickImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        if (index == 1) {
+          _imageFile1 = File(pickedFile.path);
+          _imageFileName1 = pickedFile.name;
+        } else if (index == 2) {
+          _imageFile2 = File(pickedFile.path);
+          _imageFileName2 = pickedFile.name;
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView( // Wrap the Column with SingleChildScrollView
+    return SingleChildScrollView(
       child: Column(
         children: [
           Padding(
@@ -541,359 +649,325 @@ class TourGuideFormState extends State<TourGuideForm> {
               ),
             ),
           ),
-
-
-
-
           Form(
             key: _formKey,
             child: Container(
               width: double.infinity,
               margin: const EdgeInsets.all(24.0),
               child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-
-
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: SizedBox(
-                    width: 340.0,
-                    height: 55.0,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "NIC",
-                        prefixIcon: Icon(Icons.person),
-                        border: myinputborder(),
-                        enabledBorder: myinputborder(),
-                        focusedBorder: myfocusborder(),
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: SizedBox(
+                      width: 340.0,
+                      height: 55.0,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: "NIC",
+                          prefixIcon: Icon(Icons.person),
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'NIC cannot be empty';
+                          }
+                          // return null;
+                        },
+                        onChanged: (text) {
+                          setState(() {
+                            NIC = text;
+                          });
+                        },
                       ),
-
-                      validator: (text){
-                        if(text!.isEmpty){
-                          return 'NIC Cannot be Empty';
-                        }
-                        return null;
-                      },
-
-                      onSaved: (text){
-                        NIC= text!;
-                      },
-
                     ),
                   ),
-                ),
-
-
-
-
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: SizedBox(
-                    width: 340.0,
-                    height: 55.0,
-                    child: Stack(
-                      alignment: Alignment.centerRight,
-                      children: [
-                        TextFormField(
-                          enabled: false,
-                          decoration: InputDecoration(
-                            labelText: "Upload NIC copy",
-                            prefixIcon: Icon(Icons.file_copy),
-                            border: myinputborder(),
-                            enabledBorder: myinputborder(),
-                            focusedBorder: myfocusborder(),
-                          ),
-                          validator: (text) {
-                            if (text!.isEmpty) {
-                              return 'NIC Cannot be Empty';
-                            }
-                            return null;
-                          },
-                          onSaved: (text) {
-                            NIC = text!;
-                          },
-                        ),
-                        Positioned(
-                          right: 0,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              final pickedImage = await _pickImage(ImageSource.gallery);
-                              if (pickedImage != null) {
-                                setState(() {
-                                  _imageFile = pickedImage as PickedFile?;
-                                });
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: SizedBox(
+                      width: 340.0,
+                      height: 55.0,
+                      child: Stack(
+                        alignment: Alignment.centerRight,
+                        children: [
+                          TextFormField(
+                            enabled: false,
+                            decoration: InputDecoration(
+                              labelText: _imageFileName1 ?? "Upload NIC copy",
+                              prefixIcon: Icon(Icons.file_copy),
+                              border: OutlineInputBorder(),
+                            ),
+                            validator: (text) {
+                              if (_imageFileName1 == null) {
+                                return 'NIC copy cannot be empty';
                               }
+                              return null;
                             },
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.transparent,
-                              elevation: 0, // Set elevation to 0
-                              padding: EdgeInsets.zero,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(0),
-                                side: BorderSide(color: Colors.transparent),
+                          ),
+                          Positioned(
+                            right: 0,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                await _pickImage(ImageSource.gallery, 1);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.transparent,
+                                elevation: 0,
+                                padding: EdgeInsets.zero,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0),
+                                  side: BorderSide(color: Colors.transparent),
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.upload,
+                                color: Color(0xFF0C1C33),
                               ),
                             ),
-                            child: Icon(
-                              Icons.upload,
-                              color: Color(0xFF0C1C33), // Change the color of the button icon
-                            ),
                           ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-
-
-
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: SizedBox(
-                    width: 340.0,
-                    height: 55.0,
-                    child: Stack(
-                      alignment: Alignment.centerRight,
-                      children: [
-                        TextFormField(
-                          enabled: false,
-                          decoration: InputDecoration(
-                            labelText: "Upload SLTDA License",
-                            prefixIcon: Icon(Icons.file_copy),
-                            border: myinputborder(),
-                            enabledBorder: myinputborder(),
-                            focusedBorder: myfocusborder(),
-                          ),
-                          validator: (text) {
-                            if (text!.isEmpty) {
-                              return 'NIC Cannot be Empty';
-                            }
-                            return null;
-                          },
-                          onSaved: (text) {
-                            NIC = text!;
-                          },
-                        ),
-                        Positioned(
-                          right: 0,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              final pickedImage = await _pickImage(ImageSource.gallery);
-                              if (pickedImage != null) {
-                                setState(() {
-                                  _imageFile = pickedImage as PickedFile?;
-                                });
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: SizedBox(
+                      width: 340.0,
+                      height: 55.0,
+                      child: Stack(
+                        alignment: Alignment.centerRight,
+                        children: [
+                          TextFormField(
+                            enabled: false,
+                            decoration: InputDecoration(
+                              labelText: _imageFileName2 ?? "Upload SLTDA copy",
+                              prefixIcon: Icon(Icons.file_copy),
+                              border: OutlineInputBorder(),
+                            ),
+                            validator: (text) {
+                              if (_imageFileName2 == null) {
+                                return 'SLTDA license copy cannot be empty';
                               }
+                              return null;
                             },
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.transparent,
-                              elevation: 0, // Set elevation to 0
-                              padding: EdgeInsets.zero,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(0),
-                                side: BorderSide(color: Colors.transparent),
+                          ),
+                          Positioned(
+                            right: 0,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                await _pickImage(ImageSource.gallery, 2);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.transparent,
+                                elevation: 0,
+                                padding: EdgeInsets.zero,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0),
+                                  side: BorderSide(color: Colors.transparent),
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.upload,
+                                color: Color(0xFF0C1C33),
                               ),
                             ),
-                            child: Icon(
-                              Icons.upload,
-                              color: Color(0xFF0C1C33), // Change the color of the button icon
-                            ),
                           ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-
-
-                Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: Text(
-                    'Select languages that you can', // Your desired title here
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      // Set text alignment to left
-                    ),
-
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: items.map((item) {
-                    return CheckboxListTile(
-                      title: Text(item),
-                      value: selectedItems.contains(item),
-                      onChanged: (bool? value) {
-                        _handleCheckboxChange(value, item);
-                      },
-                    );
-                  }).toList(),
-                ),
-
-                SizedBox(height:10.0),
-
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: SizedBox(
-                    width: 340.0,
-                    height: 55.0,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "No of trips",
-                        prefixIcon: Icon(Icons.book),
-                        border: myinputborder(),
-                        enabledBorder: myinputborder(),
-                        focusedBorder: myfocusborder(),
+                        ],
                       ),
-
-                      // validator: (text){
-                      //   if(text!.isEmpty){
-                      //     return 'Current Password Cannot be Empty';
-                      //   }
-                      //   return null;
-                      // },
-
-                      onSaved: (text){
-                        experiences= text!;
-                      },
-
                     ),
                   ),
-                ),
-
-                // Padding(
-                //   padding: EdgeInsets.only(bottom: 20.0),
-                //   child: SizedBox(
-                //     width: 340.0,
-                //     height: 55.0,
-                //     child: DropdownButtonFormField<String>(
-                //       value: experience_filed,
-                //       decoration: InputDecoration(
-                //         labelText: "Experience Filed",
-                //         prefixIcon: Icon(Icons.hail_outlined),
-                //         border: myinputborder(),
-                //         enabledBorder: myinputborder(),
-                //         focusedBorder: myfocusborder(),
-                //       ),
-                //       onChanged: (newValue) {
-                //         setState(() {
-                //           experience_filed = newValue!;
-                //         });
-                //       },
-                //       items: filed.map((file) {
-                //         return DropdownMenuItem<String>(
-                //           value: file,
-                //           child: Text(file),
-                //         );
-                //       }).toList(),
-                //       // validator: (value) {
-                //       //   if (value == null || value.isEmpty) {
-                //       //     return 'Please select a language';
-                //       //   }
-                //       //   return null;
-                //       // },
-                //       onSaved: (value) {
-                //         experience_filed = value!; // Save the selected language to your variable.
-                //       },
-                //     ),
-                //   ),
-                // ),
-
-
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: SizedBox(
-                    width: 340.0,
-                    height: 55.0,
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: "Price per Day",
-                        prefixIcon: Icon(Icons.money),
-                        border: myinputborder(),
-                        enabledBorder: myinputborder(),
-                        focusedBorder: myfocusborder(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: Text(
+                      'Select languages that you can', // Your desired title here
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        // Set text alignment to left
                       ),
-
-                      validator: (text){
-                        if(text!.isEmpty){
-                          return 'Price per hour cannot be empty';
-                        }
-                        return null;
-                      },
-
-                      onSaved: (text){
-                        price= text!;
-                      },
-
+                      textAlign: TextAlign.left,
                     ),
                   ),
-                ),
-
-
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: SizedBox(
-                    width: 340.0,
-                    height: 55.0,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "Address",
-                        prefixIcon: Icon(Icons.house),
-                        border: myinputborder(),
-                        enabledBorder: myinputborder(),
-                        focusedBorder: myfocusborder(),
-                      ),
-
-                      // validator: (text){
-                      //   if(text!.isEmpty){
-                      //     return 'Address Cannot be Empty';
-                      //   }
-                      //   return null;
-                      // },
-
-                      onSaved: (text){
-                        address= text!;
-                      },
-
-                    ),
+                  Column(
+                    children: items.map((item) {
+                      return CheckboxListTile(
+                        title: Text(item),
+                        value: selectedItems.contains(item),
+                        onChanged: (bool? value) {
+                          _handleCheckboxChange(value, item);
+                        },
+                      );
+                    }).toList(),
                   ),
-                ),
-
-                Center(
-                  child: Container(
-                    child: FilledButton(
-                      onPressed: () {
-                        if(_formKey.currentState!.validate()){
-                          _formKey.currentState?.save();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF0C1C33),
-                        minimumSize: Size(300.0,50.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0), // Change the radius here
+                  SizedBox(height: 10.0),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: SizedBox(
+                      width: 340.0,
+                      height: 55.0,
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          labelText: "No of years experience",
+                          prefixIcon: Icon(Icons.book),
+                          border: OutlineInputBorder(),
                         ),
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'No of years experience cannot be empty';
+                          }
+                          return null;
+                        },
+                        onChanged: (text) {
+                          setState(() {
+                            num_of_experiences = text;
+                          });
+                        },
                       ),
-                      child: Text('Upgrade Profile', style: TextStyle(fontSize: 18.0),),
                     ),
                   ),
-                ),
-              ],
-            ),
+                  // Padding(
+                  //   padding: EdgeInsets.only(bottom: 20.0),
+                  //   child: SizedBox(
+                  //     width: 340.0,
+                  //     height: 55.0,
+                  //     child: DropdownButtonFormField<String>(
+                  //       value: experienceField,
+                  //       decoration: InputDecoration(
+                  //         labelText: "Experience Field",
+                  //         prefixIcon: Icon(Icons.hail_outlined),
+                  //         border: OutlineInputBorder(),
+                  //       ),
+                  //       onChanged: (newValue) {
+                  //         setState(() {
+                  //           experienceField = newValue!;
+                  //         });
+                  //       },
+                  //       items: filed.map((file) {
+                  //         return DropdownMenuItem<String>(
+                  //           value: file,
+                  //           child: Text(file),
+                  //         );
+                  //       }).toList(),
+                  //       onSaved: (value) {
+                  //         setState(() {
+                  //           experienceField = value!;
+                  //         });
+                  //       },
+                  //     ),
+                  //   ),
+                  // ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: SizedBox(
+                      width: 340.0,
+                      height: 55.0,
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          labelText: "Price per day",
+                          prefixIcon: Icon(Icons.money),
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'Price per day cannot be empty';
+                          }
+                          return null;
+                        },
+                        onChanged: (text) {
+                          setState(() {
+                            price = text;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  // Padding(
+                  //   padding: EdgeInsets.only(bottom: 20.0),
+                  //   child: SizedBox(
+                  //     width: 340.0,
+                  //     height: 55.0,
+                  //     child: TextFormField(
+                  //       decoration: InputDecoration(
+                  //         labelText: "Address",
+                  //         prefixIcon: Icon(Icons.house),
+                  //         border: OutlineInputBorder(),
+                  //       ),
+                  //       onChanged: (text) {
+                  //         setState(() {
+                  //           address = text;
+                  //         });
+                  //       },
+                  //     ),
+                  //   ),
+                  // ),
+
+                  // Padding(
+                  //   padding: EdgeInsets.only(bottom: 20.0),
+                  //   child: SizedBox(
+                  //     width: 340.0,
+                  //     height: 55.0,
+                  //
+                  //     child: TextFormField(
+                  //       keyboardType: TextInputType.phone,
+                  //       decoration: InputDecoration(
+                  //         labelText: "Phone number",
+                  //         prefixIcon: Icon(Icons.phone),
+                  //         border: OutlineInputBorder(),
+                  //       ),
+                  //
+                  //
+                  //       validator: (text){
+                  //         if(text!.isEmpty){
+                  //           return 'Phone no Cannot be Empty';
+                  //         }
+                  //
+                  //         if (text.length < 10) {
+                  //           return 'Value must be at least 10 characters long.';
+                  //         }
+                  //         return null;
+                  //       },
+                  //
+                  //       onChanged: (text) {
+                  //         setState(() {
+                  //           phone = text;
+                  //         });
+                  //       },
+                  //
+                  //     ),
+                  //   ),
+                  // ),
+
+                  Center(
+                    child: Container(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          print('Button Clicked');
+                          print(NIC);
+                          try {
+                            await _upgradeToTourGuide(_imageFile1, _imageFile2, NIC, price, num_of_experiences);
+                          } catch (e) {
+                            print('Error in _upgradeToTourGuide: $e');
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xFF0C1C33),
+                          minimumSize: Size(300.0, 50.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        child: Text('Upgrade Profile', style: TextStyle(fontSize: 18.0)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
       ),
     );
-  }
-
-
-  Future<XFile?> _pickImage(ImageSource source) async {
-    final pickedFile = await ImagePicker().pickImage(source: source);
-    return pickedFile;
   }
 }
 
@@ -916,31 +990,111 @@ class VendorForm extends StatefulWidget {
 
 class VendorFormState extends State<VendorForm> {
   final _formKey = GlobalKey<FormState>();
-
-  late PickedFile? _imageFile;
-
-
-  List<String> cateogory = [
-    'Tent',
-    'Tools',
-    // Add more languages as needed
-  ];
-
-
-
-  late String NIC;
-  late FileImage SLTDA;
-  String cat ='Tent';
-  late String experiences;
-  String experience_filed = 'Hiking';
+  late File? _imageFile1;
+  String? _imageFileName1;  // For the first image
+  late String bussiness_reg_no;
+  late String phone;
   late String address;
-  late String price;
-  late String name;
 
+
+
+  Future<void> _upgradeToVendor(
+
+      File? imageFile1,
+      String bussiness_reg_no,
+      String address,
+      String phone) async {
+    if (imageFile1 == null) {
+      print("Image files not selected.");
+      return;
+    }
+
+    // Replace 'backendUrl' with your actual backend URL
+    final Uri profileUri = Uri.parse('$backendUrl/user/upgrade_vendor');
+
+    // Create a multipart request
+    final request = http.MultipartRequest('POST', profileUri);
+
+    // Set your authorization token
+    request.headers['Authorization'] =
+    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImZpcnN0TmFtZSI6IkFtYXNoaSIsImxhc3ROYW1lIjoiU2FuZHVuaSIsImVtYWlsIjoiYW1hc2hpQGdtYWlsLmNvbSIsImlhdCI6MTY5ODUyNjAyNywiZXhwIjoxNzAxMTE4MDI3fQ.o33iAm4TldDV-x1Q8AL7UDq3ymLbee_cBX4Sw4C_oW8';
+
+
+    request.files.add(
+      await http.MultipartFile.fromPath('file', imageFile1.path),
+    );
+
+
+    // Add other form fields
+    request.fields['bussiness_reg_no'] = bussiness_reg_no;
+    request.fields['address'] = address;
+    request.fields['tel_no'] = phone;
+
+    try {
+      final response = await request.send();
+      print('Response status code: ${response.statusCode}');
+      final responseBody = await response.stream.bytesToString();
+      print('Response body: $responseBody');
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Success'),
+            content: Text('Profile has been successfully updated.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                    return Profile();
+                  }));
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (error) {
+      print('Error uploading data: $error');
+
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Error'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                    return UpgradeProfile();
+                  }));
+                },
+                child: Text('Retry'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  Future<void> _pickImage(ImageSource source, int index) async {
+    final pickedFile = await ImagePicker().pickImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        if (index == 1) {
+          _imageFile1 = File(pickedFile.path);
+          _imageFileName1 = pickedFile.name;
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView( // Wrap the Column with SingleChildScrollView
+    return SingleChildScrollView(
       child: Column(
         children: [
           Padding(
@@ -953,209 +1107,181 @@ class VendorFormState extends State<VendorForm> {
               ),
             ),
           ),
-
-
-
           Form(
             key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: SizedBox(
-                    width: 340.0,
-                    height: 55.0,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "NIC",
-                        prefixIcon: Icon(Icons.person),
-                        border: myinputborder(),
-                        enabledBorder: myinputborder(),
-                        focusedBorder: myfocusborder(),
+            child: Container(
+              width: double.infinity,
+              margin: const EdgeInsets.all(24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: SizedBox(
+                      width: 340.0,
+                      height: 55.0,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: "Bussiness register no",
+                          prefixIcon: Icon(Icons.person),
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'Bussiness no cannot be empty';
+                          }
+                          // return null;
+                        },
+                        onChanged: (text) {
+                          setState(() {
+                            bussiness_reg_no = text;
+                          });
+                        },
                       ),
-
-                      validator: (text){
-                        if(text!.isEmpty){
-                          return 'NIC Cannot be Empty';
-                        }
-                        return null;
-                      },
-
-                      onSaved: (text){
-                        NIC= text!;
-                      },
-
                     ),
                   ),
-                ),
-
-
-
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: SizedBox(
-                    width: 340.0,
-                    height: 55.0,
-                    child: Stack(
-                      alignment: Alignment.centerRight,
-                      children: [
-                        TextFormField(
-                          enabled: false,
-                          decoration: InputDecoration(
-                            labelText: "Upload NIC copy",
-                            prefixIcon: Icon(Icons.file_copy),
-                            border: myinputborder(),
-                            enabledBorder: myinputborder(),
-                            focusedBorder: myfocusborder(),
-                          ),
-                          validator: (text) {
-                            if (text!.isEmpty) {
-                              return 'NIC Cannot be Empty';
-                            }
-                            return null;
-                          },
-                          onSaved: (text) {
-                            NIC = text!;
-                          },
-                        ),
-                        Positioned(
-                          right: 0,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              final pickedImage = await _pickImage(ImageSource.gallery);
-                              if (pickedImage != null) {
-                                setState(() {
-                                  _imageFile = pickedImage as PickedFile?;
-                                });
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: SizedBox(
+                      width: 340.0,
+                      height: 55.0,
+                      child: Stack(
+                        alignment: Alignment.centerRight,
+                        children: [
+                          TextFormField(
+                            enabled: false,
+                            decoration: InputDecoration(
+                              labelText: _imageFileName1 ?? "Upload license copy",
+                              prefixIcon: Icon(Icons.file_copy),
+                              border: OutlineInputBorder(),
+                            ),
+                            validator: (text) {
+                              if (_imageFileName1 == null) {
+                                return 'License copy cannot be empty';
                               }
+                              return null;
                             },
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.transparent,
-                              elevation: 0, // Set elevation to 0
-                              padding: EdgeInsets.zero,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(0),
-                                side: BorderSide(color: Colors.transparent),
+                          ),
+                          Positioned(
+                            right: 0,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                await _pickImage(ImageSource.gallery, 1);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.transparent,
+                                elevation: 0,
+                                padding: EdgeInsets.zero,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0),
+                                  side: BorderSide(color: Colors.transparent),
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.upload,
+                                color: Color(0xFF0C1C33),
                               ),
                             ),
-                            child: Icon(
-                              Icons.upload,
-                              color: Color(0xFF0C1C33), // Change the color of the button icon
-                            ),
                           ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-
-
-
-
-
-
-                // Padding(
-                //   padding: EdgeInsets.only(bottom: 20.0),
-                //   child: SizedBox(
-                //     width: 340.0,
-                //     height: 55.0,
-                //     child: DropdownButtonFormField<String>(
-                //       value: cat,
-                //       decoration: InputDecoration(
-                //         labelText: "Category",
-                //         prefixIcon: Icon(Icons.category),
-                //         border: myinputborder(),
-                //         enabledBorder: myinputborder(),
-                //         focusedBorder: myfocusborder(),
-                //       ),
-                //       onChanged: (newValue) {
-                //         setState(() {
-                //           cat = newValue!;
-                //         });
-                //       },
-                //       items: cateogory.map((language) {
-                //         return DropdownMenuItem<String>(
-                //           value: language,
-                //           child: Text(language),
-                //         );
-                //       }).toList(),
-                //       // validator: (value) {
-                //       //   if (value == null || value.isEmpty) {
-                //       //     return 'Please select a language';
-                //       //   }
-                //       //   return null;
-                //       // },
-                //       onSaved: (value) {
-                //         cat = value!; // Save the selected language to your variable.
-                //       },
-                //     ),
-                //   ),
-                // ),
-
-
-
-
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: SizedBox(
-                    width: 340.0,
-                    height: 55.0,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "Address",
-                        prefixIcon: Icon(Icons.house),
-                        border: myinputborder(),
-                        enabledBorder: myinputborder(),
-                        focusedBorder: myfocusborder(),
+                        ],
                       ),
-
-                      // validator: (text){
-                      //   if(text!.isEmpty){
-                      //     return 'Address Cannot be Empty';
-                      //   }
-                      //   return null;
-                      // },
-
-                      onSaved: (text){
-                        address= text!;
-                      },
-
                     ),
                   ),
-                ),
 
-                Center(
-                  child: Container(
-                    child: FilledButton(
-                      onPressed: () {
-                        if(_formKey.currentState!.validate()){
-                          _formKey.currentState?.save();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF0C1C33),
-                        minimumSize: Size(300.0,50.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0), // Change the radius here
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: SizedBox(
+                      width: 340.0,
+                      height: 55.0,
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          labelText: "Address",
+                          prefixIcon: Icon(Icons.book),
+                          border: OutlineInputBorder(),
                         ),
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'No of years experience cannot be empty';
+                          }
+                          return null;
+                        },
+                        onChanged: (text) {
+                          setState(() {
+                            address = text;
+                          });
+                        },
                       ),
-                      child: Text('Upgrade Profile', style: TextStyle(fontSize: 18.0),),
                     ),
                   ),
-                ),
-              ],
+
+
+
+
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: SizedBox(
+                      width: 340.0,
+                      height: 55.0,
+
+                      child: TextFormField(
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          labelText: "Phone number",
+                          prefixIcon: Icon(Icons.phone),
+                          border: OutlineInputBorder(),
+                        ),
+
+
+                        validator: (text){
+                          if(text!.isEmpty){
+                            return 'Phone no Cannot be Empty';
+                          }
+
+                          if (text.length < 10) {
+                            return 'Value must be at least 10 characters long.';
+                          }
+                          return null;
+                        },
+
+                        onChanged: (text) {
+                          setState(() {
+                            phone = text;
+                          });
+                        },
+
+                      ),
+                    ),
+                  ),
+
+                  Center(
+                    child: Container(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          try {
+                            await _upgradeToVendor(_imageFile1, bussiness_reg_no, phone, address);
+                          } catch (e) {
+                            print('Error in _upgradeToVendor: $e');
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xFF0C1C33),
+                          minimumSize: Size(300.0, 50.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        child: Text('Upgrade Profile', style: TextStyle(fontSize: 18.0)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
       ),
     );
-  }
-
-
-  Future<XFile?> _pickImage(ImageSource source) async {
-    final pickedFile = await ImagePicker().pickImage(source: source);
-    return pickedFile;
   }
 }
 

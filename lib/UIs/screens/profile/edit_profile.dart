@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:main/Data/env/env.dart';
 import 'profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 
 
@@ -180,9 +181,39 @@ class EditProfileFormState extends State<EditProfileForm> {
   late String username;
   late String phone;
 
+  late String email;
+  late String pro;
+
+  Future<void> _loadUserProfileData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token'); // Replace with your token storage key
+
+    if (token != null && JwtDecoder.isExpired(token) == false) {
+      Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+      setState(() {
+
+        email = decodedToken['email'];
+
+
+      });
+    } else {
+      // Handle the case when the token is missing or expired
+      print('Token is missing or expired.');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserProfileData();
+  }
+
   Future<void> _uploadImage(File? imageFile, String firstname, String lastname, String username, String phone) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
+
+
+
     print('sew');
     if (imageFile == null) {
       // Handle the case when no image is selected
@@ -360,7 +391,7 @@ class EditProfileFormState extends State<EditProfileForm> {
                 child: TextFormField(
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    labelText: "newmail@gmail.com",
+                    labelText: email,
                     prefixIcon: Icon(Icons.lock),
                     border: myinputborder(),
                     enabledBorder: myinputborder(),

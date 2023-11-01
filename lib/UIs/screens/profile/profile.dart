@@ -887,12 +887,14 @@ class _ProfileState extends State<Profile> {
 
 
   Future<List<dynamic>> fetchData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
     try {
       final Uri profileUri = Uri.parse('$backendUrl/user/myPosts');
       final response = await http.get(
         profileUri,
         headers: {
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImZpcnN0TmFtZSI6InNhY2hpbmkiLCJsYXN0TmFtZSI6InVzaGEiLCJlbWFpbCI6ImFtYXNoaUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjk4NzMzMzI5LCJleHAiOjE3MDEzMjUzMjl9.5xNuBHS8t5F_jgnEmCd3weN9oZCuizjsh4zlOYmOIZY',
+          'Authorization': 'Bearer $token',
         },
       );
 
