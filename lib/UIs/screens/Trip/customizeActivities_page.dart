@@ -15,7 +15,7 @@ class CustomizeActivities extends StatelessWidget {
         backgroundColor: ColorsTravelMate.tertiary,
         foregroundColor: ColorsTravelMate.primary,
       ),
-      body: SingleChildScrollView( 
+      body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: Column(
@@ -27,7 +27,10 @@ class CustomizeActivities extends StatelessWidget {
               ),
               Text(
                 'My Activities',
-                style: TextStyle(color: ColorsTravelMate.primary, fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: ColorsTravelMate.primary,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
               ),
               Text(
                 'You haven\'\ t added any activities yet',
@@ -37,29 +40,44 @@ class CustomizeActivities extends StatelessWidget {
                 height: 30,
               ),
               Text(
-                'Popular Activities',
-                style: TextStyle(color: ColorsTravelMate.primary, fontSize: 20, fontWeight: FontWeight.bold),
+                'Popular Activities in Galle',
+                style: TextStyle(
+                    color: ColorsTravelMate.primary,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: 10,
               ),
               TextFieldWidget(
-                  labelText: 'Search Activities',
-                  hintText: 'Eg: Surfing, Camping',
-                  prefixIcon: Icon(
-                    Icons.surfing,
-                    color: ColorsTravelMate.primary,
-                  ),
-                  validator: (value) {},),
+                labelText: 'Search Activities',
+                hintText: 'Eg: Surfing, Camping',
+                prefixIcon: Icon(
+                  Icons.surfing,
+                  color: ColorsTravelMate.primary,
+                ),
+                validator: (value) {},
+              ),
               SizedBox(
                 height: 10,
               ),
-              ActivityCard(
+              const ActivityCard(
                 title: 'Surfing',
                 // icon: Icon(Icons.surfing),
+                packageName: 'Ahikava Surf School',
                 imagepath: 'assets/hiking.jpeg',
                 locationTitle: 'Unawatuna Beach',
-                time: 'Duration: 2 - 3 Hours',
+                time: 'Duration: 2 - 3 Hourssss',
+                age: 'Ages: 16 - 70',
+                price: '1 Adult x \$50',
+              ),
+              const ActivityCard(
+                title: '',
+                // icon: Icon(Icons.surfing),
+                packageName: 'Ahikava Surf School',
+                imagepath: 'assets/hiking.jpeg',
+                locationTitle: 'Unawatuna Beach',
+                time: 'Duration: 2 - 3 Hourssss',
                 age: 'Ages: 16 - 70',
                 price: '1 Adult x \$50',
               ),
@@ -69,6 +87,7 @@ class CustomizeActivities extends StatelessWidget {
               ActivityCard(
                 title: 'Village cycling',
                 // icon: Icon(Icons.bike_scooter),
+                packageName: 'Ahikava Surf School',
                 imagepath: 'assets/cycling.jpg',
                 locationTitle: 'Unawatuna',
                 time: 'Duration: 3 - 4 Hours',
@@ -81,6 +100,7 @@ class CustomizeActivities extends StatelessWidget {
               ActivityCard(
                 title: 'Safari',
                 // icon: Icon(Icons.car_repair),
+                packageName: 'Ahikava Surf School',
                 imagepath: 'assets/safari.jpg',
                 locationTitle: 'Yala',
                 time: 'Duration: 8 - 10 Hours',
