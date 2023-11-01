@@ -1232,7 +1232,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-
   share:
     dependency: "direct main"
     description:
@@ -1346,10 +1345,10 @@ packages:
     dependency: "direct main"
     description:
       name: slide_countdown
-      sha256: "8f45cff7c07b3f11825f52edae71e984888ccba918cef74eb479abeaa4665106"
+      sha256: "384634c9147bd45a66dbf388512af4feb00e26d5d3a1397318ec3f81622b0b14"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.0"
+    version: "1.0.2"
   sliding_up_panel:
     dependency: "direct main"
     description:
@@ -1418,10 +1417,10 @@ packages:
     dependency: transitive
     description:
       name: stream_duration
-      sha256: a29e071bf3e5d284e1e7dce98dbbaf547e16543c4802ec4f1a5c74e516c71af5
+      sha256: "0df9ba6a9c0518483f8c98bec1808851bebc68072814eb03f82ec71beb6af5a1"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.1"
+    version: "4.2.0"
   stream_transform:
     dependency: transitive
     description:
@@ -1526,7 +1525,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.2.1"
-
   url_launcher_android:
     dependency: transitive
     description:
@@ -1672,5 +1670,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.1.0-185.0.dev <4.0.0"
+  dart: ">=3.1.0 <4.0.0"
   flutter: ">=3.13.0"
