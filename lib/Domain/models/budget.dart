@@ -66,12 +66,4 @@ Connection: close
       'expenses': expenses.map((e) => e.toJson()).toList(),
     };
   }
-
-  Budget copyWith({List<Expense>? expenses}) {
-    return Budget(
-      id: id,
-      amount: amount,
-      expenses: expenses ?? this.expenses,
-    );
-  }
 }

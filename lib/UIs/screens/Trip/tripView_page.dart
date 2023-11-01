@@ -7,7 +7,6 @@ import 'package:main/Data/env/env.dart';
 import 'package:main/Domain/models/trip.dart';
 import 'package:main/UIs/screens/Trip/privateTrips/budget_page.dart';
 import 'package:main/UIs/screens/Trip/tripPlanning2_page.dart';
-import 'package:main/UIs/widgets/add_starting_place_widget.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 import '../../../Data/env/apiKeys.dart';
 import '../../themes/colors.dart';
@@ -213,33 +212,6 @@ class _OverviewState extends State<Overview> {
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.all(Radius.circular(5.0))),
                   ),
-                  SizedBox(height: 20),
-                  //Starting location display
-                  Row(
-                    children: [
-                      const Text('Starting Location: ',
-                          style: TextStyle(fontSize: 20)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          //add a total amount of expenses
-                          Text(
-                            trip.value!.startPlace!.split(',')[0] ??
-                                "Add where you'll start",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          (trip.value!.startPlace ==
-                                  null)
-                              ? AddStartingPlace(context: context)
-                              : Container(),
-                          ],
-                      ),
-                      //add a button to change the starting location
-                    ],
-                  ),
                 ],
               );
             },
@@ -390,7 +362,7 @@ class _IterinarytabState extends State<Iterinarytab> {
                 //date picker
                 Consumer(
                   builder: (context, ref, child) {
-                    final trip = ref.read(tripPlanningNotifierProvider);
+                  final trip = ref.read(tripPlanningNotifierProvider);
                     final duration = trip.value!.numberOfDays;
                     return DropdownButtonHideUnderline(
                       child: DropdownButtonFormField(

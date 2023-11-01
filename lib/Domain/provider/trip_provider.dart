@@ -45,14 +45,4 @@ class TripPlanningNotifier extends _$TripPlanningNotifier {
       },
     );
   }
-
-  Future<void> updateTrip(Trip updatedTrip) async {
-    final token = ref.read(userAuthNotifierProvider);
-    final service = TripServices();
-    state = const AsyncValue.loading();
-    await AsyncValue.guard(() async {
-      return service.updateTrip(updatedTrip.toJson(), token.value!);
-    });
-    ref.invalidateSelf();
-  }
 }
