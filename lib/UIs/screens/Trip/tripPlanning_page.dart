@@ -170,7 +170,7 @@ void _presentDatePicker() async {
       lastDate: lastDate,
     );
     setState(() {
-      _selectedDate = pickedDate!.add(const Duration(days: 1));
+      _selectedDate = pickedDate!.add(const Duration(hours: 6));
       _startDateController.text = formatter.format(_selectedDate!);
     });
   }
