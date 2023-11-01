@@ -34,7 +34,8 @@ class home extends StatelessWidget {
                 );
               },
               
-              child: Image.asset('assets/profile.png', height: 30, width: 30),
+              child: const CircleAvatar(backgroundImage: AssetImage('assets/profile.png'),
+               radius: 30, backgroundColor: Colors.transparent)
             ),
         ],
         backgroundColor: ColorsTravelMate.tertiary,

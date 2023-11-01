@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_places_flutter/model/prediction.dart';
+import 'package:intl/intl.dart';
+import 'package:main/Data/env/apiKeys.dart';
 
 import 'package:flutter/material.dart';
 import 'package:main/Data/env/apiKeys.dart';
@@ -85,6 +87,10 @@ class trip extends ConsumerWidget {
           ),
         ];
         print(e);
+        //run a future to refresh the provider after 5 seconds
+        Future.delayed(const Duration(seconds: 5), () {
+          ref.refresh(tripPlanningNotifierProvider);
+        });
         tabContent = [publicTrips, customizeTrips];
         WidgetsBinding.instance.addPostFrameCallback((_) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -146,12 +152,29 @@ class Customize extends StatefulWidget {
 
 class _CustomizeState extends State<Customize> {
   final _formKey = GlobalKey<FormState>();
+  final formatter = DateFormat.yMMMd();
   final TextEditingController _destinationController = TextEditingController();
   final TextEditingController _startDateController = TextEditingController();
   final TextEditingController _numberOfDaysController = TextEditingController();
   double? lat;
   double? lng;
+  DateTime? _selectedDate;
   Future<void>? _pendingTripCreation;
+
+void _presentDatePicker() async {
+    final now = DateTime.now();
+    final lastDate = DateTime(now.year, now.month+4);
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: now,
+      lastDate: lastDate,
+    );
+    setState(() {
+      _selectedDate = pickedDate!.add(const Duration(hours: 6));
+      _startDateController.text = formatter.format(_selectedDate!);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +201,7 @@ class _CustomizeState extends State<Customize> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     itemClick: (Prediction prediction) {
-                      _destinationController.text = prediction.description!;
+                      _destinationController.text = prediction.id!;
                     },
                     isLatLngRequired: true,
                     getPlaceDetailWithLatLng: (Prediction prediction) {
@@ -188,6 +211,7 @@ class _CustomizeState extends State<Customize> {
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
+                    readOnly: true,
                     decoration: const InputDecoration(
                       labelText: 'Start Date',
                       hintText: 'Select a start date',
@@ -199,6 +223,10 @@ class _CustomizeState extends State<Customize> {
                         return 'Please enter a start date';
                       }
                       return null;
+                    },
+                    //make the presentdatepicker function and dont allow the user to type
+                    onTap: () {
+                      _presentDatePicker();
                     },
                   ),
                   const SizedBox(height: 20),
@@ -228,25 +256,6 @@ class _CustomizeState extends State<Customize> {
                               ConnectionState.waiting;
                           return TextButton(
                             onPressed: () {
-                              // token.when(
-                              //     data: (token) {
-                              //       if (token.isNotEmpty) {
-                              //         _sendTripRequest(token);
-                              //       } else {
-                              //         ScaffoldMessenger.of(context).showSnackBar(
-                              //           const SnackBar(
-                              //             content: Text('Please login to continue'),
-                              //           ),
-                              //         );
-                              //       }
-                              //     },
-                              //     loading: () {},
-                              //     error: (e, s) =>
-                              //         ScaffoldMessenger.of(context).showSnackBar(
-                              //           const SnackBar(
-                              //             content: Text('Error'),
-                              //           ),
-                              //         ));
                               if (isLoading == true) {
                                 return;
                               }
@@ -254,9 +263,9 @@ class _CustomizeState extends State<Customize> {
                                 final future = ref
                                     .read(tripPlanningNotifierProvider.notifier)
                                     .createTrip({
-                                  "startDate": _startDateController.text,
+                                  "startDate": _selectedDate.toString(),
                                   "numberOfDays": _numberOfDaysController.text,
-                                  "startPlace": _destinationController.text,
+                                  "destination": _destinationController.text,
                                   "category": "Private"
                                 });
                                 setState(() {

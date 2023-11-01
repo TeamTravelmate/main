@@ -1,30 +1,35 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:main/Domain/models/expense_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:main/Domain/provider/trip_provider.dart';
 
-class NewExpense extends StatefulWidget {
+class NewExpense extends ConsumerStatefulWidget {
   const NewExpense({super.key, required this.onAddExpense});
 
   final void Function(Expense expense) onAddExpense;
 
   @override
-  State<NewExpense> createState() => _NewExpenseState();
+  ConsumerState<NewExpense> createState() => _NewExpenseState();
 }
 
-class _NewExpenseState extends State<NewExpense> {
+class _NewExpenseState extends ConsumerState<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime? _selectedDate;
   expCategory _selectedCategory = expCategory.food;
 
   void _presentDatePicker() async {
-    final now = DateTime.now();
-    final firstDate = DateTime(now.year - 1, now.month, now.day);
+    final trip = ref.read(tripPlanningNotifierProvider);
+    final initialDate = DateFormat('EEE, M/d/y')
+                      .parse(trip.value!.startDate!);
+    final lastDate = initialDate.add(Duration(days: trip.value!.numberOfDays!));
     final pickedDate = await showDatePicker(
       context: context,
-      initialDate: now,
-      firstDate: firstDate,
-      lastDate: now,
+      initialDate: initialDate,
+      firstDate: initialDate,
+      lastDate: lastDate,
     );
     setState(() {
       _selectedDate = pickedDate;
@@ -61,7 +66,7 @@ class _NewExpenseState extends State<NewExpense> {
       Expense(
         title: _titleController.text,
         amount: enteredAmount,
-        date: _selectedDate!,
+        date: _selectedDate!.add(Duration(hours: 6)),
         category: _selectedCategory,
       ),
     );

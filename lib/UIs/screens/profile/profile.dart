@@ -1,8 +1,12 @@
 import 'dart:convert';
+import 'package:file/file.dart';
 
 import 'package:flutter/material.dart';
 import 'package:galleryimage/galleryimage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:main/Data/storage/token.dart';
+import 'package:main/Data/env/env.dart';
+import 'package:http/http.dart' as http;
 import 'edit_profile.dart';
 import 'upgrade_profile.dart';
 import 'view_destinations.dart';
@@ -10,31 +14,79 @@ import '../../widgets/feed_widget.dart';
 import 'create_newpost.dart';
 import '../friendList/followers_list.dart';
 import '../friendList/following_list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class Profile extends StatefulWidget {
   final token;
-  const Profile({super.key, this.token});
+
+  Profile({Key? key, this.token}) : super(key: key);
 
   @override
   State<Profile> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-  late int userId;
+
+
+
   late String firstName;
   late String lastName;
+  late String username;
+  late String phone_no;
+  late String profile_pic;
+  late String email;
+  Map<String, dynamic>? jsonData;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
-    userId = jwtDecodedToken['userId'];
-    firstName = "Kaleel";
-    lastName = "Sheromi";
+    fetchUsers();
 
   }
+
+
+  void fetchUsers() async {
+    try {
+      final Uri profileUri = Uri.parse('$backendUrl/user/myProfile');
+      print(profileUri);
+
+      final response = await http.get(
+        profileUri,
+        headers: {
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImZpcnN0TmFtZSI6IkFtYXNoaSIsImxhc3ROYW1lIjoiU2FuZHVuaSIsImVtYWlsIjoiYW1hc2hpQGdtYWlsLmNvbSIsImlhdCI6MTY5ODUyNjAyNywiZXhwIjoxNzAxMTE4MDI3fQ.o33iAm4TldDV-x1Q8AL7UDq3ymLbee_cBX4Sw4C_oW8', // Add the token to the headers
+        },
+
+      );
+
+      if (response.statusCode == 200) {
+        final body = response.body;
+        final jsonData = jsonDecode(body);
+
+        setState(() {
+          // Update the state with the fetched data
+          firstName = jsonData?['firstName'] ?? "";
+          lastName = jsonData?['lastName'] ?? "";
+          username = jsonData?['username'] ?? "";
+          profile_pic = jsonData?['profile_pic'] ?? "";
+          phone_no = jsonData?['phone_no'] ?? "";
+          email = jsonData?['email'] ?? "";
+          print(profile_pic);
+        });
+
+        // Now you can use the jsonData as per your requirements
+        print('User Profile Data: $jsonData');
+      } else {
+        print('Failed to fetch user profile data');
+      }
+    } catch (e) {
+      print('Error occurred while fetching user profile data: $e');
+    }
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,31 +107,55 @@ class _ProfileState extends State<Profile> {
             leading: const BackButton(
               color: Colors.black,
             ),
+
+
+            // Remove the Container from the bottom property of AppBar
+            // Add the Container above the TabBar
           ),
+
+
           body: Column(
             children: [
               Container(
+                // Place the Container above the TabBar
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const CircleAvatar(
-                      backgroundImage: AssetImage('assets/profile_pic.jpeg'),
-                      radius: 50,
+
+                    CircleAvatar(
+                      backgroundImage: NetworkImage('http://192.168.8.138:3000/' + profile_pic.replaceAll(r'\', '/')),
+                      radius: 50.0,
                     ),
-                    const Padding(
+
+
+
+
+
+                    Padding(
                       padding: EdgeInsets.only(top: 8.0),
                       child: Text(
-                        'Susan Perera',
+                        '${firstName ?? "Unknown"} ${lastName ?? "Unknown"}',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    const Padding(
+
+
+                    Padding(
                       padding: EdgeInsets.only(top: 3.0),
-                      child: Text('@sheromi99', style: TextStyle(fontSize: 15)),
+                      child: Text('${username ?? "Unknown"}',
+                          style: TextStyle(fontSize: 15)),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.only(top: 3.0),
+                      child: Text('Traveller',
+                          style: TextStyle(fontSize: 15)),
                     ),
                    
                     Row(
@@ -130,10 +206,10 @@ class _ProfileState extends State<Profile> {
                               },
                               child: const Padding(
                                 padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
-                                
+
                               ),
                             ),
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
                               child: Text('Following',
                                   style: TextStyle(fontSize: 15)),
@@ -163,9 +239,10 @@ class _ProfileState extends State<Profile> {
                               style: TextStyle(fontSize: 15.0)),
                         ),
                         FilledButton(
+                          child: const Text('Upgrade Profile',
+                              style: TextStyle(fontSize: 15.0)),
                           onPressed: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (_) {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (_) {
                               return UpgradeProfile();
                             }));
                           },
@@ -176,8 +253,6 @@ class _ProfileState extends State<Profile> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
-                          child: const Text('Upgrade Profile',
-                              style: TextStyle(fontSize: 15.0)),
                         ),
                       ],
                     )
@@ -214,73 +289,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  // Widget Tab1(BuildContext context){
-  //
-  //   List<String> posts=[
-  //     'assets/3.jpeg',
-  //     'assets/4.jpeg',
-  //     'assets/5.jpeg',
-  //     'assets/download.jpeg',
-  //     'assets/beach.jpg',
-  //     'assets/jungle.jpg',
-  //     'assets/tiger.jpeg',
-  //     'assets/river.jpg',
-  //     'assets/sigiriya.jpg',
-  //     'assets/travellers.jpg',
-  //     'assets/elephant.jpg',
-  //     'assets/fam.jpg',
-  //     'assets/ella.jpg',
-  //     'assets/beach2.jpeg',
-  //     'assets/3.jpeg',
-  //     'assets/4.jpeg',
-  //     'assets/5.jpeg',
-  //     'assets/download.jpeg',
-  //     'assets/beach.jpg',
-  //     'assets/jungle.jpg',
-  //     'assets/tiger.jpeg',
-  //
-  //   ];
-  //
-  //
-  //   return Container(
-  //     margin: EdgeInsets.all(3.0),
-  //     child: Stack(
-  //       children: [
-  //         GridView.builder(
-  //           itemCount: posts.length,
-  //           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-  //             crossAxisCount: 3,
-  //             crossAxisSpacing: 1.0,
-  //             mainAxisSpacing: 1.0,
-  //           ),
-  //           itemBuilder: (BuildContext context, int index) {
-  //             return SizedBox(
-  //               width: 100,
-  //               height: 100,
-  //               child: Image.asset(posts[index], fit: BoxFit.cover),
-  //             );
-  //           },
-  //         ),
-  //         Align(
-  //           alignment: Alignment.bottomRight,
-  //           child: Padding(
-  //             padding: EdgeInsets.all(16.0),
-  //             child: FloatingActionButton(
-  //               onPressed: () {
-  //                 Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-  //                   return NewPost();
-  //                 }));
-  //               },
-  //               child: Icon(Icons.post_add, size:30),
-  //               backgroundColor: Color(0xFF0C1C33),
-  //               foregroundColor: Colors.white,
-  //             ),
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+
 
   Widget Tab2() {
     List<String> listOfUrls = [
@@ -327,7 +336,7 @@ class _ProfileState extends State<Profile> {
                     color: Colors.grey
                         .withOpacity(0.5), // Shadow color and opacity
                     spreadRadius:
-                        2, // How far the shadow spreads from the container
+                    2, // How far the shadow spreads from the container
                     blurRadius: 5, // The intensity of the shadow blur
                     offset: const Offset(
                         0, 3), // The offset of the shadow from the container
@@ -420,7 +429,7 @@ class _ProfileState extends State<Profile> {
                     color: Colors.grey
                         .withOpacity(0.5), // Shadow color and opacity
                     spreadRadius:
-                        2, // How far the shadow spreads from the container
+                    2, // How far the shadow spreads from the container
                     blurRadius: 5, // The intensity of the shadow blur
                     offset: const Offset(
                         0, 3), // The offset of the shadow from the container
@@ -513,7 +522,7 @@ class _ProfileState extends State<Profile> {
                     color: Colors.grey
                         .withOpacity(0.5), // Shadow color and opacity
                     spreadRadius:
-                        2, // How far the shadow spreads from the container
+                    2, // How far the shadow spreads from the container
                     blurRadius: 5, // The intensity of the shadow blur
                     offset: const Offset(
                         0, 3), // The offset of the shadow from the container
@@ -604,10 +613,10 @@ class _ProfileState extends State<Profile> {
             onPressed: () {
               // Your button's onPressed function here...
             },
+            child: const Icon(Icons.next_plan_outlined, size: 30),
             backgroundColor: const Color(0xFF0C1C33),
             foregroundColor:
-                Colors.white,
-            child: const Icon(Icons.next_plan_outlined, size: 30), // Replace this with your desired icon
+            Colors.white, // Replace this with your desired icon
           ),
         ),
       ),
@@ -631,7 +640,7 @@ class _ProfileState extends State<Profile> {
                     color: Colors.grey
                         .withOpacity(0.5), // Shadow color and opacity
                     spreadRadius:
-                        2, // How far the shadow spreads from the container
+                    2, // How far the shadow spreads from the container
                     blurRadius: 5, // The intensity of the shadow blur
                     offset: const Offset(
                         0, 3), // The offset of the shadow from the container
@@ -668,7 +677,7 @@ class _ProfileState extends State<Profile> {
                                       child: const Text(
                                         "View Destinations",
                                         style:
-                                            TextStyle(color: Color(0xFF2FACBB)),
+                                        TextStyle(color: Color(0xFF2FACBB)),
                                       ),
                                     ),
                                   )),
@@ -692,7 +701,7 @@ class _ProfileState extends State<Profile> {
                     color: Colors.grey
                         .withOpacity(0.5), // Shadow color and opacity
                     spreadRadius:
-                        2, // How far the shadow spreads from the container
+                    2, // How far the shadow spreads from the container
                     blurRadius: 5, // The intensity of the shadow blur
                     offset: const Offset(
                         0, 3), // The offset of the shadow from the container
@@ -734,7 +743,7 @@ class _ProfileState extends State<Profile> {
                                       child: const Text(
                                         "View Destinations",
                                         style:
-                                            TextStyle(color: Color(0xFF2FACBB)),
+                                        TextStyle(color: Color(0xFF2FACBB)),
                                       ),
                                     ),
                                   )),
@@ -758,7 +767,7 @@ class _ProfileState extends State<Profile> {
                     color: Colors.grey
                         .withOpacity(0.5), // Shadow color and opacity
                     spreadRadius:
-                        2, // How far the shadow spreads from the container
+                    2, // How far the shadow spreads from the container
                     blurRadius: 5, // The intensity of the shadow blur
                     offset: const Offset(
                         0, 3), // The offset of the shadow from the container
@@ -800,7 +809,7 @@ class _ProfileState extends State<Profile> {
                                       child: const Text(
                                         "View Destinations",
                                         style:
-                                            TextStyle(color: Color(0xFF2FACBB)),
+                                        TextStyle(color: Color(0xFF2FACBB)),
                                       ),
                                     ),
                                   )),
@@ -824,7 +833,7 @@ class _ProfileState extends State<Profile> {
                     color: Colors.grey
                         .withOpacity(0.5), // Shadow color and opacity
                     spreadRadius:
-                        2, // How far the shadow spreads from the container
+                    2, // How far the shadow spreads from the container
                     blurRadius: 5, // The intensity of the shadow blur
                     offset: const Offset(
                         0, 3), // The offset of the shadow from the container
@@ -866,7 +875,7 @@ class _ProfileState extends State<Profile> {
                                       child: const Text(
                                         "View Destinations",
                                         style:
-                                            TextStyle(color: Color(0xFF2FACBB)),
+                                        TextStyle(color: Color(0xFF2FACBB)),
                                       ),
                                     ),
                                   )),
@@ -883,42 +892,75 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+
+
+
+
+
+
+  Future<List<dynamic>> fetchData() async {
+    try {
+      final Uri profileUri = Uri.parse('$backendUrl/user/myPosts');
+      final response = await http.get(
+        profileUri,
+        headers: {
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImZpcnN0TmFtZSI6InNhY2hpbmkiLCJsYXN0TmFtZSI6InVzaGEiLCJlbWFpbCI6ImFtYXNoaUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjk4NzMzMzI5LCJleHAiOjE3MDEzMjUzMjl9.5xNuBHS8t5F_jgnEmCd3weN9oZCuizjsh4zlOYmOIZY',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        throw 'Failed to fetch user profile data';
+      }
+    } catch (e) {
+      throw 'Error occurred while fetching user profile data: $e';
+    }
+  }
+
   Widget Tab1(BuildContext context) {
     return Stack(
       children: [
-        const SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              feedCard(
-                profile: 'assets/profile.png',
-                title: 'Nimesh Jayasinha',
-                subtitle: 'Colombo, Sri Lanka',
-                post: 'Can anyone recommend some place to travel on weekens???',
-                imagePath: 'assets/post.png',
-                likes: '100',
-                comments: '12',
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              feedCard(
-                profile: 'assets/profile.png',
-                title: 'Nimesh Jayasinha',
-                subtitle: 'Colombo, Sri Lanka',
-                post: 'Can anyone recommend some place to travel on weekens???',
-                imagePath: 'assets/post.png',
-                likes: '100',
-                comments: '12',
-              ),
-              SizedBox(
-                height: 10,
-              ),
-            ],
-          ),
+        FutureBuilder<List<dynamic>>(
+          future: fetchData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator(); // Display a loading indicator while fetching data.
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              // Data has been fetched successfully, build your UI with the data.
+              final jsonData = snapshot.data;
+              int index = 0;
+              List<Widget> feedCards = [];
+
+              if (jsonData != null) {
+                for (var post in jsonData) {
+                  feedCards.add(feedCard(
+                    profile: post['User']['profilePicture'] ?? 'assets/profile.png',
+                    title: (post['User']['firstName'] ?? '') + ' ' + (post['User']['lastName'] ?? ''),
+                    subtitle: post['User']['username'] ?? '',
+                    post: post['content'] ?? '',
+                    imagePath: post['media'] ?? '',
+                    likes: post['reactCount']?.toString() ?? '0',
+                    comments: post['commentCount']?.toString() ?? '0',
+                  ));
+                  index++;
+                }
+              }
+
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: feedCards,
+                ),
+              );
+            }
+          },
         ),
-        Align(
-          alignment: Alignment.bottomRight,
+        Positioned(
+          bottom: 0,
+          right: 0,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: FloatingActionButton(
@@ -927,13 +969,16 @@ class _ProfileState extends State<Profile> {
                   return NewPost();
                 }));
               },
+              child: const Icon(Icons.post_add, size: 30),
               backgroundColor: const Color(0xFF0C1C33),
               foregroundColor: Colors.white,
-              child: const Icon(Icons.post_add, size: 30),
             ),
           ),
         ),
       ],
     );
   }
+
+
+
 }
