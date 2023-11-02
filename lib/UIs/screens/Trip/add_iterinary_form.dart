@@ -106,7 +106,6 @@ class _AddIterinaryFormState extends State<AddIterinaryForm> {
                         width: double.infinity,
                         labelText: 'Add Iterinary',
                         path: joinedTripView(
-                          tripId: 1,
                         ))
                   ],
                 ),
