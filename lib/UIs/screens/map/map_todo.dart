@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main/Domain/provider/budget_provider.dart';
 import 'package:main/Domain/provider/itinerary_provider.dart';
+import 'package:main/Domain/provider/mapCoordinates_provider.dart';
 import 'package:main/Domain/provider/trip_provider.dart';
 import 'package:main/UIs/themes/colors.dart';
 import 'package:main/UIs/widgets/map_widget.dart';
@@ -84,7 +85,7 @@ class _MapToDoScreenState extends State<MapToDoScreen> {
   }
 }
 
-class MapSlidingPanel extends StatefulWidget {
+class MapSlidingPanel extends ConsumerStatefulWidget {
   const MapSlidingPanel({
     super.key,
     required this.sc,
@@ -95,10 +96,10 @@ class MapSlidingPanel extends StatefulWidget {
   final BuildContext context;
 
   @override
-  State<MapSlidingPanel> createState() => _MapSlidingPanelState();
+  ConsumerState<MapSlidingPanel> createState() => _MapSlidingPanelState();
 }
 
-class _MapSlidingPanelState extends State<MapSlidingPanel> {
+class _MapSlidingPanelState extends ConsumerState<MapSlidingPanel> {
   bool _isExpanded = false;
   Map<String, dynamic>? tripDay;
 
@@ -111,7 +112,7 @@ class _MapSlidingPanelState extends State<MapSlidingPanel> {
             child: _isExpanded
                 ? TripDayView(
                     day: tripDay!['day'],
-                    locations: "Places to visit in ${tripDay!['locations']}",
+                    locations: "Places to visit ${tripDay!['locations'].map((e) => e.split(',')[0])}",
                     approxBudget: "${tripDay!['approxBudget']}",
                     weather: "Weather: ${tripDay!['weather']}",
                     backMethod: () {

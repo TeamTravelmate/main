@@ -32,7 +32,7 @@ class Itinerary{
       List<String> activities = [];
       for (int j = 0; j < itineraryElements!.length; j++) {
         if (itineraryElements![j].day == i) {
-          locations.add(itineraryElements![j].location!.split(',')[0]);
+          locations.add(itineraryElements![j].location!);
           activities.add(itineraryElements![j].activity!);
         }
       }

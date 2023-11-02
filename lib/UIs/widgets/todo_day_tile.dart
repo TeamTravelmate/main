@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:main/Domain/models/budget.dart';
 import 'package:main/Domain/models/itinerary.dart';
+import 'package:main/Domain/provider/mapCoordinates_provider.dart';
 import 'package:main/Domain/provider/trip_provider.dart';
 import 'package:main/UIs/themes/colors.dart';
 import 'package:main/UIs/widgets/text_custom.dart';
@@ -20,7 +21,7 @@ class TodoDayTile extends StatelessWidget {
     required this.day,
   });
 
-  final String locations;
+  final List<String> locations;
   final String approxBudget;
   final String weather;
   final int day;
@@ -36,7 +37,10 @@ class TodoDayTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               IconWithText(
-                text: locations,
+                text: locations
+                    .toString()
+                    .replaceAll("[", "")
+                    .replaceAll("]", ""),
                 icon: Icons.location_on_outlined,
               ),
               IconWithText(
@@ -50,16 +54,25 @@ class TodoDayTile extends StatelessWidget {
             ],
           ),
         ),
-        IconButton(
-          icon: Icon(Icons.arrow_forward_ios_outlined),
-          color: ColorsTravelMate.primary,
-          onPressed: (){
-            displayDayMethod({
-              'day': day,
-              'locations': locations,
-              'approxBudget': approxBudget,
-              'weather': weather,
-            });
+        Consumer(
+          builder: (context, ref, child) {
+            return IconButton(
+              icon: Icon(Icons.arrow_forward_ios_outlined),
+              color: ColorsTravelMate.primary,
+              onPressed: () {
+                if(locations.length>0){
+                  ref
+                    .read(mapCoordinatesNotifierProvider.notifier)
+                    .newCoordinates(locations);
+                }
+                displayDayMethod({
+                  'day': day,
+                  'locations': locations,
+                  'approxBudget': approxBudget,
+                  'weather': weather,
+                });
+              },
+            );
           },
         ),
       ],
@@ -80,7 +93,7 @@ class IconWithText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0,4,0,4),
+      padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
       child: Row(
         children: [
           Padding(
@@ -121,10 +134,12 @@ class TripTimeline extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tripProvider = ref.read(tripPlanningNotifierProvider);
-    final itinerayMap = tripDays.getItineraryMap(tripProvider.value!.numberOfDays!);
+    final itinerayMap =
+        tripDays.getItineraryMap(tripProvider.value!.numberOfDays!);
     final startDateString = tripProvider.value!.startDate!;
     final startDate = DateFormat('EEE, MM/dd/yyyy').parse(startDateString);
-    final dayTotals = budget.getBudgetMap(tripProvider.value!.numberOfDays!, startDate);
+    final dayTotals =
+        budget.getBudgetMap(tripProvider.value!.numberOfDays!, startDate);
     return Timeline.tileBuilder(
       controller: sc,
       theme: TimelineThemeData(
@@ -161,10 +176,11 @@ class TripTimeline extends ConsumerWidget {
               child: TodoDayTile(
                 day: index + 1,
                 key: Key("Day ${index + 1}"),
-                locations: itinerayMap[index+1]!['locations'].toString().replaceAll('[','').replaceAll(']',''),
+                locations: itinerayMap[index + 1]!['locations']!,
                 approxBudget: "Rs. ${dayTotals[index + 1]}",
                 weather: "",
-                displayDayMethod: displayDayMethod, //print the day number of the widget
+                displayDayMethod:
+                    displayDayMethod, //print the day number of the widget
               )),
         ),
       ),
@@ -207,7 +223,7 @@ class TripDayView extends StatelessWidget {
         Row(
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width/1.5,
+              width: MediaQuery.of(context).size.width / 1.5,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

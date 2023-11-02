@@ -292,8 +292,8 @@ class CustomFacilities extends StatelessWidget {
                 areaBackgroundColor: Colors.transparent,
                 indicatorOffset: Offset.zero,
                 contentOffset: Offset.zero,
-                child: const Facility(
-                    widgetName: Placeholder(),
+                child: Facility(
+                    widgetName: CustomizeResturants(),
                     title: 'Resturants',
                     icon: Icons.restaurant_menu),
               ),

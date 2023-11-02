@@ -41,13 +41,11 @@ class _CustomizeDestinationState extends State<CustomizeDestination> {
               return ListView.builder(
                 itemCount: places.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return CardWidget(
-                      height: 50,
-                      width: 50,
-                      imagePath: widget.placeServices
-                          .getPlaceImage(places[index].photoReference),
-                      titleText: Text(places[index].name),
-                      subtitleText: Text(places[index].address));
+                  return RestaurantCard(
+                      place: places[index],
+                      placePhoto: widget.placeServices
+                          .getPlaceImage(places[index].photoReference)
+                  );
                 },
               );
             } else {
@@ -60,88 +58,30 @@ class _CustomizeDestinationState extends State<CustomizeDestination> {
   }
 }
 
-class CardWidget extends StatelessWidget {
-  const CardWidget({
-    super.key,
-    required this.height,
-    required this.width,
-    required this.imagePath,
-    required this.titleText,
-    required this.subtitleText,
-  });
 
-  final double height;
-  final double width;
-  final Image imagePath;
-  final Text titleText;
-  final Text subtitleText;
+class RestaurantCard extends StatelessWidget {
+  final Place place;
+  final Image placePhoto;
+  const RestaurantCard({super.key, required this.place, required this.placePhoto});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTile(
-            leading: SizedBox(
-                child: SizedBox(
-              height: height,
-              width: width,
-              child: imagePath,
-            )),
-            title: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        SizedBox(
-                          height: height,
-                          width: width,
-                          child: FloatingActionButton(
-                            onPressed: () {},
-                            backgroundColor: ColorsTravelMate.tertiary,
-                            child:
-                                const Icon(Icons.favorite, color: Colors.red),
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                        SizedBox(
-                          height: height,
-                          width: width,
-                          child: FloatingActionButton(
-                            onPressed: () {},
-                            backgroundColor: ColorsTravelMate.tertiary,
-                            child: const Icon(
-                              Icons.map_sharp,
-                              color: ColorsTravelMate.secundary,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                        SizedBox(
-                          height: height,
-                          width: width,
-                          child: FloatingActionButton(
-                            onPressed: () {},
-                            backgroundColor: ColorsTravelMate.tertiary,
-                            child: const Icon(
-                              Icons.add,
-                              color: ColorsTravelMate.primary,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    titleText,
-                  ],
-                )),
-            subtitle: subtitleText,
-          ),
-        ],
+    var iconButton = IconButton(
+        onPressed: () {},
+        icon: const Icon(Icons.add),
+      );
+    return ListTile(
+      leading: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          height: 50,
+          width: 50,
+          child: placePhoto,
+        ),
       ),
+      title: Text(place.name),
+      subtitle: Text(place.address),
+      trailing: iconButton,
     );
   }
 }

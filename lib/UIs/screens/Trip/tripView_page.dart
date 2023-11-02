@@ -229,8 +229,9 @@ class _OverviewState extends State<Overview> {
                         children: [
                           //add a total amount of expenses
                           Text(
-                            trip.value!.startPlace!.split(',')[0] ??
-                                "Add where you'll start",
+                            (trip.value!.startPlace != null)
+                                ? trip.value!.startPlace!.split(',')[0]
+                                : "Not set",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,

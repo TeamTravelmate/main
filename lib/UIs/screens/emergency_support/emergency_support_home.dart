@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/emergency_support/options.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class EmergencySupportHome extends StatefulWidget {
   const EmergencySupportHome({Key? key}) : super(key: key);
@@ -59,12 +60,21 @@ class _EmergencySupportHomeState extends State<EmergencySupportHome> {
                   ),
                 ),
                 // Map container takes up the remaining space
-                // Expanded(
-                //   child: Container(
-                //     color: Colors.white,
-                //     // Your map widget goes here
-                //   ),
-                // ),
+                Expanded(
+                  child: GoogleMap(
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(6.9020, 79.8611),
+                      zoom: 11.0,
+                    ),
+                    markers: {
+                      Marker(
+                        markerId: MarkerId('UOC'),
+                        position: LatLng(6.9020, 79.8611),
+                        infoWindow: InfoWindow(title: 'University of Colombo'),
+                      ),
+                    },
+                  ),
+                ),
               ],
             ),
             Positioned(

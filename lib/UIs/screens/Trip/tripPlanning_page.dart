@@ -200,7 +200,7 @@ void _presentDatePicker() async {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     itemClick: (Prediction prediction) {
-                      _destinationController.text = prediction.id!;
+                      _destinationController.text = prediction.description!;
                     },
                     isLatLngRequired: true,
                     getPlaceDetailWithLatLng: (Prediction prediction) {

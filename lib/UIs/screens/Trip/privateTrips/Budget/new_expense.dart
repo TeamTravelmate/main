@@ -24,7 +24,7 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
     final trip = ref.read(tripPlanningNotifierProvider);
     final initialDate = DateFormat('EEE, M/d/y')
                       .parse(trip.value!.startDate!);
-    final lastDate = initialDate.add(Duration(days: trip.value!.numberOfDays!));
+    final lastDate = initialDate.add(Duration(days: trip.value!.numberOfDays! - 1));
     final pickedDate = await showDatePicker(
       context: context,
       initialDate: initialDate,
@@ -32,7 +32,7 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
       lastDate: lastDate,
     );
     setState(() {
-      _selectedDate = pickedDate;
+      _selectedDate = pickedDate!.add(Duration(hours: 6));
     });
   }
 

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:main/Domain/models/places.dart';
 import 'package:main/Domain/services/place_services.dart';
 import '../../themes/colors.dart';
+import 'package:main/Data/controller/global_controller.dart';
 
 class CustomizeResturants extends StatefulWidget {
-  late final PlaceServices placeServices;
-  CustomizeResturants({super.key}) {
-    placeServices = PlaceServices(
-        filterType: 'restaurant', searchedLocation: "6.9020,79.8611");
-  }
+  CustomizeResturants({super.key});
 
   @override
   State<CustomizeResturants> createState() => _CustomizeResturantsState();
@@ -16,11 +14,21 @@ class CustomizeResturants extends StatefulWidget {
 
 class _CustomizeResturantsState extends State<CustomizeResturants> {
   late Future<List<dynamic>> _places;
+  double? _lat;
+  double? _lng;
+  late final PlaceServices placeServices;
+
+  final GlobalController globalController =
+      Get.put(GlobalController(), permanent: true);
 
   @override
   void initState() {
     super.initState();
-    _places = widget.placeServices.getPlaces();
+    _lat = globalController.getLattitude().value;
+    _lng = globalController.getLongitude().value;
+    placeServices = PlaceServices(
+        filterType: 'restaurant', searchedLocation: "$_lat, $_lng");
+    _places = placeServices.getPlaces();
   }
 
   @override
@@ -41,7 +49,7 @@ class _CustomizeResturantsState extends State<CustomizeResturants> {
               return ListView.builder(
                 itemCount: places.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return RestaurantCard(place: places[index], placePhoto: widget.placeServices.getPlaceImage(places[index].photoReference));
+                  return RestaurantCard(place: places[index], placePhoto: placeServices.getPlaceImage(places[index].photoReference));
                 },
               );
             } else {
