@@ -10,6 +10,7 @@ class Checkout extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Column(
           children: [
@@ -95,18 +96,18 @@ class Checkout extends StatelessWidget{
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Jane Doe',
+                                'Kamal Kishore',
                                 style: TextStyle(
                                   fontSize: 15.0,
                                 ),
                                 textAlign: TextAlign.left,
                               ),
                               Text(
-                                '3 Newbridge Court',
+                                '3 Prk Lane',
                                 textAlign: TextAlign.left,
                               ),
                               Text(
-                                'Chino Hills, CA 91709, United Sates',
+                                'Kandy, Sri Lanka',
                                 textAlign: TextAlign.left,
                               )
                             ],

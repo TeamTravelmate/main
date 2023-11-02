@@ -144,8 +144,8 @@ class _OverviewState extends State<Overview> {
               // durationTitle: DurationTitle.en(),
               separatorType: SeparatorType.symbol,
               slideDirection: SlideDirection.up,
-              height: 60.0,
-              width: 60.0,
+              // height: 60.0,
+              // width: 60.0,
               textStyle: TextStyle(
                   fontSize: 20.0,
                   color: Colors.white,

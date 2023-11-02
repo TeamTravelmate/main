@@ -106,84 +106,89 @@ class _EmergencySupportHomeState extends State<EmergencySupportHome> {
                     ],
                   ),
                   padding: EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 40,
-                        height: 4,
-                        color: Colors.grey, // Grey line at the top
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Emergency Support',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                  child: SingleChildScrollView( // Wrap the Column with SingleChildScrollView
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 40,
+                          height: 4,
+                          color: Colors.grey, // Grey line at the top
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            child: SupportCard(
-                              icon: Icons.local_gas_station,
-                              label: 'Gas Stations Near Me',
-                            ),
-                          ),
-                          Expanded(
-                            child: SupportCard(
-                              icon: Icons.local_hospital,
-                              label: 'Hospitals Near Me',
-                            ),
-                          ),
-                          Expanded(
-                            child: SupportCard(
-                              icon: Icons.local_police,
-                              label: 'Police Stations Near Me',
-                            ),
-                          ),
-                        ],
-                      ),
-                      // Add some space between the support cards and "In Case of Emergency"
-                      SizedBox(height: 40),
-                      Text(
-                        'In Case of Emergency',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Navigate to Guidelines page when the button is pressed
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Options()),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
-                            onPrimary: Colors.white,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 15),
-                          ),
-                          child: Text(
-                            'Tap Here',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Emergency Support',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              child: SupportCard(
+                                icon: Icons.local_gas_station,
+                                label: 'Gas Stations Near Me',
+                              ),
+                            ),
+                            Expanded(
+                              child: SupportCard(
+                                icon: Icons.local_hospital,
+                                label: 'Hospitals Near Me',
+                              ),
+                            ),
+                            Expanded(
+                              child: SupportCard(
+                                icon: Icons.local_police,
+                                label: 'Police Stations Near Me',
+                              ),
+                            ),
+                          ],
+                        ),
+                        // Add some space between the support cards and "In Case of Emergency"
+                        SizedBox(height: 40),
+                        Text(
+                          'In Case of Emergency',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Navigate to Guidelines page when the button is pressed
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Options(),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.red,
+                              onPrimary: Colors.white,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 30,
+                                vertical: 15,
+                              ),
+                            ),
+                            child: Text(
+                              'Tap Here',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -229,18 +234,3 @@ class SupportCard extends StatelessWidget {
     );
   }
 }
-
-// class Options extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     // Your UI for the options screen goes here
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Options'),
-//       ),
-//       body: Center(
-//         child: Text('Options Screen'),
-//       ),
-//     );
-//   }
-// }

@@ -4,6 +4,9 @@ import 'package:main/UIs/screens/Trip/publicTrip/publicTripViewPage.dart';
 import 'package:main/UIs/widgets/tripCard_widget.dart';
 import '../../../themes/colors.dart';
 import '../../../widgets/popular_widget.dart';
+// import '../publicTripViewPage.dart';
+// import 'publicTrip_page.dart';
+// import 'publicTrip_page.dart';
 
 // ignore: camel_case_types
 class publicTripsAll extends StatelessWidget {

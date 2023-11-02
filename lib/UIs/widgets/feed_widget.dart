@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import '../screens/home/feedView_page.dart';
 import '../themes/colors.dart';
 
@@ -53,28 +55,28 @@ class feedCard extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
-                title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: Row(
-                  children: [
-                    Icon(subtitleIcon, size: 20),
-                    Text(subtitle,
-                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold))
-                  ],
-                ),
-                trailing: const Icon(
-                  Icons.more_horiz,
-                  color: Colors.blue, // Use your desired color
-                  size: 30,
-                ),
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(25), // Adjust the radius as needed
-                  child: Image.asset(
-                    profile, // Replace with your image asset path
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
+                  title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+                  subtitle: Row(
+                    children: [
+                      Icon(subtitleIcon, size: 20),
+                      Text(subtitle,
+                          style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold))
+                    ],
                   ),
-                ),
+                  trailing: const Icon(
+                    Icons.more_horiz,
+                    color: Colors.blue, // Use your desired color
+                    size: 30,
+                  ),
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(25), // Adjust the radius as needed
+                    child: Image.network(
+                      'http://192.168.8.138:3000/' + profile.replaceAll(r'\', '/'), // Replace with your image URL
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                    ),
+                  )
               ),
               Text(post),
               Padding(
@@ -82,7 +84,11 @@ class feedCard extends StatelessWidget {
                   top: 20,
                   bottom: 20,
                 ),
-                child: Image.asset(imagePath),
+                child: Image.network('http://192.168.8.138:3000/' + imagePath.replaceAll(r'\', '/'),
+                  width: 300, // Set the desired width
+                  height: 150, // Set the desired height
+                  fit: BoxFit.fill, // Adjust the fit as needed
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -303,42 +309,42 @@ class feedCard extends StatelessWidget {
                                   child: Column(
                                     children:[
                                       Text('Comments',
-                                        style: TextStyle(
-                                        fontWeight: FontWeight.bold,)),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,)),
 
                                       SizedBox(height:10.0),
 
                                       Row(
-                                      mainAxisAlignment: MainAxisAlignment.start, // Adjust as needed
-                                      crossAxisAlignment: CrossAxisAlignment.center, // Adjust as needed
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(50.0),
-                                          child: Image.asset(
-                                            'assets/profile_pic.jpeg',
-                                            width: 40,
-                                            height: 40,
-                                            fit: BoxFit.cover,
+                                        mainAxisAlignment: MainAxisAlignment.start, // Adjust as needed
+                                        crossAxisAlignment: CrossAxisAlignment.center, // Adjust as needed
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(50.0),
+                                            child: Image.asset(
+                                              'assets/profile_pic.jpeg',
+                                              width: 40,
+                                              height: 40,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          width: 20.0, // Adjust the spacing between image and column
-                                        ),
-                                        Flexible(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text('Sew',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
+                                          SizedBox(
+                                            width: 20.0, // Adjust the spacing between image and column
+                                          ),
+                                          Flexible(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text('Sew',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
-                                              ),
-                                              Text('If you like to surfing I recommand Arugambe'),
-                                            ],
+                                                Text('If you like to surfing I recommand Arugambe'),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
+                                        ],
+                                      ),
 
                                       SizedBox(
                                         height: 20.0, // Adjust the spacing between image and column
@@ -366,8 +372,8 @@ class feedCard extends StatelessWidget {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text('Kasun',style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                               ),
                                               Text('Trinco'),
                                             ],
@@ -448,7 +454,7 @@ class feedCard extends StatelessWidget {
                                       SizedBox(
                                         height: 20.0, // Adjust the spacing between image and column
                                       ),
-                                  ],
+                                    ],
                                   ),
                                 ),
                               );

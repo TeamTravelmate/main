@@ -7,6 +7,7 @@ class Catalog extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Column(
           children: [
@@ -66,7 +67,7 @@ class Catalog extends StatelessWidget{
             Row(
               children: [
                 Container(
-                  width: 150.0,
+                  width: 170.0,
                   height: 160.0,
                   margin: const EdgeInsets.only(
                       left: 20.0,
@@ -108,7 +109,6 @@ class Catalog extends StatelessWidget{
                                         builder: (context) =>  Product()));
                               },
                             ),
-
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,7 +126,7 @@ class Catalog extends StatelessWidget{
                                     textAlign: TextAlign.left,
                                   ),
                                 )
-
+                            
                               ],
                             ),
                             Row(
@@ -139,7 +139,7 @@ class Catalog extends StatelessWidget{
                                     'Rs. 850',
                                     style: TextStyle(
                                       color: Color(0xff2FACBB),
-                                      fontSize: 10.0,
+                                      fontSize: 12.0,
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
@@ -163,7 +163,7 @@ class Catalog extends StatelessWidget{
                   ),
                 ),
                 Container(
-                  width: 150.0,
+                  width: 170.0,
                   height: 160.0,
                   margin: const EdgeInsets.only(
                       left: 20.0,
@@ -236,7 +236,7 @@ class Catalog extends StatelessWidget{
                                     'Rs. 850',
                                     style: TextStyle(
                                       color: Color(0xff2FACBB),
-                                      fontSize: 10.0,
+                                      fontSize: 12.0,
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
@@ -264,7 +264,7 @@ class Catalog extends StatelessWidget{
             Row(
               children: [
                 Container(
-                  width: 150.0,
+                  width: 170.0,
                   height: 160.0,
                   margin: const EdgeInsets.only(
                       left: 20.0,
@@ -334,10 +334,10 @@ class Catalog extends StatelessWidget{
                                       right: 10.0
                                   ),
                                   child: Text(
-                                    'Rs. 850',
+                                    'Rs. 4500',
                                     style: TextStyle(
                                       color: Color(0xff2FACBB),
-                                      fontSize: 10.0,
+                                      fontSize: 12.0,
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
@@ -361,7 +361,7 @@ class Catalog extends StatelessWidget{
                   ),
                 ),
                 Container(
-                  width: 150.0,
+                  width: 170.0,
                   height: 160.0,
                   margin: const EdgeInsets.only(
                       left: 20.0,
@@ -431,10 +431,10 @@ class Catalog extends StatelessWidget{
                                       right: 10.0
                                   ),
                                   child: Text(
-                                    'Rs. 850',
+                                    'Rs. 1500',
                                     style: TextStyle(
                                       color: Color(0xff2FACBB),
-                                      fontSize: 10.0,
+                                      fontSize: 12.0,
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
@@ -462,7 +462,7 @@ class Catalog extends StatelessWidget{
             Row(
               children: [
                 Container(
-                  width: 150.0,
+                  width: 170.0,
                   height: 160.0,
                   margin: const EdgeInsets.only(
                       left: 20.0,
@@ -532,10 +532,10 @@ class Catalog extends StatelessWidget{
                                       right: 10.0
                                   ),
                                   child: Text(
-                                    'Rs. 850',
+                                    'Rs. 2000',
                                     style: TextStyle(
                                       color: Color(0xff2FACBB),
-                                      fontSize: 10.0,
+                                      fontSize: 12.0,
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
@@ -559,7 +559,7 @@ class Catalog extends StatelessWidget{
                   ),
                 ),
                 Container(
-                  width: 150.0,
+                  width: 170.0,
                   height: 160.0,
                   margin: const EdgeInsets.only(
                       left: 20.0,
@@ -629,10 +629,10 @@ class Catalog extends StatelessWidget{
                                       right: 10.0
                                   ),
                                   child: Text(
-                                    'Rs. 850',
+                                    'Rs. 1050',
                                     style: TextStyle(
                                       color: Color(0xff2FACBB),
-                                      fontSize: 10.0,
+                                      fontSize: 12.0,
                                     ),
                                     textAlign: TextAlign.left,
                                   ),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:main/UIs/screens/profile/profile.dart';
 import 'package:main/UIs/widgets/side_drawer.dart';
@@ -7,10 +9,78 @@ import '../../widgets/popular_widget.dart';
 import '../Trip/tripPlanning_page.dart';
 import 'popularPlaces_page.dart';
 import '../profile/create_newpost.dart';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:main/Data/env/env.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class home extends StatelessWidget {
+class home extends StatefulWidget {
   final token;
+
   const home({@required this.token, super.key});
+
+  @override
+  _homeState createState() => _homeState();
+}
+
+
+
+
+
+
+class _homeState extends State<home> {
+  List<Widget> feedCards = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    try {
+      final Uri profileUri = Uri.parse('$backendUrl/user/posts');
+      final response = await http.get(
+        profileUri,
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body) as List<dynamic>;
+        updateFeedCards(jsonData);
+      } else {
+        throw 'Failed to fetch user profile data';
+      }
+    } catch (e) {
+      throw 'Error occurred while fetching user profile data: $e';
+    }
+  }
+
+  void updateFeedCards(List<dynamic> jsonData) {
+    if (jsonData != null) {
+      for (var post in jsonData) {
+        feedCards.add(
+          feedCard(
+            profile: post['User']['profile_pic'] ?? 'assets/profile.png',
+            title: (post['User']['firstName'] ?? '') +
+                ' ' +
+                (post['User']['lastName'] ?? ''),
+            subtitle: post['User']['username'] ?? '',
+            post: post['content'] ?? '',
+            imagePath: post['media'] ?? '',
+            likes: post['reactCount']?.toString() ?? '0',
+            comments: post['commentCount']?.toString() ?? '0',
+          ),
+        );
+      }
+      setState(() {}); // Trigger a UI update to display the feedCards
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +99,7 @@ class home extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Profile(token: token),
+                    builder: (context) => Profile(),
                   ),
                 );
               },
@@ -143,41 +213,9 @@ class home extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const feedCard(
-                      profile: 'assets/man.jpg',
-                      title: 'Kasun Jayaweera',
-                      subtitle: 'Gampaha, Sri Lanka',
-                      post:
-                      'What destinations do you recommend for a relaxing weekend by the water, like lakes or beaches?',
-                      imagePath: 'assets/post.png',
-                      likes: '5',
-                      comments: '4',
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const feedCard(
-                      profile: 'assets/woman.jpeg',
-                      title: 'Nimesh Jayasinha',
-                      subtitle: 'Colombo, Sri Lanka',
-                      post:
-                      'Can anyone recommend some place to travel on weekends???',
-                      imagePath: 'assets/post.png',
-                      likes: '100',
-                      comments: '12',
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const feedCard(
-                      profile: 'assets/woman2.jpg',
-                      title: 'Sachini Usha',
-                      subtitle: 'Colombo, Sri Lanka',
-                      post:
-                      'Can you suggest some great weekend getaway destinations that are within a few hours drive?',
-                      imagePath: 'assets/post.png',
-                      likes: '100',
-                      comments: '12',
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: feedCards, // Display the feedCards
                     ),
                   ],
                 ),
@@ -191,7 +229,7 @@ class home extends StatelessWidget {
               onPressed: () {
 
                 Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                return NewPost();
+                  return NewPost();
                 }));},
               child: Icon(Icons.post_add, size: 30),
               backgroundColor: Color(0xFF0C1C33),

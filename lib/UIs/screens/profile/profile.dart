@@ -47,7 +47,11 @@ class _ProfileState extends State<Profile> {
   }
 
 
-  void fetchUsers() async {
+  Future<void> fetchUsers() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+
     try {
       final Uri profileUri = Uri.parse('$backendUrl/user/myProfile');
       print(profileUri);
@@ -55,7 +59,7 @@ class _ProfileState extends State<Profile> {
       final response = await http.get(
         profileUri,
         headers: {
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImZpcnN0TmFtZSI6IkFtYXNoaSIsImxhc3ROYW1lIjoiU2FuZHVuaSIsImVtYWlsIjoiYW1hc2hpQGdtYWlsLmNvbSIsImlhdCI6MTY5ODUyNjAyNywiZXhwIjoxNzAxMTE4MDI3fQ.o33iAm4TldDV-x1Q8AL7UDq3ymLbee_cBX4Sw4C_oW8', // Add the token to the headers
+          'Authorization': 'Bearer $token', // Add the token to the headers
         },
 
       );
@@ -157,6 +161,7 @@ class _ProfileState extends State<Profile> {
                       child: Text('Traveller',
                           style: TextStyle(fontSize: 15)),
                     ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -197,21 +202,17 @@ class _ProfileState extends State<Profile> {
                                       fontWeight: FontWeight.bold)),
                             ),
                             InkWell(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                                  return const FollowingList();
-                                }));
-                              },
-                              child: const Padding(
-                                padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
-
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
-                              child: Text('Following',
-                                  style: TextStyle(fontSize: 15)),
-                            )
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                                    return const FollowingList();
+                                  }));
+                                },
+                                child:
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 5.0, bottom: 12.0),
+                                  child: Text('Following',
+                                      style: TextStyle(fontSize: 15)),
+                                )),
                           ],
                         )
                       ],
@@ -897,12 +898,14 @@ class _ProfileState extends State<Profile> {
 
 
   Future<List<dynamic>> fetchData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
     try {
       final Uri profileUri = Uri.parse('$backendUrl/user/myPosts');
       final response = await http.get(
         profileUri,
         headers: {
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImZpcnN0TmFtZSI6InNhY2hpbmkiLCJsYXN0TmFtZSI6InVzaGEiLCJlbWFpbCI6ImFtYXNoaUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjk4NzMzMzI5LCJleHAiOjE3MDEzMjUzMjl9.5xNuBHS8t5F_jgnEmCd3weN9oZCuizjsh4zlOYmOIZY',
+          'Authorization': 'Bearer $token',
         },
       );
 
@@ -929,13 +932,14 @@ class _ProfileState extends State<Profile> {
             } else {
               // Data has been fetched successfully, build your UI with the data.
               final jsonData = snapshot.data;
+              print(jsonData);
               int index = 0;
               List<Widget> feedCards = [];
 
               if (jsonData != null) {
                 for (var post in jsonData) {
                   feedCards.add(feedCard(
-                    profile: post['User']['profilePicture'] ?? 'assets/profile.png',
+                    profile: post['User']['profile_pic'] ?? 'assets/profile.png',
                     title: (post['User']['firstName'] ?? '') + ' ' + (post['User']['lastName'] ?? ''),
                     subtitle: post['User']['username'] ?? '',
                     post: post['content'] ?? '',

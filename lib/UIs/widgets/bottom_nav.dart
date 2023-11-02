@@ -9,8 +9,8 @@ import 'package:main/UIs/screens/leaderboard/leaderboard.dart';
 import 'package:main/UIs/screens/myorders/orders_1.dart';
 import 'package:main/UIs/screens/product/add.dart';
 import 'package:main/UIs/screens/search/search_page.dart';
+import 'package:main/UIs/screens/search/search_page_new.dart';
 import 'package:main/UIs/screens/vendor/home_page.dart';
-import 'package:main/UIs/widgets/side_drawer.dart';
 
 class BottomNav extends StatefulWidget {
   final token;

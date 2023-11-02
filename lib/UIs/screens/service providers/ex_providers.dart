@@ -83,7 +83,7 @@ class Providerlist extends StatelessWidget {
         // Navigator.push(
         //   context,
         //   MaterialPageRoute(
-        //     builder: (context) => Profile(token: token,),
+        //     builder: (context) => Profile(),
         //   ),
         // );
       },

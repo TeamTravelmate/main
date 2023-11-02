@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:main/Data/env/env.dart';
 import 'profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NewPost extends StatefulWidget {
   @override
@@ -17,6 +18,8 @@ class _NewPost extends State<NewPost> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // Add a GlobalKey for the form
 
   Future<void> _createpost(File? imageFile, String content) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
     if (imageFile == null) {
       // Handle the case when no image is selected
       print('No image selected.');
@@ -26,7 +29,7 @@ class _NewPost extends State<NewPost> {
     try {
       final Uri profileUri = Uri.parse('$backendUrl/user/createPost');
       var request = http.MultipartRequest('POST', profileUri);
-      request.headers['Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImZpcnN0TmFtZSI6ImFtYXNoaSIsImxhc3ROYW1lIjoiYWJleSIsImVtYWlsIjoiYW1hc2hpQGdtYWlsLmNvbSIsImlhdCI6MTY5ODU4ODk5NSwiZXhwIjoxNzAxMTgwOTk1fQ.xbi0oNYGQG3V2b8OsREpiOpfFmgCt2DFxThwn7kJxdE';
+      request.headers['Authorization'] = 'Bearer $token';
       request.files.add(await http.MultipartFile.fromPath('file', imageFile.path));
 
       request.fields['content'] = _experience;
